@@ -1,0 +1,273 @@
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".upper-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a ng-if="!(isAuthenticated())" class="navbar-brand" href="/#/search" title="Webr" rel="home">
+                        <h3 style="margin-top:-4px;color:#fff;">
+                            YouPep
+                        </h3>
+                    </a>
+                    <a ng-if="isAuthenticated()" class="navbar-brand" href="/#/home" title="Webr" rel="home">
+                        <h3 style="margin-top:-4px;color:#fff;">
+                            YouPep
+                        </h3>
+                    </a>
+                </div><!-- /.navbar-header -->
+                <div class="collapse navbar-collapse upper-navbar">
+                    <form class="navbar-form pull-left" ng-if="isAuthenticated()" role="search">
+
+                        <div class="input-group">
+                            <autocomplete ng-model="result" attr-placeholder="Search friends in Weber"
+                                          click-activation="false" data="movies" on-type="doSomething"
+                                          on-select="doSomethingElse" attr-inputclass="form-control input-md search-navbar">
+                            </autocomplete>
+                            <div class="input-group-btn">
+                                <button type="submit" id="searchsubmit" value="Search"
+                                        class="btn btn-default">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <ul  ng-if="!(isAuthenticated())" class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#/login">
+                                Login
+                            </a>
+                        </li>
+                    </ul>
+                    <ul id="menu-topmenu" ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
+                        <li id="menu-item-1">
+                            <a href="#/search" ng-click="SeenMatchButton()">
+                                Match Me
+                            </a>
+                        </li>
+                        <li>
+                            <a class="mes_link" style="cursor:pointer" ng-click="loadLatestMessages()">
+                                <i class="glyphicon glyphicon-comment" style="font-size:17px;opacity:0.55;">
+                                </i>
+                                <label class="label label-danger" ng-if="chatactivity.messageNotifc.length"
+                                       style="position:absolute;font-size:10px;top: 5px;right:-8px;">
+                                        {{ chatactivity.messageNotifc.length }}
+                                </label>
+                            </a>
+                            <div class="popup arrow_box" tabindex="-1">
+                                <div class="me_30_es_hea_21_div">
+                                    <h6>
+                                        <strong>
+                                            Inbox Messages
+                                        </strong>
+                                        <a href="" class="pull-right">
+                                            30 New
+                                        </a>
+                                    </h6>
+                                     <!--<a class="close" href="#">Close</a>-->
+                                </div>
+                                <div class="me_30_es_bo_22_div div_scroll">
+                                    <div class="message-hide inn_30_bo_23_sc_22_40"
+                                         ng-repeat="message in chatactivity.latestMessages | limitTo : 6 ">
+                                        <div class="con_22_mess_44_repeat" ng-click="openchatroom(message.sender)">
+                                            <img src="{{ message.sender.picture.medium }}">
+                                            <p>
+                                                <strong>
+                                                    {{ message.sender.name.first }} {{ message.sender.name.last }}
+                                                </strong>
+                                            </p>
+                                            <h6>
+                                                {{ message.message }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <style>
+                                .mes_link{
+                                }
+                                .popup{
+                                    background: rgba(255,255,255,.98);
+                                    background-color: #fff;
+                                    border: 1px solid rgba(100, 100, 100, .4);
+                                    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+                                    overflow: visible;
+                                    position: absolute;
+                                    width: 400px;
+                                    z-index: -1;
+                                    cursor:default;
+                                    background: #fff;
+                                    color: #000;
+                                    display: none;
+                                    right: -10px;
+                                    outline:0;
+                                }
+                            </style>
+                            <script>
+                                $(document).ready(function() {
+                                    $(".mes_link").click(function(e){
+                                        e.preventDefault();
+                                        $(".popup").fadeIn(200,function(){$(this).focus();});
+                                    });
+
+                                    $('.message-hide').click(function() {
+                                       $(".popup").fadeOut(200);
+                                    });
+                                    $(".popup").on('blur',function(){
+                                        $(this).fadeOut(200);
+                                    });
+                                });
+                            </script>
+                        </li>
+                        <li class="dropdown">
+                            <a class="note_link" style="cursor:pointer" ng-click="getNewNotifcations();makeSeen()">
+                                <i class="glyphicon glyphicon-globe" style="font-size:17px;opacity:0.55;"></i>
+                                <label class="label label-danger"
+                                       style="position:absolute;font-size:10px;top: 5px;right: 0px;"
+                                       ng-if="notifications_count">
+                                        {{ notifications_count }}
+                                </label>
+                            </a>
+                            <div class="note_popup arrow_box" tabindex="-2">
+                                <div class="me_30_es_hea_21_div">
+                                    <h6>
+                                        <strong>
+                                            Notifications
+                                        </strong>
+                                        <a href="" class="pull-right">
+                                            See All
+                                        </a>
+                                    </h6>
+                                     <!--<a class="close" href="#">Close</a>-->
+                                </div>
+                                <div class="no_30_te_bo_22_div div_scroll">
+                                    <div class="inn_30_no_20_bo_23_sc_22_40" ng-repeat="request_notific in currentUser.notifications"
+                                             ng-if="request_notific.notific_type === 1">
+                                        <div class="note_22_user_44_repeat">
+                                            <img src="{{  UserService.get(request_notific.friendid).picture.thumbnail }}">
+                                            <p>
+                                                <strong>
+                                                    {{ UserService.get(request_notific.friendid).name.first }}
+                                                    {{ UserService.get(request_notific.friendid).name.last }}
+                                                          {{ request_notific.notific_type }}
+                                                </strong>
+                                                <span class="pull-right">
+                                                    <acceptreject>
+                                                        <span ng-click="acceptrequest(request_notific.friendid, 0)"
+                                                              class="btn btn-sm btn-primary">
+                                                            <strong>
+                                                                Confirm
+                                                            </strong>
+                                                        </span>&nbsp;&nbsp;
+                                                        <span ng-click="rejectrequest(request_notific.friendid, 0)"
+                                                              class="btn btn-sm btn-default">
+                                                            <strong>
+                                                                Delete Req
+                                                            </strong>
+                                                        </span>
+                                                    </acceptreject>
+                                                </span>
+                                            </p>
+                                            <h6>
+                                                On Friday 09:00PM
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="inn_30_no_20_bo_23_sc_22_40" ng-repeat="request_notific in currentUser.notifications"
+                                         ng-if="request_notific.notific_type === 2 || request_notific.notific_type === 3">
+                                        <div class="note_22_user_44_repeat">
+                                            <img src="{{ UserService.get(request_notific.friendid).picture.large}}">
+                                            <p>
+                                                <strong>
+                                                    <a href="#/profile/{{ UserService.get(request_notific.friendid).username }}">
+                                                        {{ UserService.get(request_notific.friendid).name.first }}
+                                                        &nbsp;{{ UserService.get(request_notific.friendid).name.last }}
+                                                    </a>
+                                                </strong>
+                                                Accepted your friend request.
+                                                <span>
+                                                    <a ng-if="request_notific.notific_type === 3"
+                                                       href="#/post/{{ request_notific.postid }}">Likes your your post.
+                                                    </a>
+                                                </span>
+                                            </p>
+                                            <h6>
+                                                On Friday 09:00PM
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <style>
+                                .note_link{
+                                }
+                                .note_popup{
+                                    background: rgba(255,255,255,.98);
+                                    background-color: #fff;
+                                    border: 1px solid rgba(100, 100, 100, .4);
+                                    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+                                    overflow: visible;
+                                    position: absolute;
+                                    width: 400px;
+                                    z-index: -1;
+                                    cursor:default;
+                                    background: #fff;
+                                    color: #000;
+                                    display: none;
+                                    right: -10px;
+                                    outline:0;
+                                }
+                            </style>
+                            <script>
+                                $(".note_link").click(function(e){
+                                    e.preventDefault();
+                                    $(".note_popup").fadeIn(300,function(){$(this).focus();});
+                                });
+
+                                $('.note-hide').click(function() {
+                                   $(".note_popup").fadeOut(300);
+                                });
+                                $(".note_popup").on('blur',function(){
+                                    $(this).fadeOut(300);
+                                });
+                            </script>
+                        </li>
+                        <li id="menu-item-4">
+                            <a href="" bs-dropdown="dropdown" style="padding-top: 11px; padding-bottom: 11px;">
+                                <img style="width:28px; border: 2px solid; margin-right: 5px;" class="img-circle" ng-src="{{currentUser.picture.thumbnail}}" alt="">
+                                {{currentUser.username}}
+                                <span class="caret"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div>
+        </nav>
+
+
+        <div ng-if="!(isAuthenticated())" class="footer navbar-fixed-bottom">
+            <div class="panel-footer">
+                <div class="container text-center">
+                    <a href="#/about">
+                        About
+                    </a>&nbsp;&nbsp;
+                    <a href="#/careers">
+                        Careers
+                    </a>&nbsp;&nbsp;
+                    <a href="#/term-policy">
+                        Terms and Policy
+                    </a>&nbsp;&nbsp;
+                    <a href="#/privacy-policy">
+                        Privacy Policy
+                    </a>&nbsp;&nbsp;
+                    <a href="#/feedback">
+                        Feedback
+                    </a>
+                </div>
+            </div>
+        </div>

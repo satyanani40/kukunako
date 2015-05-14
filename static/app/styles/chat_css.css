@@ -1,0 +1,332 @@
+/* chat box css goes here*/
+.ch22at_290_b22ox_2080{
+    width:200px;
+    position:fixed;
+    bottom:0px;
+    height:200px;
+    right:250px;
+}
+.ch_66_at_bo55x_co00ont3388ent{
+    height:250px;
+    padding:10px 20px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+.ch_20_at_un_22_der_div{
+    width:100% !important;
+    height:25px;
+    margin: 0px 0px 8px 0px;
+    border:1px solid #dcdcdc;
+}
+.ch_20_at_un_22_der_div>input{
+    width:100% !important;
+    height:25px;
+    font-size:12px;
+    border:0px solid #dcdcdc !important;
+}
+.ch_20_at_un_22_der_div>input:focus{
+    box-shadow:none !important;
+    border:1px solid #ddd;
+}
+.ch_22_at_inp_33_bo_33_x:active{
+    border:1px solid #344150;
+}
+
+.chat-box {
+  font:normal normal 11px/1.4 Tahoma,Verdana,Sans-Serif;
+  width:250px; /* Chatbox width */
+  border-bottom:none;
+  background-color:white;
+  position:fixed;
+  right:270px;
+  bottom:1px;
+  z-index:9999;
+  -webkit-box-shadow:1px 1px 5px rgba(0,0,0,.2);
+  -moz-box-shadow:1px 1px 5px rgba(0,0,0,.2);
+  box-shadow:1px 1px 5px rgba(0,0,0,.2);
+}
+.chat-box> label{
+    margin-bottom:-1px !important;
+}
+.chat-box> label .fa{
+      margin-top: 7px;
+      cursor:pointer;
+}
+
+.chat-box > input[type="checkbox"] {
+  display:block;
+  margin:0 0;
+  padding:0 0;
+  position:absolute;
+  top:0;
+  right:0;
+  left:0;
+  width:80%;
+  height:26px;
+  z-index:4;
+  cursor:pointer;
+  opacity:0;
+  filter:alpha(opacity=0);
+}
+
+.chat-box > label {
+  display:block;
+  height:30px;
+  color:#fff;
+  font-size: 13px;
+  line-height: 32px;
+  background-color:#0097A7;
+  font-weight:bold;
+  padding:0 1em 1px;
+}
+
+.chat-box > label:before {content:attr(data-expanded)}
+
+.chat-box .chat-box-content {
+  padding:0px;
+  display:block;
+}
+
+/* hover state */
+.chat-box > input[type="checkbox"]:hover + label
+    {
+        background-color:#0097A7;
+        color:#fff;
+    }
+
+/* checked state */
+.chat-box > input[type="checkbox"]:checked + label
+    {
+        background-color:#0097A7;
+        color:#fff;
+    }
+.chat-box > input[type="checkbox"]:checked + label:before {content:attr(data-expanded)}
+.chat-box > input[type="checkbox"]:checked ~ .chat-box-content {display:none}
+
+
+/*end of chat box css*/
+#button_show_hide{
+    position: fixed;
+    top: 90px;
+    right: 253px;
+    height: 32px;
+    z-index: 1;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+#button_show_hide>i{
+    font-size:14px;
+    cursor:pointer;
+}
+
+.main-chat-head{
+    background:#fff !important;
+    padding:2px 1px;
+    border-bottom:1px solid #f2f2f2 !important;
+    margin-bottom:2px;
+}
+.main-chat-head>li{
+    width:50% !important;
+    border-right:1px solid #f5f5f5;
+}
+.main-chat-head .active a{
+    color:#00BCD4 !important;
+}
+.main-chat-head>li:focus{
+    border-bottom:2px solid;
+}
+#layout,
+#menu,
+.menu-link {
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+.content-subhead {
+    margin: 50px 0 20px 0;
+    font-weight: 300;
+    color: #888;
+}
+#menu {
+    margin-right: -150px; /* "#menu" width */
+    width: 150px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000; /* so the menu or its navicon stays above all content */
+    margin-top:50px;
+    background: #fff;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+#menu a {
+    color: #999;
+    border: none;
+    padding: 0.6em 0 0.6em 0.6em;
+}
+.pure-menu-list li{
+    padding:6px 0px;
+    border-bottom:1px solid #f5f5f5;
+}
+.pure-menu-list>li img{
+    width:35px;
+    border-radius:2px;
+}
+.pure-menu-list li:hover,
+.pure-menu-list li:focus {
+    background: #f5f5f5;
+}
+#menu .pure-menu-selected,
+#menu .pure-menu-heading {
+    background: #1f8dd6;
+}
+#menu .pure-menu-selected a {
+    color: #fff;
+}
+#menu .pure-menu-heading {
+    font-size: 110%;
+    color: #fff;
+    margin: 0;
+}
+.menu-link {
+    position: fixed;
+    display: block; /* show this only on small screens */
+    top: 0;
+    left: 0; /* "#menu width" */
+    background: #000;
+    background: rgba(0,0,0,0.7);
+    font-size: 10px; /* change this value to increase/decrease button size */
+    z-index: 10000;
+    width: 2em;
+    height: auto;
+    padding: 2.1em 1.6em;
+}
+
+/*
+Hides the menu at `48em`, but modify this based on your app's needs.
+*/
+@media (min-width: 48em) {
+
+    .header,
+    .content {
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+    #layout {
+        padding-left: 150px; /* left col width "#menu" */
+        left: 0;
+    }
+
+    #menu {
+        right: 150px;
+        width: 250px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        z-index: 1000; /* so the menu or its navicon stays above all content */
+        margin-top:50px;
+        background: #fff;
+        border: 1px solid #E7E7E7;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    #layout.active .menu-link {
+        left: 150px;
+    }
+}
+
+@media (max-width: 48em) {
+    /* Only apply this when the window is small. Otherwise, the following
+    case results in extra padding on the left:
+        * Make the window small.
+        * Tap the menu to trigger the active state.
+        * Make the window large again.
+    */
+    #layout.active {
+        position: relative;
+        right: 150px;
+    }
+    #menu{
+        display:none;
+    }
+}
+.commentArea {
+    font: 13px Arial;
+    padding: 0 10px;
+}
+.bubbledLeft,.bubbledRight {
+    margin-top: 8px;
+    padding: 5px 10px;
+    max-width: 90%;
+    clear: both;
+    position: relative;
+}
+.bubbledLeft{
+    float: left;
+    margin-right: auto;
+    -webkit-border-radius: 3px 3px 3px 0px;
+    -moz-border-radius: 3px 3px 3px 0px;
+    -o-border-radius: 3px 3px 3px 0px;
+    -ms-border-radius: 3px 3px 3px 0px;
+    border-radius: 3px 3px 3px 0px;
+    background-color: #B2EBF2;
+    color: #333;
+}
+.bubbledLeft:before {
+    border-bottom: 10px solid #B2EBF2;
+    border-left: 9px solid rgba(0, 0, 0, 0);
+    position: absolute;
+    bottom: 0;
+    left: -8px;
+    content: "";
+}
+.bubbledRight{
+    float: right;
+    margin-left: auto;
+    text-align: left;
+    -webkit-border-radius: 3px 3px 0px 3px;
+    -moz-border-radius: 3px 3px 0px 3px;
+    -o-border-radius: 3px 3px 0px 3px;
+    -ms-border-radius: 3px 3px 0px 3px;
+    border-radius: 3px 3px 0px 3px;
+    background-color: #f5f5f5;
+    color: #333;
+}
+.bubbledRight:before {
+    border-bottom: 9px solid #f5f5f5;
+    border-right: 9px solid rgba(0, 0, 0, 0);
+    position: absolute;
+    bottom: 0;
+    right: -8px;
+    content: "";
+}
+.div_scroll{
+    overflow-y:hidden;
+}
+.div_scroll:hover{
+    overflow-y:scroll;
+}
+
+.div_scroll::-webkit-scrollbar
+{
+  width: 7px;  /* for vertical scrollbars */
+  height: 7px; /* for horizontal scrollbars */
+}
+
+.div_scroll::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.div_scroll::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.5);
+}

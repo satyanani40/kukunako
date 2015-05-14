@@ -1,0 +1,231 @@
+<div class="container">
+    <div class="col-md-3 colpadding" wb-affix="150">
+		<div class="thumbnail">
+            <div class="itemsContainer">
+                <div class="image">
+                    <a href="">
+                        <img class="img-rounded" style="width:;" data-placement="center"
+                             data-animation="am-fade-and-scale" data-template="static/app/views/show_profile_image.html"
+                             bs-modal="modal" ng-src="{{user.picture.large}}" />
+                    </a>
+                </div>
+            </div>
+			<div class="caption text-center">
+				<h3 style="text-transform: capitalize;">
+                    <a href="" data-placement="bottom" style="text-decoration:none;" data-animation="am-fade-and-scale"
+                       data-html="true" data-title="<h6>{{user.name.first}} {{user.name.last}}</h6>"
+                         bs-tooltip>
+                        {{user.name.first}} {{user.name.last}}
+                    </a>
+                </h3>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading" style="background-color:#fff;">
+				<h5 style="">
+					<strong>About</strong>
+				</h5>
+			</div>
+			<div class="panel-body">
+				<div class="row" style="padding-bottom:7px;">
+					<div class="col-sm-12">
+						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;" class="about-edit">
+							<i class="fa fa-dashboard" style="opacity:0.65;font-size:12px;"></i>&nbsp;
+							I am interested in:
+                            <a ng-repeat="interest in user.interests"
+                               style="line-height:1.2em;color:;text-decoration:none;">
+								{{ InterestsService.get(interest).interest_string }}{{$last ? '' : ', '}}
+							</a>
+						</h6>
+					</div>
+				</div>
+				<div class="row" style="padding-bottom:7px;">
+					<div class="col-sm-12">
+						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;">
+							<i class="fa fa-graduation-cap" style="opacity:0.65;font-size:12px;"></i>
+							Studied at:
+                            <a style="line-height:1.2em;color:;text-decoration:none;">
+
+									{{ user.study.graduate }}
+
+							</a>
+						</h6>
+					</div>
+				</div>
+				<div class="row" style="padding-bottom:7px;">
+					<div class="col-sm-12">
+						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;">
+							<i class="fa fa-home" style="opacity:0.65;font-size:13px;"></i>&nbsp;
+							Lives in:
+                            <a style="line-height:1.2em;color:;text-decoration:none;">
+								{{ user.location.state }}, {{ user.location.city }}
+                            </a>
+						</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="clearfix panel-heading" style="background-color:#fff;">
+                <h5>
+                    <strong>
+                        Friends - <span style="opacity:0.70;">
+                        {{user.friends.length}}
+                    </span>
+                    </strong>
+                </h5>
+			</div>
+
+            <div class="panel-body" style="padding:1px;">
+                <a ng-repeat="friend in user.friends " href="#/profile/{{ friend }}">
+                    <img data-placement="top" style="width:87px" data-animation="am-fade-and-scale" data-html="true"
+                         data-title="<h6>{{UserService.get(friend).name.first}} {{UserService.get(friend).name.last}}</h6>
+                            <h6>Lives In {{ UserService.get(friend).location.city }}, {{UserService.get(friend).location.state}}</h6>"
+                         bs-tooltip ng-src="{{UserService.get(friend).picture.thumbnail}}">
+                </a>
+            </div>
+		</div>
+	</div>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default" ng-show="friends.length">
+                   <div class="panel-heading" style="background-color:#fff;">
+                       <div class="row">
+                           <div class="col-sm-6">
+                               <h5 style="opacity:0.70">
+                                   <strong>Friends</strong> -&nbsp;
+                                       <label class="">
+                                           <a href="" style="">
+                                               {{user.friends.length}}
+                                           </a>
+                                       </label>
+                                   </span>
+                               </h5>
+                           </div>
+                           <div class="col-sm-5 pull-right">
+                               <div class="right-inner-addon">
+                                    <i class="fa fa-search" style="opacity:0.70;padding:7px;"></i>
+                                    <input type="search" class="form-control input-sm"
+                                           placeholder="Search Friends" ng-model="searchFriend"/>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="panel-body">
+                       <div ng-repeat=" friend in data = (friends |  filter : searchFriend )" class="row pad-top" >
+                            <div class="jumbotron"
+                                 style="padding:5px 10px;background-color:#fff;margin-bottom:10px;">
+                                <div class="row" style="">
+                                    <div class="col-lg-2" style="padding-right:5px;">
+                                        <div class="thumbnail" style="border:0px solid;">
+                                            <img ng-src="{{ friend.picture.thumbnail }}"
+                                                style="border-radius:2px">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 colpadding">
+                                        <h5>
+                                            <a href="#/profile/{{ friend._id }}"
+                                               data-placement="top" style="text-decoration:none;" data-animation="am-fade-and-scale"
+                                               data-html="true" data-title="<h6>{{friend.name.first}} {{friend.name.last}}</h6>"
+                                                 bs-tooltip>
+                                                <strong>
+                                                    {{ friend.name.first }} {{ friend.name.last }}
+                                                </strong>
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <div class="col-sm-3 pull-right">
+                                        <!--<a matchmeunfriend  style="margin-top:15px"
+                                           class="btn btn-default btn-sm pull-right" ng-click="matchmeunfriend('{{ friend._id }}')">
+                                            Unfriend
+                                        </a>-->
+                                        <unaddfriend>
+                                            <button ng-click="friendunfriend('{{ friend._id }}')" class="btn-sm btn btn-default">unfriend</button>
+                                        </unaddfriend>
+                                    </div>
+                                </div>
+                            </div>
+
+                       </div>
+                   </div>
+               </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="padding-bottom:0px;">
+                        <h5 style="margin:1px 0px">
+                            <strong>
+                                <i class="fa fa-user"></i>&nbsp;
+                                Friends Suggestions
+                            </strong>
+                        </h5>
+                    </div>
+                    <hr />
+                    <div class="panel-body" style="padding-top:0px;">
+                        <div ng-repeat="person in suggested_people">
+                            <div class="row" cg-busy="load_cancel_request">
+                                <div class="col-lg-12">
+                                    <img ng-src="{{ person.picture.medium }}" class="pull-left"
+                                         style="width:60px;border-radius:3px;margin-right:10px;" />
+                                    <h5 style="">
+                                        <a href="#/profile/{{ person._id}}">
+                                            {{ person.name.first }} {{ person.name.last }}
+                                        </a>
+                                        <cancelrequest>
+                                            <button  ng-click="frndaddrequest(person._id, 0)"
+                                                     class="btn btn-sm pull-right btn-primary">
+                                                Add Friend
+                                            </button>
+                                        </cancelrequest>
+                                    </h5>
+                                </div>
+                            </div>
+                            <hr style="margin:10px 0px;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="padding-bottom:0px;">
+                        <h5 style="margin:1px 0px">
+                            <strong>
+                                <i class="fa fa-user"></i>&nbsp;
+                                Sent Friend Requests
+                            </strong>
+                        </h5>
+                    </div>
+                    <hr />
+                    <div class="panel-body" style="padding-top:0px;">
+                        <!--{{ currentUser.send_add_requests }}-->
+                        <div ng-repeat="friend in currentUser.send_add_requests">
+                            <div class="row" cg-busy="load_add_friend">
+                                <div class="col-lg-12">
+                                    <img ng-src="{{ friend.picture.thumbnail }}" class="pull-left"
+                                         style="width:60px;border-radius:3px;margin-right:10px;" />
+                                    <h5 style="">
+                                        <a href="#/profile/{{UserService.get(friend)._id}}">
+                                            {{ friend.name.first }} {{ friend.name.last }}
+                                        </a>
+                                        <addfriend>
+                                            <button ng-click="frndcancelrequest(friend._id, 0)"
+                                                    class="btn btn-sm btn-primary pull-right">
+                                                cancel request
+                                            </button>
+                                        </addfriend>
+                                    </h5>
+                                </div>
+                            </div>
+                            <hr style="margin:10px 0px;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+while initating friendsActivity constructor this.profile.patch object
+not updating _etag.
+
+that's why i am rewritting code of getting profile user in every firends activity function.
+
+
+
+
+1...in chat.html page search box functionality must be add to search online friends and also conversations of others
+
+2...in chat.html page add the latest chat conversation date display and also show the latest convrsation date in merssages box in navbar.html and also in chat box div
+
+3...in friends.html page search box functionality must be add to search friends in your account
+
+4.. testing thing

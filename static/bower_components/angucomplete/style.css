@@ -1,0 +1,75 @@
+@CHARSET "UTF-8";
+
+@font-face { /* Entypo pictograms by Daniel Bruce — www.entypo.com */
+	font-family: 'Entypo';
+	src: url('../assets/entypo.ttf') format('truetype'),
+		url('../assets/entypo.eot') format('eot');
+}
+
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+a{
+	text-decoration: none;
+}
+
+a:hover{
+  transition: 0.1s all ease-in-out;
+}
+/* taken from bootstrap */
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+img {
+  /* Responsive images (ensure images don't scale beyond their parents) */
+
+  max-width: 100%;
+  /* Part 1: Set a maxium relative to the parent */
+
+  width: auto\9;
+  /* IE7-8 need help adjusting responsive images */
+
+  height: auto;
+  /* Part 2: Scale the height according to the width, otherwise you get stretching */
+
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
+
+ul>li{
+	list-style:none;
+	cursor:pointer;
+}
+
+/* Generic classes */
+.hide { /* Hide stuff without resorting to display:none; */
+	visibility: hidden !important;
+	width: 0 !important;
+	height: 0 !important;
+	line-height: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.hide:after { /* Hide stuff without resorting to display:none; */
+	visibility: hidden !important;
+	width: 0 !important;
+	height: 0 !important;
+	line-height: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}

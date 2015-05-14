@@ -1,0 +1,181 @@
+<div class="container">
+	<div class="col-md-3 colpadding" wb-affix="150">
+		<div class="thumbnail">
+            <div class="itemsContainer">
+                <div class="image">
+                    <a href="">
+                        <img class="img-rounded" style="width:;" src="{{user.picture.large}}" />
+                    </a>
+                </div>
+            </div>
+			<div class="caption text-center">
+				<h3 style="text-transform: capitalize;">
+                    <a href="" style="text-decoration:none;">
+                        {{user.name.first}} {{user.name.last}}
+                    </a>
+                </h3>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading" style="background-color:#fff;">
+				<h5 style="">
+					<strong>About</strong>
+				</h5>
+			</div>
+			<div class="panel-body">
+				<div class="row" style="padding-bottom:7px;">
+					<div class="col-sm-12">
+						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;" class="about-edit">
+							<i class="fa fa-dashboard" style="opacity:0.65;font-size:12px;"></i>&nbsp;
+							I am interested in:
+                            <a ng-repeat="interest in user.interests"
+                               style="line-height:1.2em;color:;text-decoration:none;">
+								{{ interest }}&nbsp;
+							</a>
+						</h6>
+					</div>
+				</div>
+				<div class="row" style="padding-bottom:7px;">
+					<div class="col-sm-12">
+						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;">
+							<i class="fa fa-graduation-cap" style="opacity:0.65;font-size:12px;"></i>
+							Studied at:
+                            <a style="line-height:1.2em;color:;text-decoration:none;">
+
+									{{ user.study.graduate }}
+
+
+							</a>
+						</h6>
+					</div>
+				</div>
+				<div class="row" style="padding-bottom:7px;">
+					<div class="col-sm-12">
+						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;">
+							<i class="fa fa-home" style="opacity:0.65;font-size:13px;"></i>&nbsp;
+							Lives in:
+                            <a style="line-height:1.2em;color:;text-decoration:none;">
+								{{ user.location.state }}, {{ user.location.city }}
+                            </a>
+						</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="clearfix panel-heading" style="background-color:#fff;">
+                <h5>
+                    <strong>
+                        Friends - <span style="opacity:0.70;">{{user.friends.length}}</span>
+                    </strong>
+                </h5>
+			</div>
+
+            <div class="panel-body" style="padding:1px;">
+                <a ng-repeat="friend in friends " href="#/profile/{{friend._id}}">
+                    <img data-placement="top-right" style="width:87px"
+                         data-content="{{friend.location.city}}, {{friend.location.state}}"
+                         title="{{friend.name.first}} {{friend.name.last}}" data-trigger="hover" bs-popover
+                         src="{{friend.picture.thumbnail}}">
+                </a>
+            </div>
+		</div>
+	</div>
+	<div class="col-md-6 colpadding" style="min-height:2000px">
+		<div id='userposts' ng-show="infinitePosts.posts.length" ng-repeat="post in infinitePosts.posts">
+
+			<div class="media panel panel-default">
+
+				<div class="panel-heading post-div" style="background-color:#fff;border-bottom:1px solid #F2F2F2;">
+					<a class="pull-left" style="padding: 5px;" href="#/profile/{{PostService.author._id}}">
+						<img style="width:35px" class="media-object img-circle" src="{{post.author.picture.thumbnail}}" alt="">
+					</a>
+					<strong>
+						<a href="#/profile/{{infinitePosts.posts[0].author._id}}" style="color:#133444">
+							{{post.author.name.first}} {{post.author.name.last}}
+						</a>
+					</strong>&nbsp;wrote on his story.
+
+                    <confirmdelete>
+                        <a class="pull-right delete-div" ng-if="user._id == post.author._id"
+                           ng-click="deletediv(post._id)" style="cursor:pointer;font-size:12px">
+                            Delete
+                        </a>
+                    </confirmdelete>
+					<br>
+					<small class="text-muted">
+                        <span class="glyphicon glyphicon-time" style="color:#2F5168"></span>
+						<span am-time-ago="post.author._created"></span></small>
+					<br>
+				</div>
+				<div class="panel-body" style="margin-bottom:0px;padding-bottom:0px;">
+                    <div ng-if="post.post_image_path" class="row">
+						<div class="col-sm-12" style="padding:0px;">
+							<div class="thumbnail" style="border:0px solid;">
+								<img src="{{ post.post_image_path }}">
+							</div>
+						</div>
+					</div>
+                    <div class="row" style="padding-bottom:5px;">
+                        <div class="col-sm-12">
+                            <p>
+                                {{ post.content }}
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="post.author._id != user._id">
+                        <div class="col-sm-12">
+                             <h6>
+                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, user) == false"
+                                   ng-click=" pushToPost(post.author._id, post._id)"
+                                   style="cursor:pointer" >
+                                    Match
+                                </a>&nbsp;
+                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, user) == true"
+                                   ng-click="deleteFromPost(post.author._id,post._id)"
+                                   style="cursor:pointer" >
+                                    UnMatch
+                                </a>&nbsp;
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer"
+                     style="padding-top:5px;background-color:#fff;border:1px solid #FCF8F8;">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <!--<h6>
+                                <a style="text-decoration:none;cursor:pointer;" alt="Match this post">
+                                    <i class="fa fa-slideshare" style="font-size:14px;"></i>&nbsp;
+                                </a>
+                                <a href="" ng-repeat="matchPeople in UserService.get(post.author).MatchedPeopleNotifications">
+
+                                    <span ng-if="matchPeople.postid == post._id ">
+
+                                        <span ng-repeat="temp in sortIListService.sendList(matchPeople.interestedList)">
+                                            <span ng-if="user._id == temp">
+                                                you
+                                            </span>
+                                            <span ng-if="user._id != temp">
+                                                {{ UserService.get(temp).name.first }}
+                                            </span>
+                                        </span>
+                                    </span>
+
+                                </a>
+                                <span ng-if="!(sortIListService.sendList(matchPeople.interestedList).length)">0</span>
+                                 matched with this post
+
+                            </h6>-->
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+        <div ng-show="!(infinitePosts.posts.length)">
+            no post found
+        </div>
+	</div>
+</div>

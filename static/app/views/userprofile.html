@@ -1,0 +1,336 @@
+<div navbar></div>
+<div class="container" >
+	<div class="col-lg-3 col-md-3 col-sm-12 colpadding">
+		<div class="thumbnail">
+			<img style="cursor:pointer;"
+                 class="img-rounded" data-placement="center"data-animation="am-fade-and-scale"
+                 data-template="modal.showProfileUserImage.tpl.html"
+                 bs-modal="modal" ng-src="{{profileuser.picture.large}}" />
+			<div class="caption text-center">
+				<h3 style="text-transform: capitalize;">
+                    <a href="" data-placement="bottom" style="text-decoration:none;" data-animation="am-fade-and-scale"
+                       data-html="true" data-title="<h6>Lives In {{profileuser.location.city}}</h6>"
+                       bs-tooltip>
+                        {{profileuser.name.first}} {{profileuser.name.last}}
+                    </a>
+                </h3>
+                <div ng-switch on="check_relation()">
+                    <div ng-switch-when="addfriend">
+                        <cancelrequest>
+                            <button  ng-click="frndaddrequest(profileuser._id, 0)" class="btn btn-block btn-sm btn-primary">Add Friend</button>
+                        </cancelrequest>
+                    </div>
+                    <div ng-switch-when="cancelrequest">
+                        <addfriend>
+							<button ng-click="frndcancelrequest(profileuser._id, 0)" class="btn btn-block btn-sm btn-primary">cancel request</button>
+						</addfriend>
+                    </div>
+                    <div ng-switch-when="reject_accept">
+						<acceptreject>
+                        	<button ng-click="acceptrequest(profileuser._id, 0)" class="btn btn-block btn-sm btn-primary">accept request</button>
+							<button ng-click="rejectrequest(profileuser._id, 0)" class="btn btn-block btn-sm btn-primary">reject request</button>
+						</acceptreject>
+                    </div>
+                     <div ng-switch-when="unfriend">
+						<unaddfriend>
+                        	<button ng-click="friendunfriend(profileuser._id)" class="btn btn-block btn-sm btn-primary">unfriend</button>
+						</unaddfriend>
+                    </div>
+                    <div class="animate-switch" ng-switch-default></div>
+
+                </div>
+                <div ng-if="profileuser._id != user._id" style="margin-top:10px;">
+                    <button ng-click="openchatroom(profileuser);addToConversations(profileuser._id)" class="btn btn-block btn-sm btn-success">
+                        chat
+                    </button>
+                </div>
+
+
+			</div>
+		</div>
+        <div class="panel panel-default">
+			<div class="panel-heading" style="background-color:#fff;">
+				<h5 style="">
+					<strong>About</strong>
+				</h5>
+			</div>
+			<div class="panel-body">
+				<div class="row" style="padding-bottom:7px;">
+					<div class="col-sm-12">
+						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;" class="about-edit">
+							<i class="fa fa-dashboard" style="opacity:0.65;font-size:12px;"></i>&nbsp;
+							I am interested in:
+                            <a ng-repeat="interest in profileuser.interests"
+                               style="line-height:1.2em;text-decoration:none;">
+								{{ InterestsService.get(interest).interest_string }}{{$last ? '' : ', '}}
+							</a>
+						</h6>
+					</div>
+				</div>
+				<div class="row" style="padding-bottom:7px;">
+					<div class="col-sm-12">
+						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;">
+							<i class="fa fa-graduation-cap" style="opacity:0.65;font-size:12px;"></i>
+							Studied at:
+                            <a style="line-height:1.2em;text-decoration:none;">
+								{{ profileuser.study.graduate }}
+							</a>
+						</h6>
+					</div>
+				</div>
+				<div class="row" style="padding-bottom:7px;">
+					<div class="col-sm-12">
+						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;">
+							<i class="fa fa-home" style="opacity:0.65;font-size:13px;"></i>&nbsp;
+							Lives in:
+                            <a style="line-height:1.2em;text-decoration:none;">
+								{{ profileuser.location.state }}, {{ profileuser.location.city }}
+                            </a>
+						</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="clearfix panel-heading" style="background-color:#fff;">
+                <h5>
+                    <strong>
+                        Friends -
+                        <span style="opacity:0.70;">
+                            {{profileuser.friends.length}}
+                        </span>
+                    </strong>
+                </h5>
+			</div>
+
+            <div class="panel-body" style="padding:1px;">
+                <a ng-repeat="friend in profileuser.friends" href="#/profile/{{ friend }}">
+
+                    <img data-placement="top" style="width:87px" data-html="true"
+                         data-title="<h6>{{ UserService.get(friend).name.first}} {{UserService.get(friend).name.last}}</h6>
+                         <h6>Lives In {{UserService.get(friend).location.city}}, {{UserService.get(friend).location.state}}</h6>"
+                         data-trigger="hover" bs-tooltip ng-src="{{UserService.get(friend).picture.thumbnail}}">
+                </a>
+            </div>
+		</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sm-12 colpadding" style="min-height:2000px">
+        <!-- questions part -->
+        <div class="panel panel-default" ng-repeat="question in questions.cuserquestions">
+            <div class="panel-body">
+                <h5>
+                    <strong>
+                        {{ question.question }}
+                    </strong>
+                </h5>
+                <hr style="margin:2px 0px" />
+            </div>
+            <div class="panel-body">
+                <div class="row" style="padding-bottom:5px;" ng-if="checkYouAnswered(question._id) && isAuthenticated()">
+                    <div class="col-lg-10"
+                         ng-if="checkAnswer(question._id)==1">
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
+                                   ng-change="answered('{{ question._id}}',1)"
+                                   name="ans_{{question._id}}" ng-checked="true" />
+                                <label for="{{question._id}}_1">Say yes</label>
+                            </div>
+                            <div class="funkyradio-info">
+                                <input type="radio"  ng-model="choice" id="{{question._id}}_2" value="{{question._id}}_no"
+                                   ng-change="answered('{{ question._id }}', 0)" ng-select="true"
+                                   name="ans_{{question._id}}" />
+                                <label for="{{question._id}}_2">Say no</label>
+                            </div>
+                        </div>
+                        answered : Yes
+                    </div>
+
+                    <div class="col-lg-10" ng-if="checkAnswer(question._id)==0">
+
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
+                                   ng-change="answered('{{ question._id}}',1)"
+                                   name="ans_{{question._id}}" />
+                                <label for="{{question._id}}_1">Say yes</label>
+                            </div>
+                            <div class="funkyradio-info">
+                                <input type="radio"  ng-model="choice" id="{{question._id}}_2" value="{{question._id}}_no"
+                                   ng-change="answered('{{ question._id }}', 0)" ng-select="true"
+                                   name="ans_{{question._id}}" ng-checked="true" />
+                                <label for="{{question._id}}_2">Say no</label>
+                            </div>
+                        </div>
+                        answered : No
+
+                    </div>
+                    <div class="col-lg-10" ng-if="checkAnswer(question._id)==3">
+
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
+                                   ng-change="answered('{{ question._id}}',1)"
+                                   name="ans_{{question._id}}" />
+                                <label for="{{question._id}}_1">Say yes</label>
+                            </div>
+                            <div class="funkyradio-info">
+                                <input type="radio" ng-model="choice" id="{{question._id}}_2" value="{{question._id}}_no"
+                                   ng-change="answered('{{ question._id }}', 0)" ng-select="true"
+                                   name="ans_{{question._id}}" />
+                                <label for="{{question._id}}_2">Say no</label>
+                            </div>
+                        </div>
+                        Not Yet answered
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-if="checkYouAnswered(question._id) == false && isAuthenticated()"  class="col-lg-10" style="padding-bottom:5px;">
+
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
+                                   ng-change="youAnswered('{{ question._id}}',1)"
+                                   name="ans_{{question._id}}" />
+                                <label for="{{question._id}}_1">Say yes</label>
+                            </div>
+                            <div class="funkyradio-info">
+                                <input type="radio" ng-model="choice" id="{{question._id}}_2" value="{{question._id}}_no"
+                                   ng-change="youAnswered('{{ question._id }}', 0)" ng-select="true"
+                                   name="ans_{{question._id}}" />
+                                <label for="{{question._id}}_2">Say no</label>
+                            </div>
+                        </div>
+                        please answer to see this question
+                    </div>
+                </div>
+                <div  class="row" style="padding-bottom:5px;" ng-if="!(isAuthenticated())">
+                    please login to see he/she answers
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- questions part ended--->
+
+		<div infinite-scroll='infinitePosts.nextPage()' infinite-scroll-disabled='infinitePosts.busy'
+			 infinite-scroll-distance='1'>
+			<div class="media panel panel-default" ng-repeat="post in infinitePosts.posts">
+				<div class="panel-heading" style="background-color:#fff;border-bottom:1px solid #F2F2F2;">
+					<a class="pull-left" style="padding: 5px;" href="#/profile/{{UserService.get(post.author)._id}}">
+						<img style="width:35px" class="media-object img-circle"
+							 src="{{UserService.get(post.author).picture.thumbnail}}" alt="">
+					</a>
+					<strong>
+						{{UserService.get(post.author).name.first}} {{UserService.get(post.author).name.last}}
+					</strong>
+					wrote on his story.
+					<br>
+					<small class="text-muted"><span class="glyphicon glyphicon-time"></span>
+						<span am-time-ago="post._created"></span></small>
+					<br>
+				</div>
+				<div class="panel-body" style="margin-bottom:0px;padding-bottom:0px;">
+                    <div ng-if="post.post_image_path" class="row">
+						<div class="col-sm-12" style="padding:0px;">
+							<div class="thumbnail" style="border:0px solid;">
+								<img src="{{ post.post_image_path }}">
+							</div>
+						</div>
+					</div>
+                    <div class="row" style="padding-bottom:12px;">
+                        <div class="col-sm-12">
+                            <p>
+                                {{ post.content }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="post.author != user._id && isAuthenticated()">
+                        <div class="col-sm-12">
+                            <h6>
+                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, user) == false"
+                                   ng-click=" pushToPost(post.author,post._id)"
+                                   style="cursor:pointer" >
+                                    Match
+                                </a>&nbsp;
+                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, user) == true"
+                                   ng-click="deleteFromPost(post.author,post._id)"
+                                   style="cursor:pointer" >
+                                    UnMatch
+                                </a>&nbsp;
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer"
+                     style="padding-top:5px;background-color:#fff;border:1px solid #FCF8F8;">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h6>
+                                <!--<span ng-repeat="temp in sortIListService.sendList(post.interestedPeople.interestedlist, user._id)">
+                                    <a style="text-decoration:none;cursor:pointer;"
+                                       alt="Match this post">
+                                        <i class="fa fa-slideshare" style="font-size:14px;"></i>&nbsp;
+                                    </a>
+                                    <span ng-if="user._id == temp">
+                                        <a href="">
+                                            you
+                                        </a>
+                                    </span>
+
+                                    <span ng-if="user._id != temp">
+                                        <a href="">
+                                            {{ UserService.get(temp).name.first }}
+                                        </a>
+                                    </span>
+                                    matched with this post
+                                </span>
+                                <span ng-if="sortIListService.sendList(matchPeople.interestedList).length">
+                                    {{ sortIListService.sendList(matchPeople.interestedList).length }}
+                                    matched with this post
+                                </span>-->
+
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<div ng-show='infinitePosts.busy'>
+                Loading data...
+            </div>
+			<div ng-show='infinitePosts.end'>
+                You Reached the end!
+            </div>
+		</div>
+	</div>
+</div>
+<script type="text/ng-template" id="modal.showProfileUserImage.tpl.html">
+      <div class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content" style="border-radius:4px;">
+              <div class="modal-header" style="background-color:#f5f5f5;padding:12px 15px 8px 15px">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h5 class="modal-title">
+                    <label>
+                        Showing Profile Picture
+                    </label>
+                </h5>
+              </div>
+              <div class="modal-body">
+                  <div class='row'>
+                    <div class='col-lg-12'>
+                        <div class="thumbnail" style="border:0px solid;margin-bottom:1px;">
+                            <img ng-src="{{ profileuser.picture.large }}">
+                        </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer" style="background-color:#f5f5f5;">
+              </div>
+            </div>
+          </div>
+      </div>
+</script>
+
+

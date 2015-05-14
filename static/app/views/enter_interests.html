@@ -1,0 +1,151 @@
+<div class="container" style="padding-top:;">
+    <div class="row" ng-if="currentUser.email_confirmed == false">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div style="width:100%;position:relative;right:0px;" class="alert alert-danger">
+                <h6 style="line-height:1.7em;">
+                    Thanks for registering with us, An email confirmation link has been sent to <strong>{{ email }}</strong>,
+                    Please click on the link to activate your account.
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:40px;">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="panel panel-default" ng-show="show_interests"
+                 cg-busy="Interests_busy"
+                 style="border:1px solid #dcdcdc;">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4 class="">
+                                <strong>
+                                    Welcome to Weber, Please add your Interests..
+                                </strong>
+                            </h4>
+                        </div>
+                    </div>
+                    <hr style="margin-top:2px" />
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div>
+                                <div tags-complete model="data.tags"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button ng-click="newUserInterests()" class=" pull-right text-right btn btn-sm btn-primary">
+                                Next Question&nbsp;
+                                <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-show="show_questions" cg-busy="Interests_busy" style="border:1px solid #dcdcdc;">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4>
+                                <strong>
+                                    Please answer to this Questions
+                                </strong>
+                            </h4>
+                        </div>
+                    </div>
+                    <hr style="margin-top:2px;" />
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default" style="margin-bottom:10px" ng-repeat="question in questions.allquestions">
+                                    <div style="cursor:pointer;padding: 15px;" class="panel-heading"
+                                         data-toggle="collapse" data-parent="#accordion" data-target="#{{ question._id }}">
+                                        <h5 class="">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <strong>{{question.question}}</strong>
+                                                </div>
+                                            </div>
+                                        </h5>
+                                    </div>
+                                    <div id="{{ question._id }}" class="panel-collapse collapse out">
+                                        <hr style="margin:0px 15px;" />
+                                        <div class="panel-body" style="padding:;">
+                                            <div class="row" style="padding-bottom:5px;">
+                                                <div class="col-lg-10" style="margin-left:;" ng-if="checkAnswer(question._id)==1">
+                                                    <div class="funkyradio">
+                                                        <div class="funkyradio-primary">
+                                                            <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
+                                                               ng-change="answered('{{ question._id}}',1)"
+                                                               name="ans_{{question._id}}" ng-checked="true" />
+                                                            <label for="{{question._id}}_1">Say yes</label>
+                                                        </div>
+                                                        <div class="funkyradio-info">
+                                                            <input type="radio"  ng-model="choice" id="{{question._id}}_2" value="{{question._id}}_no"
+                                                               ng-change="answered('{{ question._id }}', 0)" ng-select="true"
+                                                               name="ans_{{question._id}}" />
+                                                            <label for="{{question._id}}_2">Say no</label>
+                                                        </div>
+                                                    </div>
+                                                    <!--answered : Yes-->
+                                                </div>
+
+                                                <div class="col-lg-10" style="margin-left:;" ng-if="checkAnswer(question._id)==0">
+
+                                                    <div class="funkyradio">
+                                                        <div class="funkyradio-primary">
+                                                            <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
+                                                               ng-change="answered('{{ question._id}}',1)"
+                                                               name="ans_{{question._id}}" />
+                                                            <label for="{{question._id}}_1">Say yes</label>
+                                                        </div>
+                                                        <div class="funkyradio-info">
+                                                            <input type="radio"  ng-model="choice" id="{{question._id}}_2" value="{{question._id}}_no"
+                                                               ng-change="answered('{{ question._id }}', 0)" ng-select="true"
+                                                               name="ans_{{question._id}}" ng-checked="true" />
+                                                            <label for="{{question._id}}_2">Say no</label>
+                                                        </div>
+                                                    </div>
+                                                    <!--answered : No-->
+                                                </div>
+
+                                                <div class="col-lg-10" style="margin-left:;" ng-if="checkAnswer(question._id)==3">
+
+                                                    <div class="funkyradio">
+                                                        <div class="funkyradio-primary">
+                                                            <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
+                                                               ng-change="answered('{{ question._id}}',1)"
+                                                               name="ans_{{question._id}}" />
+                                                            <label for="{{question._id}}_1">Say yes</label>
+                                                        </div>
+                                                        <div class="funkyradio-info">
+                                                            <input type="radio" ng-model="choice" id="{{question._id}}_2" value="{{question._id}}_no"
+                                                               ng-change="answered('{{ question._id }}', 0)" ng-select="true"
+                                                               name="ans_{{question._id}}" />
+                                                            <label for="{{question._id}}_2">Say no</label>
+                                                        </div>
+                                                    </div>
+                                                <!--Not Yet answered-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="margin-top:2px;" />
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button class="btn btn-sm btn-primary pull-right" ng-click="afterFinishQuestions()">
+                                Finish & Goto Home&nbsp;
+                                <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="static/bower_components/angular-motion/dist/angular-motion.min.css" />
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:500,400italic,700italic,300,100,700,500italic,400%7COpen+Sans:300,400,600,700&amp;lang=en"
+        rel="stylesheet">
+
+        <link rel="stylesheet" href="/static/app/styles/main.css">
+        <link rel="stylesheet" href="/static/app/styles/chat_css.css">
+        <link rel="stylesheet" href="static/bower_components/ngImgCrop/compile/minified/ng-img-crop.css"/>
+        <link rel="stylesheet" href="static/bower_components/angular-busy/dist/angular-busy.min.css">
+        <link rel="stylesheet" href="static/bower_components/angucomplete/autocomplete.css">
+        <link rel="stylesheet" href="static/bower_components/angucomplete/style.css">
+        <!--<link rel="stylesheet" href="static/bower_components/allcss.min.css">-->
+
+        <script src="static/bower_components/jquery/dist/jquery.min.js"></script>
+	    <script src="static/bower_components/angular/angular.min.js"></script>
+        <script src="/static/app/scripts/app.js"></script>
+        <!-- endbuild -->
+    </head>
+    <div class="se-pre-con"></div>
+
+    <body ng-app="weberApp" ng-controller="indexCtrl">
+       <div ng-include src="'/static/app/views/navbar.html'"></div>
+        <!-- Add your site or application content here -->
+        <div ng-view="" autoscroll="true"></div>
+
+
+        <!--<div ng-include src="'/static/app/views/chat.html'"></div>-->
+        <div ng-include src="'/static/app/views/chat.html'"></div>
+        <!--<div ng-if="isloggin" chatbar></div>-->
+        <!-- CHATING SECTION -->
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <!--[if lt IE 9]>
+        <script src="static/bower_components/es5-shim/es5-shim.min.js"></script>
+        <![endif]-->
+        <script src="static/bower_components/json3/lib/json3.min.js"></script>
+        <script src="static/bower_components/angular-resource/angular-resource.min.js"></script>
+        <script src="static/bower_components/angular-cookies/angular-cookies.min.js"></script>
+        <script src="static/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="static/bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="static/bower_components/angular-touch/angular-touch.min.js"></script>
+        <script src="static/bower_components/angular-route/angular-route.min.js"></script>
+        <script src="static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="static/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
+        <script src="static/bower_components/angular-strap/dist/angular-strap.min.js"></script>
+        <script src="static/bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+        <script src="static/bower_components/lodash/dist/lodash.compat.min.js"></script>
+        <script src="static/bower_components/restangular/dist/restangular.min.js"></script>
+        <script src="static/bower_components/satellizer/satellizer.min.js"></script>
+        <script src="static/bower_components/moment/moment.min.js"></script>
+        <script src="static/bower_components/angular-moment/angular-moment.min.js"></script>
+        <script src="static/bower_components/scroll-glue.js"></script>
+        <!--<script src="static/bower_components/elasticsearch/elasticsearch.min.js"></script>
+        <script src="static/bower_components/elasticsearch/elasticsearch.angular.min.js"></script>-->
+        <script src="static/bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+        <script src="static/bower_components/socket.io.js"></script>
+        <script src="static/bower_components/ngSocket.js"></script>
+
+        <script type="text/javascript" src="static/bower_components/ngImgCrop/compile/minified/ng-img-crop.js"></script>
+        <script type="text/javascript" src="static/bower_components/angular-busy/dist/angular-busy.min.js"></script>
+        <script type="text/javascript" src="static/bower_components/angucomplete/autocomplete.js"></script>
+        <!--<script type="text/javascript" src="static/bower_components/ng-file-upload/angular-file-upload-shim.min.js"></script>
+        <script type="text/javascript" src="static/bower_components/ng-file-upload/angular-file-upload.min.js"></script>-->
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+        <!--<script src="/static/app/scripts/controllers/main.js"></script>
+        <script src="/static/app/scripts/controllers/indexcontroller.js"></script>
+        <script src="/static/app/scripts/controllers/postscontroller.js"></script>
+        <script src="/static/app/scripts/controllers/friends.js"></script>
+        <script src="/static/app/scripts/controllers/confirm_email.js"></script>
+        <script src="/static/app/scripts/controllers/emaildetails.js"></script>
+        <script src="/static/app/scripts/controllers/forgot_password.js"></script>
+        <script src="/static/app/scripts/controllers/settings.js"></script>
+        <script src="/static/app/scripts/services/SettingsService.js"></script>
+        <script src="/static/app/scripts/services/weberservice.js"></script>
+        <script src="/static/app/scripts/services/friendRequests.js"></script>
+        <script src="/static/app/scripts/services/ChatSerivce.js"></script>
+        <script src="/static/app/scripts/directives/requestsdirectives.js"></script>
+        <script src="/static/app/scripts/controllers/chatcontroller.js"></script>
+        <script src="/static/app/scripts/controllers/userprofile.js"></script>
+        <script src="/static/app/scripts/controllers/login.js"></script>
+        <script src="/static/app/scripts/controllers/signup.js"></script>
+        <script src="/static/app/scripts/controllers/navbar.js"></script>
+        <script src="/static/app/scripts/controllers/weber_search.js"></script>-->
+        <script src="/static/app/scripts/servicectrls.js"></script>
+        <!-- endbuild -->
+        <!--<script src="/static/app/scripts/servicectrls.js"></script>-->
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-61687751-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+        <script>
+            //paste this code under head tag or in a seperate js file.
+            // Wait for window load
+            $(window).load(function() {
+                // Animate loader off screen
+                $(".se-pre-con").fadeOut("slow");;
+            });
+        </script>
+
+
+        <style ng-if="!(isAuthenticated())">
+            body{
+                background-color:#fff;
+            }
+            .navbar-default{
+                margin-bottom:10px;
+                box-shadow: 0 4px 1px -4px #00BCD4;
+                -moz-box-shadow: 0 4px 1px -4px #00BCD4;
+                -webkit-box-shadow: 0 4px 1px -4px #00BCD4;
+            }
+            .navbar-brand>h3{
+                color:#000;
+            }
+        </style>
+    </body>
+</html>

@@ -1,0 +1,12 @@
+var dbName = 'test'
+
+
+db.getSiblingDB(dbName).getCollectionNames().forEach(function(collName) {
+    // Drop all collections except system ones (indexes/profile)
+    if (!collName.startsWith("system.")) {
+        // Safety hat
+        print("WARNING: going to drop ["+dbName+"."+collName+"] in 5s .. hit Ctrl-C if you've changed your mind!");
+        sleep(5000);
+        db[collName].drop();
+    }
+})

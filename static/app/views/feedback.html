@@ -1,0 +1,39 @@
+<!--<textarea ng-model="feedback_data">
+
+</textarea>
+<input type="button" ng-click="send_feedback()" value="send">-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-offset-1 col-lg-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h5>
+                                <strong>Youpep</strong> is the fastest growing network/platform to search for people.
+                                    We need your feedback to make it more powerful.
+                            </h5>
+                            <hr />
+                            <div class="row feed-box" cg-busy="load_feedback">
+                                <div class="col-lg-6">
+                                    <h5>
+                                        <strong>
+                                            Give Feedback
+                                        </strong>
+                                    </h5>
+                                    <input type="text" class="feed-email" autocomplete="off" placeholder="Email (Optional)" />
+                                    <textarea ng-model="feedback_data" class="feed-text" rows="3" required
+                                              placeholder="Please give us feedback"></textarea>
+                                    <button ng-click="send_feedback()" class="btn btn-sm btn-default pull-right">
+                                        Submit feedback
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

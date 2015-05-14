@@ -1,0 +1,30 @@
+{
+  "name": "weber",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "1.2.16",
+    "json3": "~3.3.1",
+    "es5-shim": "~3.1.0",
+    "angular-resource": "1.2.16",
+    "angular-cookies": "1.2.16",
+    "angular-sanitize": "1.2.16",
+    "angular-animate": "1.2.16",
+    "angular-touch": "1.2.16",
+    "angular-route": "1.2.16",
+    "Bootflat": "~2.0.4",
+    "bootstrap": "~3.2.0",
+    "ngInfiniteScroll": "1.0.0",
+    "angular-strap": "~2.2.1",
+    "restangular": "~1.4.0",
+    "lodash": "~2.4.1",
+    "satellizer": "~0.8.7",
+    "angular-moment": "~0.8.3",
+    "elasticsearch": "~3.0.2",
+    "angular-busy": "~4.1.2"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.2.16",
+    "angular-scenario": "1.2.16"
+  },
+  "appPath": "app"
+}

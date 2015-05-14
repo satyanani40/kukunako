@@ -1,0 +1,120 @@
+<div id="layout" ng-init="right = 260" ng-if="isAuthenticated()">
+    <div id="button_show_hide" class="btn btn-sm btn-primary">
+        <i class="fa fa-arrow-right"></i>
+    </div>
+    <div id="menu">
+        <div class="pure-menu">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs main-chat-head" role="tablist">
+                <li class="active">
+                  <a data-target="#friends" role="tab" data-toggle="tab"
+                     style="background:#fff;">
+                      <strong>
+                          Friends
+                      </strong>
+                  </a>
+                </li>
+                <li>
+                    <a data-target="#others" role="tab" data-toggle="tab"
+                             style="background:#fff;">
+                        <strong>
+                            Others
+                        </strong>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="friends">
+                    <ul class="pure-menu-list">
+                        <li class="pure-menu-item" ng-repeat="chatuser in currentUser.friends"
+                            ng-click="openchatroom(UserService.get(chatuser))">
+                            <a style="cursor:pointer;text-decoration:none;" class="pure-menu-link">
+                                <img style="margin-right:5px;" src="{{ UserService.get(chatuser).picture.thumbnail}}">
+                               {{ UserService.get(chatuser).name.first }} {{ UserService.get(chatuser).name.last }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="others" cg-busy="new_submit_busy_post">
+                    <ul class="pure-menu-list">
+                        <li class="pure-menu-item" ng-repeat="conversation in tempconversations = (chatactivity.currentuser.conversations)"
+                            ng-click="openchatroom(UserService.get(conversation))">
+                            <a style="cursor:pointer;text-decoration:none;" class="pure-menu-link">
+                                <img style="margin-right:5px;" src="{{ UserService.get(conversation).picture.thumbnail }}">
+                                {{ UserService.get(conversation).name.first }}
+                                {{ UserService.get(conversation).name.last }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ch22at_290_b22ox_2080">
+        <div class="chat-box" ng-repeat="chatroom in  chatactivity.messages"
+                style="right:{{ right * ($index+1) }}px;" chatdivdir>
+            <input type="checkbox" />
+            <label data-expanded="{{ chatroom.details.name }}" data-collapsed="{{ chatroom.details.name }}">
+                <i ng-click="close_div('{{ chatroom.id}}')" class="fa fa-close pull-right"></i>
+            </label>
+            <div class="chat-box-content" id="{{ chatroom.id }}" scroll>
+                <div scroll-glue class="ch_66_at_bo55x_co00ont3388ent">
+                    <div class="commentArea" ng-repeat="message in chatroom.messages | reverse">
+                        <div class="bubbledLeft" ng-if="message.sender._id == chatroom.id" scrollitem>
+                            <p style="margin:0px 0px 2px 0px;width:100%;">
+                                {{ message.message }}
+                            </p>
+                        </div>
+                        <div class="bubbledRight" ng-if="message.receiver._id == chatroom.id" scrollitem>
+                            <p style="margin:0px 0px 2px 0px;width:100%;">
+                                {{ message.message }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ch_20_at_un_22_der_div">
+                    <input type="text" autocomplete="off" ng-model="SendMessage"
+                           ng-keyup="$event.keyCode == 13 && send_message(chatroom.id)" placeholder="Enter Message"
+                           class="ch_22_at_inp_33_bo_33_x form-control" autofocus />
+                </div>
+    </div>
+</div>
+
+        <style>
+          [scroll-glue-top],
+          [scroll-glue-bottom],
+          [scroll-glue]{
+            height: 250px;
+            overflow-y: scroll;
+          }
+
+          [scroll-glue-left],
+          [scroll-glue-right]{
+            width: 100px;
+            overflow-x: scroll;
+            border: 1px solid gray;
+            padding: 10px;
+          }
+
+          [scroll-glue-left] span,
+          [scroll-glue-right] span{
+            border: 1px solid black;
+          }
+        </style>
+
+
+<script>
+    $('#button_show_hide').on('click', function () {
+        var value = $(this).html();
+        if(value=='<i class="fa fa-arrow-right"></i>'){
+            $(this).html('<i class="fa fa-arrow-left"></i>');
+            $('#menu').css('right',"-150px");
+            $('#button_show_hide').css('right', "0px");
+        }else{
+            $(this).html('<i class="fa fa-arrow-right"></i>');
+            $('#menu').css('right',"150px");
+            $('#button_show_hide').css('right', "253px");
+        }
+
+    })
+</script>

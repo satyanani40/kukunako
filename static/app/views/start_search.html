@@ -1,0 +1,228 @@
+<!--<textarea ng-model="enterquestion">
+
+
+</textarea>
+<input type="button" ng-click="storequestion()" value="save">-->
+<div class="container" style="">
+    <div ng-if="!(isAuthenticated())" style="margin-top: 50px;"></div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row" ng-if="!(isAuthenticated())">
+                <div class="col-sm-12">
+                    <h3 style="font-family: 'open sans',arial,sans-serif;color:#3E4349;font-weight:300;line-height: 1.5em;">
+                        Youpep is a medium to search and find people, based on their activities,interests and location.
+                    </h3>
+                </div>
+            </div>
+            <div class="row" style="margin-top:30px;">
+                <div class="col-sm-12">
+                    <div class="right-inner-addon ">
+                        <i class="glyphicon glyphicon-search"
+                           style="font-size: 17px;padding: 10px 12px;top:5px;"></i>
+                        <input type="search" style="border-radius: 22px;"
+                               class="form-control input-lg search-box" ng-model="query" focus="true"
+                           placeholder="Search anything in weber" ng-keyup="$event.keyCode == 13 && perfomSearch()"/>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="matchResults.saResultsNotFound && matchResults.mResultsNotFound && searched"
+                 ng-init="getSuggestedPeople()">
+
+            </div>
+
+            <div class="row" ng-if="matchResults.suggestpeople">
+                <div class="col-lg-12">
+                    <h5>
+                        <label style="color:;">
+                            no results found but these peoples can help you...
+                        </label>
+                    </h5>
+                </div>
+            </div>
+
+            <div class="row" style="padding-top:30px;" infinite-scroll='matchResults.nextPage()'
+                                         infinite-scroll-disabled='matchResults.busy'
+                                         infinite-scroll-distance='0'
+                                         infinite-scroll-parent="true">
+                <div class="col-lg-12">
+                    <div class="panel panel-body post-div" ng-repeat="rs in matchResults.mresults" >
+                        <img src="{{ rs.picture.thumbnail }}" class="pull-left" style="width:50px;">
+                        <h5>
+                            <strong>
+                                <a href="#/profile/{{rs._id}}">
+                                    {{ rs.name.first }} {{ rs.name.last }}
+                                </a>
+                            </strong>
+                            <span class="pull-right">
+                                <!-- if post from you -->
+                                <a style="font-size:14px;" name="{{rs._id}}"
+                                   ng-if="isAuthenticated() && currentUser._id == rs._id" >
+                                    post from you
+                                </a>
+
+
+                                <!-- if post not from you and you logged in-->
+                                <a  style="font-size:14px;" name="{{rs._id}}"
+                                   ng-if="isAuthenticated() && currentUser._id != rs._id"
+                                   ng-click="openchatroom(rs);addToConversations('{{ rs._id}}')">
+                                   <i class="fa fa-comment"></i>
+                                </a>
+                                <!-- if not logged in -->
+                                <a  ng-if="!(isAuthenticated())" style="font-size:14px;" data-placement="top-right" style="width:87px"
+                                     data-content="Please Login to chat" data-trigger="hover" bs-popover>
+                                    <i class="fa fa-comment"></i>
+                                </a>
+
+                            </span>
+                        </h5>
+                    </div>
+
+                    <div class="row" ng-if="!searched;!(isAuthenticated())" style="margin-top:20px;">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default" style="border-top:1px solid #dcdcdc!important;">
+                                <div class="panel-body">
+                                    <h5 style="color:;">
+                                        How to use Youpep in simple 3 steps
+                                    </h5>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row" style="padding-bottom:20px;">
+                                        <div class="col-lg-4" style="padding:0px 0px 0px 15px;">
+                                            <i class="fa fa-search"
+                                               style="padding:17px;font-size:18px;background-color:#3090C7;color:#FFF;border-radius:50%;">
+
+                                            </i>
+                                            <label style="margin-top:3px;">
+                                                Search
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-4" style="padding:0px 0px 0px 10px;">
+                                            <i class="fa fa-user"
+                                               style="padding:17px;font-size:18px;background-color:#4E9258;color:#FFF;border-radius:50%;">
+
+                                            </i>
+                                            <label style="margin-top:3px;">
+                                                Find a person
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-4" style="padding:0px;">
+                                            <i class="fa fa-check-circle"
+                                                style="padding:17px;text-align:center;font-size:18px;background-color:#FFA62F;color:#FFF;border-radius:50%;">
+
+                                            </i>
+                                            <label style="margin-top:3px;">
+                                                Connect & Enjoy
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4" ng-if="isAuthenticated()">
+            <div class="panel panel-default" style="margin-bottom:0px;">
+                <div class="panel-body" style="border-bottom:1px solid #F5F5F5;padding:10px 15px 5px 10px;">
+                    <h5>
+                        <strong>
+                            Previous Searches
+                        </strong>
+                    </h5>
+                </div>
+                <div class="panel-body" style="padding:5px 15px;">
+                    <div class="row" style="border-bottom:1px solid #f5f5f5;margin-bottom:3px;" ng-repeat="search_text in searchActivity.searchHistory">
+                        <div class="col-lg-12" style="padding:0px 0px 0px 4px;">
+                            <div class="oaerror info">
+                                <h5 class="truncate">
+                                    <a class="" ng-href="#/search?query={{search_text.content}}" ng-click="go(search_text.content)">
+                                        {{ search_text.content }}
+                                    </a>
+                                </h5>
+                                <span class="pull-right">
+                                    <i class="fa fa-close" ng-click="delete_searchHistoryItem(search_text._id)"></i>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-offset-1 col-lg-4" ng-if="!(isAuthenticated())">
+            <div class="row">
+                <div class="col-lg-12 colpadding">
+                    <h4>
+                        <label style="font-family: 'open sans',arial,sans-serif;color:;font-weight:400;">
+                            Register with Youpep.. It's free
+                        </label>
+                    </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 colpadding">
+                    <form accept-charset="UTF-8"
+                          role="form" name="myForm" method="post"
+                          ng-submit="signup()" cg-busy="signupBusy">
+                        <fieldset>
+                            <div class="form-group">
+                                <input type="email" class="form-control input-box input-md"
+                                       placeholder="Enter email" autocomplete="off"
+                                           id="email" name="email" ng-model="formData.email" required/>
+                                    <span ng-show="myForm.email.$error.required && myForm.email.$dirty" style="color:red">
+                                        Email is required
+                                    </span>
+                                    <span ng-show="!myForm.email.$error.required && myForm.email.$error.email && myForm.email.$dirty"
+                                            style="color:red">
+                                        You entered an invalid email
+                                    </span>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6" style="padding-right:2px;">
+                                        <input class="form-control input-box input-md" autocomplete="off" type="text" placeholder="Enter first name"
+                                           id="name" name="name" ng-model="formData.firstname" required/>
+                                        <span ng-show="myForm.name.$error.required && myForm.name.$dirty" style="color:red">
+                                            required
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6" style="padding-left:2px;">
+                                        <input class="form-control input-box input-md" autocomplete="off" type="text" placeholder="Enter last name"
+                                           id="lastname" name="lastname" ng-model="formData.lastname" required  />
+                                        <span ng-show="myForm.lastname.$error.required && myForm.lastname.$dirty" style="color:red">
+                                            required
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="">
+                                <input class="form-control input-box input-md" required
+                                       placeholder="Password(at least 6 Characters )"
+                                       id="password" name="password" ng-model="formData.password" ng-minlength="5" ng-maxlength="15" type="password" value="">
+                                <span ng-show="myForm.password.$error.required && myForm.password.$dirty" style="color:red">
+                                    required
+                                </span>
+                                <span ng-show="!myForm.password.$error.required && (myForm.password.$error.minlength || myForm.password.$error.maxlength) && myForm.password.$dirty" style="color:red">
+                                    Passwords must be between 5 and 10 characters.
+                                </span>
+                            </div>
+                            <div class="form-group" style="">
+                                <span ng-if="signUpError" style="color:red;">
+                                    {{ signUpError.data.error }}
+                                </span>
+                            </div>
+
+                            <button ng-click = "registerUser()" style="padding: 8px 12px;background-color:#00BCD4;border:1px solid #00BCD4 !important;"
+                                                type="submit" class="btn btn-block btn-warning"
+                                                ng-disabled="!myForm.$valid">
+                                Register with weber
+                            </button>
+                        </fieldset>
+			      	</form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
