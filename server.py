@@ -84,10 +84,10 @@ def login():
         response = jsonify(error='Your email does not exist')
         response.status_code = 401
         return response
-    """if not user['email_confirmed'] == True:
+    if not user['email_confirmed'] == True:
         response = jsonify(error='Email is not confirmed')
         response.status_code = 401
-        return response"""
+        return response
     if not user or not check_password_hash(user['password']['password'], request.json['password']):
         response = jsonify(error='Wrong Email or Password')
         response.status_code = 401
@@ -257,8 +257,16 @@ def matchresults():
 
     final_list = reduce(lambda r, v: v in r[1] and r or (r[0].append(v) or r[1].add(v)) or r, level1_list, ([], set()))[0]
 
-    final_people_data = peoples.find({'_id':{"$in":final_list}},{'username':1,'_id':1,'name':1,'picture':1})
-    return dumps({'final_result': final_people_data})
+    final_people_data = peoples.find({'_id':{"$in":final_list}},{'username':1,'_id':1,'interests':1,
+                                                                 'location':1,'study':1,'name':1,'picture':1})
+    filtered_people = []
+
+    #return dumps({'final_result': final_people_data})
+    for temp in final_people_data:
+        print '-----------------'
+        print temp['_id']
+        filtered_people.append(filterIdFields(temp, _id=True, interests = True))
+    return json.dumps({'final_result': filtered_people})
 
 
 

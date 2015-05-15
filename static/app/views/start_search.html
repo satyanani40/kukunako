@@ -21,7 +21,7 @@
                            style="font-size: 17px;padding: 10px 12px;top:5px;"></i>
                         <input type="search" style="border-radius: 22px;"
                                class="form-control input-lg search-box" ng-model="query" focus="true"
-                           placeholder="Search anything in weber" ng-keyup="$event.keyCode == 13 && perfomSearch()"/>
+                           placeholder="Search anything in Youpep" ng-keyup="$event.keyCode == 13 && perfomSearch()"/>
                     </div>
                 </div>
             </div>
@@ -46,10 +46,12 @@
                                          infinite-scroll-parent="true">
                 <div class="col-lg-12">
                     <div class="panel panel-body post-div" ng-repeat="rs in matchResults.mresults" >
-                        <img src="{{ rs.picture.thumbnail }}" class="pull-left" style="width:50px;">
-                        <h5>
+                        <img src="{{ rs.picture.thumbnail }}" class="pull-left" style="width:100px;">
+                        <h5 style="">
+
                             <strong>
-                                <a href="#/profile/{{rs._id}}">
+                                <a style="color:#333;font-size:18px;text-transform:capitalize;font-family: 'open sans',arial,sans-serif;"
+                                   href="#/profile/{{rs.username}}">
                                     {{ rs.name.first }} {{ rs.name.last }}
                                 </a>
                             </strong>
@@ -62,18 +64,37 @@
 
 
                                 <!-- if post not from you and you logged in-->
-                                <a  style="font-size:14px;" name="{{rs._id}}"
+                                <a  style="color: #2196f3;font-size:14px;" name="{{rs._id}}"
                                    ng-if="isAuthenticated() && currentUser._id != rs._id"
-                                   ng-click="openchatroom(rs);addToConversations('{{ rs._id}}')">
+                                   ng-click="openchatroom('{{ rs.username }}');addToConversations('{{ rs.username}}')">
                                    <i class="fa fa-comment"></i>
                                 </a>
                                 <!-- if not logged in -->
-                                <a  ng-if="!(isAuthenticated())" style="font-size:14px;" data-placement="top-right" style="width:87px"
+                                <a  ng-if="!(isAuthenticated())" style="color: #2196f3;font-size:14px;" data-placement="top-right" style="width:87px"
                                      data-content="Please Login to chat" data-trigger="hover" bs-popover>
                                     <i class="fa fa-comment"></i>
                                 </a>
 
                             </span>
+                        </h5>
+                        <h5 style="margin-top:7px;opacity:0.5;">
+                            Interests:
+                            <a ng-repeat="interest in rs.interests | limitTo:5"
+                               style="color:#000;line-height:1.2em;text-decoration:none;">
+								{{ InterestsService.get(interest).interest_string }}{{$last ? '   ...' : ', '}}
+							</a>
+                        </h5>
+                        <h5 style="margin-top:7px;opacity:0.5;">
+                            Location:
+                            <a style="color:#000;line-height:1.2em;text-decoration:none;">
+								{{ rs.location.city }}, {{ rs.location.state }}
+							</a>
+                        </h5>
+                        <h5 style="margin-top:7px;margin-bottom:10px;opacity:0.5;">
+                            Study:
+                            <a style="color:#000;line-height:1.2em;text-decoration:none;">
+								{{ rs.study.graduate }}
+							</a>
                         </h5>
                     </div>
 

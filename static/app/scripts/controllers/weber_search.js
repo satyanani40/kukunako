@@ -8,12 +8,13 @@
  * Controller of the weberApp
  */
 angular.module('weberApp')
-    .controller('WeberSearchCtrl', function($scope, $q, $auth, Restangular,$route,$window,
+    .controller('WeberSearchCtrl', function($scope, $q, $auth, Restangular,$route,$window, InterestsService,
 	 										InfinitePosts, $alert, $http,$location,$socket,
 	 										CurrentUser, UserService,CurrentUser1,$rootScope,
 	 										SearchActivity, $routeParams, MatchMeResults) {
 	 	$scope.searched = false;
 	 	$scope.UserService = UserService;
+	 	$scope.InterestsService = InterestsService;
         $scope.$watch('currentUser', function(){
             if(typeof $scope.currentUser !== 'undefined' && $scope.isAuthenticated()){
                 // check interests and questions answered or not

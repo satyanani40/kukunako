@@ -682,7 +682,7 @@ angular.module('weberApp')
 
                 var keywords = combine_ids(this.query.split(" "));
                 var self = this;
-                var req = {
+               /* var req = {
                     method: 'POST',
                     url: '/api/matchresults',
                     headers: {
@@ -699,11 +699,22 @@ angular.module('weberApp')
             $http(req).success(function(data){
                console.log("============>", data)
                self.mresults.push.apply(self.mresults, data.final_result);
-               for(var temp in self.mresults){
-                   self.mresults[temp]._id = self.mresults[temp]._id.$oid;
-               }
                console.log(self.mresults)
-            }.bind(self));
+            }.bind(self));*/
+
+            Restangular.all('matchresults').post({
+                        page: self.page,
+                        query: self.query,
+                        keywords : keywords,
+                        location : self.location
+                    },{},{'Content-Type': 'application/json'}).then(function(data){
+                        console.log(data)
+
+                    });
+
+
+
+
 
 
                 /*this.param1 = '{"$or":[{"keywords": {"$in":['+keywords+']}},{"content":{"$regex":".*'+this.query+'.*"}}]}';

@@ -333,12 +333,13 @@ angular.module('weberApp')
  * Controller of the weberApp
  */
 angular.module('weberApp')
-    .controller('WeberSearchCtrl', function($scope, $q, $auth, Restangular,$route,$window,
+    .controller('WeberSearchCtrl', function($scope, $q, $auth, Restangular,$route,$window, InterestsService,
 	 										InfinitePosts, $alert, $http,$location,$socket,
 	 										CurrentUser, UserService,CurrentUser1,$rootScope,
 	 										SearchActivity, $routeParams, MatchMeResults) {
 	 	$scope.searched = false;
 	 	$scope.UserService = UserService;
+	 	$scope.InterestsService = InterestsService;
         $scope.$watch('currentUser', function(){
             if(typeof $scope.currentUser !== 'undefined' && $scope.isAuthenticated()){
                 // check interests and questions answered or not
@@ -1199,6 +1200,8 @@ angular.module('weberApp')
 
         // opens new chat room
         $scope.openchatroom = function(room_user){
+            console.log("----------------->>>>>");
+            document.getElementById("show_div").style.display="block";
             if(!(sessionStorage.getItem(room_user._id))){
                 // check room alredy open
                 var json = {
@@ -3151,7 +3154,7 @@ angular.module('weberApp')
 
                 var keywords = combine_ids(this.query.split(" "));
                 var self = this;
-                var req = {
+               /* var req = {
                     method: 'POST',
                     url: '/api/matchresults',
                     headers: {
@@ -3168,11 +3171,22 @@ angular.module('weberApp')
             $http(req).success(function(data){
                console.log("============>", data)
                self.mresults.push.apply(self.mresults, data.final_result);
-               for(var temp in self.mresults){
-                   self.mresults[temp]._id = self.mresults[temp]._id.$oid;
-               }
                console.log(self.mresults)
-            }.bind(self));
+            }.bind(self));*/
+
+            Restangular.all('matchresults').post({
+                        page: self.page,
+                        query: self.query,
+                        keywords : keywords,
+                        location : self.location
+                    },{},{'Content-Type': 'application/json'}).then(function(data){
+                        console.log(data)
+
+                    });
+
+
+
+
 
 
                 /*this.param1 = '{"$or":[{"keywords": {"$in":['+keywords+']}},{"content":{"$regex":".*'+this.query+'.*"}}]}';
