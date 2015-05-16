@@ -2240,11 +2240,11 @@ angular.module('weberApp')
                    //console.log('all one messages', allMessages[k].messages)
                    allMessages[k].messages.push.apply(allMessages[k].messages, newMessages);
                    //console.log('after all one messages', allMessages[k].messages)
-                   return allMessages;
+
 
                 }
             }
-
+            return allMessages;
         }
 
         ChatActivity.prototype.nextPage = function(user2) {
