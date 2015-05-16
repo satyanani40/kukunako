@@ -86,13 +86,9 @@
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <form role="form" name="usernameInfo">
-                                                <input type="text" style="margin-bottom:10px;" placeholder="Enter username"
+                                                <input required type="text" style="margin-bottom:10px;" placeholder="Enter username"
                                                        autocomplete="off" id="username" name="username"
                                                        ng-model="u_username" class="form-control input-sm" />
-                                                <span style="color:red;" ng-show="usernameInfo.username.$error.required
-                                                        && usernameInfo.username.$dirty">
-                                                       required
-                                                </span>
                                                 <button type="submit" ng-click="updateUsername()"
                                                         class="btn btn-sm btn-primary" ng-disabled="!usernameInfo.$valid">
                                                     Update
@@ -136,20 +132,12 @@
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <form role="form" name="firstLastInfo">
-                                                <input type="text" style="margin-bottom:10px;" placeholder="Enter First name"
+                                                <input required type="text" style="margin-bottom:10px;" placeholder="Enter First name"
                                                        autocomplete="off" id="firstName" name="firstName"
                                                        ng-model="edit_first_name" class="form-control input-sm" />
-                                                <span style="color:red;" ng-show="firstLastInfo.firstName.$error.required
-                                                        && firstLastInfo.firstName.$dirty">
-                                                       required
-                                                </span>
-                                                <input type="text" style="margin-bottom:10px;" placeholder="Enter Last name"
+                                                <input required type="text" style="margin-bottom:10px;" placeholder="Enter Last name"
                                                        autocomplete="off" id="lastName" name="lastName"
                                                        ng-model="edit_last_name" class="form-control input-sm" />
-                                                <span style="color:red;" ng-show="firstLastInfo.lastName.$error.required
-                                                        && firstLastInfo.lastName.$dirty">
-                                                       required
-                                                </span>
                                                 <button type="submit" ng-click="updateFirstLastName()"
                                                         class="btn btn-sm btn-primary" ng-disabled="!firstLastInfo.$valid">
                                                     Update
@@ -312,15 +300,15 @@
                                 <div class="col-lg-7">
                                     <div class="row">
                                         <div class="col-lg-8">
-                                            <form role="form" name="myFormL">
-                                                <input type="text" style="margin-bottom:10px;" placeholder="Enter State"
+                                            <form role="form" name="myFormL" ng-submit="Location()">
+                                                <input required type="text" style="margin-bottom:10px;" placeholder="Enter State"
                                                        autocomplete="off" id="location_state" name="location_state"
                                                        ng-model="location_state" class="form-control input-sm" />
                                                 <span style="color:red;"
-                                                          ng-show="myFormL.location_street.$error.required && myFormL.location_street.$dirty">
+                                                          ng-show="myFormL.location_state.$error.required && myFormL.location_state.$dirty">
                                                        required
                                                 </span>
-                                                <input type="text" style="margin-bottom:10px;" placeholder="Enter City"
+                                                <input required type="text" style="margin-bottom:10px;" placeholder="Enter City"
                                                        autocomplete="off" id="location_city" name="location_city"
                                                        ng-model="location_city" class="form-control input-sm" />
                                                 <span style="color:red;" ng-show="myFormL.location_city.$error.required && myFormL.location_city.$dirty">
@@ -374,14 +362,14 @@
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <form role="form" name="myForms">
-                                                <input type="text" style="margin-bottom:10px;" placeholder="Enter School"
+                                                <input required type="text" style="margin-bottom:10px;" placeholder="Enter School"
                                                        autocomplete="off" id="study_intermediate" name="study_intermediate"
                                                        ng-model="study_school" class="form-control input-sm" />
                                                 <span style="color:red;"
                                                           ng-show="myForms.study_intermediate.$error.required && myForms.study_intermediate.$dirty">
                                                        required
                                                 </span>
-                                                <input type="text" style="margin-bottom:10px;" placeholder="Enter Graduation"
+                                                <input required type="text" style="margin-bottom:10px;" placeholder="Enter Graduation"
                                                        autocomplete="off" id="study_graduate" name="study_graduate"
                                                        ng-model="study_graduate" class="form-control input-sm" />
                                                 <span style="color:red;" ng-show="myForms.study_graduate.$error.required && myForms.study_graduate.$dirty">
@@ -443,9 +431,6 @@
                                                         <input type="password" class="form-control input-sm" id="cPassword" name="cPassword"
                                                               ng-model="formData.cPassword" ng-change="checkUserCurrentPassword()" required
                                                               placeholder="Enter Current Password" style="margin-bottom:8px;"  />
-                                                        <span ng-if="if_user_password_is_incorrect" style="color:red;">
-                                                            {{ if_user_password_is_incorrect }}
-                                                        </span>
                                                         <span style="color:red;" ng-show="myfForm.cPassword.$error.required && myfForm.cPassword.$dirty">
                                                                required
                                                         </span>
@@ -507,10 +492,17 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12">
-                                                        <button type="submit" ng-click="username_section = !username_section;updatePassword()"
+                                                        <button type="submit" ng-click="updatePassword()"
                                                                 class="btn btn-sm btn-primary" ng-disabled="!myfForm.$valid">
                                                            Submit
                                                         </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-if="show_error_password">
+                                                    <div class="col-lg-12">
+                                                        <span style="color:red;">
+                                                            Your current password is incorrrect..
+                                                        </span> 
                                                     </div>
                                                 </div>
                                             </div>

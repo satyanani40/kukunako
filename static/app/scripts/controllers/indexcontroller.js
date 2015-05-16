@@ -331,13 +331,16 @@ angular.module('weberApp')
 				$scope.chatactivity = new ChatActivity($scope.currentUser);
 			}, function(error) {
 				$scope.loginError = error;
-				$alert({
+				var loginAlert = $alert({
 					title: 'Login Failed:',
 					content: error.data.error,
 					placement: 'top',
 					type: 'danger',
 					show: true
 				});
+				$timeout(function() {
+                    loginAlert.hide();
+                }, 5000);
 			});
 		};
         /* end of login functionality*/
@@ -362,13 +365,16 @@ angular.module('weberApp')
 
             }, function (signuperror) {
                 $scope.signUpError = signuperror;
-                $alert({
+                var userNameAlert = $alert({
                     title: 'Registration Failed:',
                     content: signuperror.data.error,
                     placement: 'top',
                     type: 'danger',
                     show: true
                 });
+                $timeout(function() {
+                    userNameAlert.hide();
+                }, 5000);
             });
         };
 

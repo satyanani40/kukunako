@@ -1206,11 +1206,6 @@ if it's not present, don't show loader */
 	top:50px;
 	right:0px;
 }
-.alert-danger {
-    background-color: rgb(255, 77, 77);
-    border-color: rgb(255, 77, 77);
-    color: rgb(255, 255, 255);
-}
 .colpadding {
 	padding-left: 5px !important;
 	padding-right: 5px !important;
