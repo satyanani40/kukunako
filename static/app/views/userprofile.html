@@ -39,7 +39,7 @@
                     <div class="animate-switch" ng-switch-default></div>
 
                 </div>
-                <div ng-if="profileuser._id != user._id" style="margin-top:10px;">
+                <div ng-if="profileuser._id != currentUser._id" style="margin-top:10px;">
                     <button ng-click="openchatroom(profileuser);addToConversations(profileuser._id)"
                             class="btn btn-block btn-sm btn-success">
                         chat

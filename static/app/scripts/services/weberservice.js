@@ -47,24 +47,42 @@ angular.module('weberApp')
 
         }
 
-        questions.prototype.updateAnswer = function(question, answer){
+        questions.prototype.updateAnswer = function(question, answer, cuser_id){
             console.log('----------------service------------')
-            Restangular.one('updateAnswer').get({
+            var self = this;
+            var req = {
+                method: 'POST',
+                url: '/api/updateAnswer',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                        question : question,
+		                answer : answer,
+		                cuserid : cuser_id,
+		                seed:Math.random()
+                }
+            }
+
+            $http(req).success(function (data) {
+                for(var temp in self.canswers){
+                    if(self.canswers[temp].questionid == question){
+                        self.canswers[temp].answer = answer;
+                        return true
+                    }
+		        }
+		        self.canswers.push({'questionid':question, 'answer':answer});
+            }.bind(self));
+
+            /*Restangular.one('updateAnswer').get({
 		        question : question,
 		        answer : answer,
 		        cuserid : this.currentuser._id,
 		        seed:Math.random()
 		    }).then(function(data){
 		        console.log('updated answer', data);
-		        for(var temp in this.canswers){
-                    if(this.canswers[temp].questionid == question){
-                        this.canswers[temp].answer = answer;
-                        return true
-                    }
-		        }
 
-		        this.canswers.push({'questionid':question, 'answer':answer});
-		    }.bind(this));
+		    }.bind(this));*/
         }
 
         questions.prototype.checkAnswer = function(questionid){

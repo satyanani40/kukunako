@@ -31,7 +31,8 @@ angular.module('weberApp')
 		}).success(function(userId) {
             Restangular.one('people', JSON.parse(userId)).get({seed:Math.random()}).then(function(user) {
 
-                $scope.user = user;
+                $scope.currentUser = user;
+
                 $scope.afterFinishQuestions = function(){
                     $location.path('/home');
                 }
@@ -43,13 +44,13 @@ angular.module('weberApp')
                     for(var temp in $scope.currentUser.questions){
                         if($scope.currentUser.questions[temp].questionid == question){
                             $scope.currentUser.questions[temp].answer = ans;
-                            $scope.questions.updateAnswer(question, ans);
+                            $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
                             return;
                         }
                     }
 
                     $scope.currentUser.questions.push({'questionid':question, 'answer': ans});
-                    $scope.questions.updateAnswer(question, ans);
+                    $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
                     return;
                 }
 
@@ -59,7 +60,7 @@ angular.module('weberApp')
                 }
                 // end of questions section
 
-                if($scope.user.interests.length){
+                if($scope.currentUser.interests.length){
                     // success show
                     $scope.show_interests = false;
                     $scope.show_questions = true;
@@ -70,14 +71,14 @@ angular.module('weberApp')
                     $scope.show_questions = false;
                 }
                 $scope.newUserInterests = function(){
-                    for(var temp in $scope.user.interests){
-                        $scope.final_interests_array.push(InterestsService.get($scope.user.interests[temp]).interest_string)
+                    for(var temp in $scope.currentUser.interests){
+                        $scope.final_interests_array.push(InterestsService.get($scope.currentUser.interests[temp]).interest_string)
                     }
                     $scope.Interests_busy = $timeout(function() {
                         $http.post('/get_interested_ids',
                         {
                             interests: $scope.final_interests_array,
-                            username: $scope.user.username
+                            username: $scope.currentUser.username
                         })
                         .success(function(data, status, headers, config) {
                             console.log("======return success of interests of ids",data);

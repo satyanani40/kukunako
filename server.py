@@ -314,18 +314,17 @@ def deleteConversation():
 @app.route('/api/updateAnswer', methods=['POST', 'GET'])
 def updateAnswer():
     print '----------update answer---------'
-    data = (request.args.to_dict())
     accounts = app.data.driver.db['people']
-    userdata = accounts.find_one({'_id':ObjectId(data['cuserid']), 'questions.questionid': ObjectId(data['question'])})
+    userdata = accounts.find_one({'_id':ObjectId(request.json['cuserid']), 'questions.questionid': ObjectId(request.json['question'])})
     if userdata is not None:
-        accounts.update({'_id':ObjectId(data['cuserid']), 'questions.questionid': ObjectId(data['question'])},
-                    {"$set":{"questions.$.answer": data['answer'] }})
+        accounts.update({'_id':ObjectId(request.json['cuserid']), 'questions.questionid': ObjectId(request.json['question'])},
+                    {"$set":{"questions.$.answer": request.json['answer'] }})
         return jsonify({'data':True})
     else:
-        accounts.update({'_id':ObjectId(data['cuserid'])},
+        accounts.update({'_id':ObjectId(request.json['cuserid'])},
                     { "$push" : { "questions":
-                                                {'questionid': ObjectId(data['question']),
-                                                 'answer': data['answer']
+                                                {'questionid': ObjectId(request.json['question']),
+                                                 'answer': request.json['answer']
                                                 }
                                 }
                     })
