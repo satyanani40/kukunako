@@ -708,7 +708,7 @@ def signup():
         msg.html = '<div style="min-height:100px;border:1px solid #dcdcdc;">' \
                    '<h5>Thanks for registering with us, To complete your Weber registration, Follow this link:</h5>' \
                    '<div style="padding:20px 5px">' \
-                   '<a href="http://www.weber.ooo/#/confirm_account/users/'+user_id+'/confirm/'+user_random_string+'">Click Here</a></div></div>'
+                   '<a href="104.155.44.72/#/confirm_account/users/'+user_id+'/confirm/'+user_random_string+'">Click Here</a></div></div>'
         mail.send(msg)
 
         token = create_token(user)
