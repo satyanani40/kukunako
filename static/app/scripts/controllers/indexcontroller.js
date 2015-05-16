@@ -95,7 +95,6 @@ angular.module('weberApp')
 
         // opens new chat room
         $scope.openchatroom = function(room_user){
-            console.log("----------------->>>>>");
             document.getElementById("show_div").style.display="block";
             if(!(sessionStorage.getItem(room_user._id))){
                 // check room alredy open
@@ -250,10 +249,13 @@ angular.module('weberApp')
 
         function loadintodivs(){
             var chatrooms = getData();
-           //console.log('chat room opened previously', chatrooms)
+            console.log('chat room opened previously', chatrooms)
             for(var k in  chatrooms){
                 $scope.chatactivity.loadMessages($scope.currentUser._id, chatrooms[k].id, chatrooms[k]);
            }
+           $scope.$apply(function(){
+            
+           })
 
         }
         function get_location(){
@@ -400,12 +402,13 @@ angular.module('weberApp')
              $scope.chatactivity = new ChatActivity(user);
              $scope.searchActivity = new SearchActivity($scope.currentUser);
              get_friend_notifications($scope.currentUser);
-             loadintodivs();
+
              $scope.MessageNotifcations();
              if($scope.currentUser.friends.length !== 0){
                 $scope.chatactivity.getChatFriends();
              }
              socket_operations();
+             loadintodivs();
         }else{
              $http.get('/api/me', {
                 headers: {
@@ -425,12 +428,13 @@ angular.module('weberApp')
                    $scope.chatactivity = new ChatActivity(user);
                    $scope.searchActivity = new SearchActivity($scope.currentUser);
                    get_friend_notifications($scope.currentUser);
-                   loadintodivs();
+
                    $scope.MessageNotifcations();
                    if($scope.currentUser.friends.length !== 0){
                     $scope.chatactivity.getChatFriends();
                    }
                    socket_operations();
+                   loadintodivs();
                 });
             });
         }

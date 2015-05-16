@@ -97,7 +97,7 @@ def login():
 
 
 def filterIdFields(user, interests = None, questions = None, conversations = None, _id = None, \
-                   send_add_requests= None, notifications = None, all = None):
+                   send_add_requests= None, notifications = None,friends = None, all = None):
     temp_array = []
 
     if _id or all is not None:
@@ -123,6 +123,14 @@ def filterIdFields(user, interests = None, questions = None, conversations = Non
             temp_array.append(str(temp))
         user['conversations'] = temp_array
         temp_array = []
+
+    if friends or all is not None:
+        #conversation ids to string
+        for temp in user['friends']:
+            temp_array.append(str(temp))
+        user['friends'] = temp_array
+        temp_array = []
+
 
     if send_add_requests or all is not None:
         #send add requests ids to string
