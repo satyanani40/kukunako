@@ -253,7 +253,7 @@ angular.module('weberApp')
             for(var k in  chatrooms){
                 $scope.chatactivity.loadMessages($scope.currentUser._id, chatrooms[k].id, chatrooms[k]);
            }
-          
+
 
         }
         function get_location(){
@@ -418,13 +418,15 @@ angular.module('weberApp')
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()})
                 .then(function(user) {
 
+                   $scope.chatactivity = new ChatActivity(user);
+                   $scope.searchActivity = new SearchActivity($scope.currentUser);
+
                    $scope.currentUser = user;
                    if($scope.currentUser.interests.length == 0 && $scope.currentUser.questions.length < 4){
                         $location.path("/enter_interests")
                    }
 
-                   $scope.chatactivity = new ChatActivity(user);
-                   $scope.searchActivity = new SearchActivity($scope.currentUser);
+
                    get_friend_notifications($scope.currentUser);
 
                    $scope.MessageNotifcations();

@@ -506,6 +506,7 @@ angular.module('weberApp')
                 $scope.chatactivity.loadMessages($scope.currentUser._id, chatrooms[k].id, chatrooms[k]);
            }
 
+
         }
         function get_location(){
             if (navigator.geolocation) {
@@ -669,13 +670,15 @@ angular.module('weberApp')
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()})
                 .then(function(user) {
 
+                   $scope.chatactivity = new ChatActivity(user);
+                   $scope.searchActivity = new SearchActivity($scope.currentUser);
+
                    $scope.currentUser = user;
                    if($scope.currentUser.interests.length == 0 && $scope.currentUser.questions.length < 4){
                         $location.path("/enter_interests")
                    }
 
-                   $scope.chatactivity = new ChatActivity(user);
-                   $scope.searchActivity = new SearchActivity($scope.currentUser);
+
                    get_friend_notifications($scope.currentUser);
 
                    $scope.MessageNotifcations();
@@ -2191,9 +2194,11 @@ angular.module('weberApp')
         ChatActivity.prototype.loadMessages = function(user1, user2, roomdetails){
 
             var self = this;
+
             this.busy = true;
             var page = null;
             var key = null;
+
             self.messages.push.apply(self.messages,[{id:user2,details:roomdetails,messages:[]}]);
 
             self.main_params =  '{ "$or" : ['+

@@ -82,9 +82,11 @@ angular.module('weberApp')
         ChatActivity.prototype.loadMessages = function(user1, user2, roomdetails){
 
             var self = this;
+
             this.busy = true;
             var page = null;
             var key = null;
+
             self.messages.push.apply(self.messages,[{id:user2,details:roomdetails,messages:[]}]);
 
             self.main_params =  '{ "$or" : ['+

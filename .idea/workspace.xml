@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a2fa648-7f11-479f-be1f-c754e028a197" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/app/scripts/services/ChatSerivce.js" afterPath="$PROJECT_DIR$/static/app/scripts/services/ChatSerivce.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js" afterPath="$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js" />
     </list>
     <ignored path="forsatya.iws" />
@@ -51,18 +52,18 @@
       <file leaf-file-name="weberservice.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/app/scripts/services/weberservice.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="13782" max-vertical-offset="16188">
+            <state vertical-scroll-proportion="0.0" vertical-offset="12186" max-vertical-offset="16188">
               <caret line="846" column="7" selection-start-line="846" selection-start-column="7" selection-end-line="846" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="indexcontroller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="indexcontroller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4655776" vertical-offset="4446" max-vertical-offset="11229">
-              <caret line="255" column="10" selection-start-line="255" selection-start-column="10" selection-end-line="255" selection-end-column="10" />
+            <state vertical-scroll-proportion="-10.314285" vertical-offset="4446" max-vertical-offset="11267">
+              <caret line="253" column="48" selection-start-line="253" selection-start-column="36" selection-end-line="253" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -90,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChatSerivce.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ChatSerivce.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/app/scripts/services/ChatSerivce.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5961" max-vertical-offset="7030">
-              <caret line="329" column="63" selection-start-line="329" selection-start-column="61" selection-end-line="329" selection-end-column="63" />
+            <state vertical-scroll-proportion="0.33333334" vertical-offset="1249" max-vertical-offset="7068">
+              <caret line="81" column="43" selection-start-line="81" selection-start-column="31" selection-end-line="81" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -161,13 +162,13 @@
         <option value="$PROJECT_DIR$/static/app/styles/chat_css.css" />
         <option value="$PROJECT_DIR$/static/app/styles/main.css" />
         <option value="$PROJECT_DIR$/static/app/scripts/services/weberservice.js" />
-        <option value="$PROJECT_DIR$/static/app/scripts/services/ChatSerivce.js" />
         <option value="$PROJECT_DIR$/static/app/views/start_search.html" />
         <option value="$PROJECT_DIR$/friendRequests.py" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/static/app/scripts/app.js" />
         <option value="$PROJECT_DIR$/generator.py" />
         <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/static/app/scripts/services/ChatSerivce.js" />
         <option value="$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js" />
       </list>
     </option>
@@ -292,6 +293,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="forsatya" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="forsatya" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -866,14 +893,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/app/scripts/services/ChatSerivce.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5961" max-vertical-offset="7030">
-          <caret line="329" column="63" selection-start-line="329" selection-start-column="61" selection-end-line="329" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/app/views/start_search.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="694" max-vertical-offset="4864">
@@ -891,14 +910,6 @@
             <element signature="n#style#0;n#h5#3;n#div#0;n#div#0;n#div#4;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#h5#3;n#div#0;n#div#0;n#div#4;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/app/scripts/services/weberservice.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="13782" max-vertical-offset="16188">
-          <caret line="846" column="7" selection-start-line="846" selection-start-column="7" selection-end-line="846" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -954,10 +965,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/app/scripts/services/weberservice.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="13782" max-vertical-offset="16188">
+          <caret line="846" column="7" selection-start-line="846" selection-start-column="7" selection-end-line="846" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4655776" vertical-offset="4446" max-vertical-offset="11229">
-          <caret line="255" column="10" selection-start-line="255" selection-start-column="10" selection-end-line="255" selection-end-column="10" />
+        <state vertical-scroll-proportion="-10.314285" vertical-offset="4446" max-vertical-offset="11267">
+          <caret line="253" column="48" selection-start-line="253" selection-start-column="36" selection-end-line="253" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/app/scripts/services/ChatSerivce.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="1249" max-vertical-offset="7068">
+          <caret line="81" column="43" selection-start-line="81" selection-start-column="31" selection-end-line="81" selection-end-column="43" />
           <folding />
         </state>
       </provider>
