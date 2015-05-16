@@ -24,7 +24,7 @@ for raw_user in users:
     user.pop('registered')
     user.pop('md5')
     user.pop('salt')
-    user.pop('SSN')
+    #user.pop('SSN')
     user.pop('cell')
     user.pop('version')
     user.pop('nationality')
