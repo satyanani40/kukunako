@@ -107,6 +107,7 @@ angular.module('weberApp')
                     right:0,
                     height:'364px'
                 }
+
                 $scope.chatactivity.loadMessages($scope.currentUser._id, room_user._id, json);
                 sessionStorage.setItem(room_user._id, JSON.stringify(json));
                 $socket.emit('connect', {data:room_user._id});
@@ -167,7 +168,9 @@ angular.module('weberApp')
 
          // closing open div
         $scope.close_div = function(id){
+
             for(var k in $scope.chatactivity.messages){
+                console.log($scope.chatactivity)
                 if($scope.chatactivity.messages[k].id == id){
                     // remove get chat room
                     $scope.chatactivity.messages.splice(k,1);
