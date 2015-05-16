@@ -183,7 +183,7 @@ class Friends(object):
                                             "notifications": {
                                                 'friendid': currentuser['_id'],
                                                 'seen': False,
-                                                'daterequest': datetime.now(),
+                                                'daterequest': str(datetime.now()),
                                                 'notific_type': 2 #accept request type
                                             },
                                             "friends": ObjectId(self.cuserid)

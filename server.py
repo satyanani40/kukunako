@@ -97,8 +97,11 @@ def login():
 
 
 def filterIdFields(user, interests = None, questions = None, conversations = None, _id = None, \
-                   send_add_requests= None, notifications = None,friends = None, all = None):
+                   send_add_requests= None, notifications = None,friends = None, _updated = None, all = None):
     temp_array = []
+
+    if _updated or all is not None:
+        user['_updated'] = str(user['_updated'])
 
     if _id or all is not None:
         user['_id'] = str(user['_id'])
@@ -142,6 +145,8 @@ def filterIdFields(user, interests = None, questions = None, conversations = Non
         #for notifcations convert ids to string
         for temp in user['notifications']:
             temp['friendid'] = str(temp['friendid'])
+            temp['daterequest'] = str(temp['daterequest'])
+
             if hasattr(temp, 'postid'):
                 print 'yes arrtibute-------------------'
                 temp['postid'] =str(temp['postid'])
