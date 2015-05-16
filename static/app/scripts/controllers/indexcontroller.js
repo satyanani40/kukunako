@@ -253,9 +253,7 @@ angular.module('weberApp')
             for(var k in  chatrooms){
                 $scope.chatactivity.loadMessages($scope.currentUser._id, chatrooms[k].id, chatrooms[k]);
            }
-           $scope.$apply(function(){
-            
-           })
+          
 
         }
         function get_location(){

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a2fa648-7f11-479f-be1f-c754e028a197" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.py" afterPath="$PROJECT_DIR$/server.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js" afterPath="$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js" />
     </list>
     <ignored path="forsatya.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="indexcontroller.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="indexcontroller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11267">
-              <caret line="256" column="12" selection-start-line="256" selection-start-column="12" selection-end-line="256" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.4655776" vertical-offset="4446" max-vertical-offset="11229">
+              <caret line="255" column="10" selection-start-line="255" selection-start-column="10" selection-end-line="255" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -100,10 +100,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.31038508" vertical-offset="16606" max-vertical-offset="18430">
+            <state vertical-scroll-proportion="-20.62857" vertical-offset="16150" max-vertical-offset="18430">
               <caret line="888" column="25" selection-start-line="888" selection-start-column="25" selection-end-line="888" selection-end-column="25" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -163,12 +163,12 @@
         <option value="$PROJECT_DIR$/static/app/scripts/services/weberservice.js" />
         <option value="$PROJECT_DIR$/static/app/scripts/services/ChatSerivce.js" />
         <option value="$PROJECT_DIR$/static/app/views/start_search.html" />
-        <option value="$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js" />
         <option value="$PROJECT_DIR$/friendRequests.py" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/static/app/scripts/app.js" />
         <option value="$PROJECT_DIR$/generator.py" />
         <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js" />
       </list>
     </option>
   </component>
@@ -944,21 +944,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4446" max-vertical-offset="11267">
-          <caret line="256" column="12" selection-start-line="256" selection-start-column="12" selection-end-line="256" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31038508" vertical-offset="16606" max-vertical-offset="18430">
+        <state vertical-scroll-proportion="-20.62857" vertical-offset="16150" max-vertical-offset="18430">
           <caret line="888" column="25" selection-start-line="888" selection-start-column="25" selection-end-line="888" selection-end-column="25" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/app/scripts/controllers/indexcontroller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4655776" vertical-offset="4446" max-vertical-offset="11229">
+          <caret line="255" column="10" selection-start-line="255" selection-start-column="10" selection-end-line="255" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
