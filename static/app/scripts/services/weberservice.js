@@ -682,7 +682,7 @@ angular.module('weberApp')
 
                 var keywords = combine_ids(this.query.split(" "));
                 var self = this;
-               /* var req = {
+                var req = {
                     method: 'POST',
                     url: '/api/matchresults',
                     headers: {
@@ -697,78 +697,9 @@ angular.module('weberApp')
                 }
 
             $http(req).success(function(data){
-               console.log("============>", data)
                self.mresults.push.apply(self.mresults, data.final_result);
-               console.log(self.mresults)
-            }.bind(self));*/
+            }.bind(self));
 
-            Restangular.all('matchresults').post({
-                        page: self.page,
-                        query: self.query,
-                        keywords : keywords,
-                        location : self.location
-                    },{},{'Content-Type': 'application/json'}).then(function(data){
-                        console.log(data)
-
-                    });
-
-
-
-
-
-
-                /*this.param1 = '{"$or":[{"keywords": {"$in":['+keywords+']}},{"content":{"$regex":".*'+this.query+'.*"}}]}';
-			    this.param2 = '{"author":1}';
-
-                Restangular.all('posts').getList({
-                    where : self.param1,
-                    seed: Math.random(),
-                    max_results: 30,
-                    page: self.page,
-                    embedded : self.param2
-				}).then(function(data) {
-				   if (data.length < 30) {
-                        self.end = true;
-    			   }
-
-    			   if(data.length == 0){
-    			        self.mResultsNotFound = true;
-
-    			   }
-                   self.mresults.push.apply(self.mresults,data);
-
-                   self.mresults = removeDuplicateResults(self.mresults);
-                   self.total_matches = data.length;
-                   self.page = self.page + 1;
-                   self.busy = false;
-				}.bind(this));
-
-				// also find in search activity
-				this.param1 = '{"$or":[{"keywords": {"$in":['+keywords+']}},{"content":{"$regex":".*'+this.query+'.*"}}]}';
-			    this.param2 = '{"author":1}';
-
-                Restangular.all('searchActivity').getList({
-				where : this.param1,
-				seed: Math.random(),
-				max_results: 30,
-				page: this.sPage,
-				embedded : this.param2
-				}).then(function(data) {
-                   if (data.length < 30) {
-                        this.sEnd = true;
-    			   }
-
-    			   if(data.length == 0){
-    			       self.saResultsNotFound = true;
-
-    			   }
-
-                   this.mresults.push.apply(this.mresults,data);
-                   self.mresults = removeDuplicateResults(self.mresults);
-                   this.total_matches = this.total_matches+data.length;
-                   this.sPage = this.sPage + 1;
-                   this.sBusy = false;
-				}.bind(this));*/
             }
  		};
 

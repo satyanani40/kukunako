@@ -1,4 +1,4 @@
-<!--<textarea ng-model="enterquestion">
+<textarea ng-model="enterquestion">
 
 
 </textarea>
@@ -44,11 +44,12 @@
                                          infinite-scroll-disabled='matchResults.busy'
                                          infinite-scroll-distance='0'
                                          infinite-scroll-parent="true">
+
                 <div class="col-lg-12">
                     <div class="panel panel-body post-div" ng-repeat="rs in matchResults.mresults" >
                         <img src="{{ rs.picture.thumbnail }}" class="pull-left" style="width:100px;">
                         <h5 style="">
-
+                            {{ rs }}
                             <strong>
                                 <a style="color:#333;font-size:18px;text-transform:capitalize;font-family: 'open sans',arial,sans-serif;"
                                    href="#/profile/{{rs.username}}">
@@ -66,7 +67,7 @@
                                 <!-- if post not from you and you logged in-->
                                 <a  style="color: #2196f3;font-size:14px;" name="{{rs._id}}"
                                    ng-if="isAuthenticated() && currentUser._id != rs._id"
-                                   ng-click="openchatroom('{{ rs.username }}');addToConversations('{{ rs.username}}')">
+                                   ng-click="openchatroom(rs);addToConversations(rs)">
                                    <i class="fa fa-comment"></i>
                                 </a>
                                 <!-- if not logged in -->
