@@ -261,7 +261,7 @@ angular.module('weberApp')
         $scope.isAuthenticated = function() {
             return $auth.isAuthenticated();
         };
-        
+
         $scope.get_screen_height = window.innerHeight-52;
         $scope.get_inner_div_height = (window.innerHeight-210)/2;
         $scope.UserService = UserService;
