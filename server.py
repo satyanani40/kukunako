@@ -886,7 +886,7 @@ def fileupload():
             #print os.path.join(app.config['UPLOAD_FOLDER'], renamed_filename)
         return os.path.join(app.config['UPLOAD_FOLDER'], renamed_filename)
 
-@socketio.on('connecting', namespace='/live')
+@socketio.on('connecting')
 def joiningtoroom(data):
     if(join_into_room(data['id'])):
         emit('joiningstatus',{'data': data['id'] in request.namespace.rooms})
