@@ -8,7 +8,7 @@
  * Controller of the weberApp
  */
 angular.module('weberApp')
-    .controller('WeberSearchCtrl', function($scope, $q, $auth, Restangular,$route,$window, InterestsService,
+    .controller('WeberSearchCtrl', function($scope, $timeout, $q, $auth, Restangular,$route,$window, InterestsService,
 	 										InfinitePosts, $alert, $http,$location,$socket,
 	 										CurrentUser, UserService,CurrentUser1,$rootScope,
 	 										SearchActivity, $routeParams, MatchMeResults) {
@@ -32,22 +32,26 @@ angular.module('weberApp')
 
         // delete search history item
         $scope.delete_searchHistoryItem = function(id){
-            $scope.searchActivity.deleteItem(id);
+            $scope.delete_searchHistory = $timeout(function(){
+                $scope.searchActivity.deleteItem(id);
+            },2000);
         }
 
         $scope.perfomSearch = function(){
-            $scope.search = true;
-            if($scope.present_search_query == $scope.query) return;
-            if($scope.query){
-                // alredy present searched query no need to search again
-                $location.search('query', $scope.query);
-                $scope.matchResults = new MatchMeResults($scope.query, $scope.location);
-                $scope.matchResults.newSearchResults();
-                if($scope.isAuthenticated()){
-                    store_search_text($scope.query);
+            $scope.load_data = $timeout(function(){
+                $scope.search = true;
+                if($scope.present_search_query == $scope.query) return;
+                if($scope.query){
+                    // alredy present searched query no need to search again
+                    $location.search('query', $scope.query);
+                    $scope.matchResults = new MatchMeResults($scope.query, $scope.location);
+                    $scope.matchResults.newSearchResults();
+                    if($scope.isAuthenticated()){
+                        store_search_text($scope.query);
+                    }
                 }
-            }
-            $scope.present_search_query = $scope.query;
+                $scope.present_search_query = $scope.query;
+            },2000);
         }
 
         $scope.storequestion = function(){

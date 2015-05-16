@@ -31,7 +31,8 @@ angular.module('weberApp')
 		}).success(function(userId) {
             Restangular.one('people', JSON.parse(userId)).get({seed:Math.random()}).then(function(user) {
 
-                $scope.user = user;
+                $scope.currentUser = user;
+
                 $scope.afterFinishQuestions = function(){
                     $location.path('/home');
                 }
@@ -43,13 +44,13 @@ angular.module('weberApp')
                     for(var temp in $scope.currentUser.questions){
                         if($scope.currentUser.questions[temp].questionid == question){
                             $scope.currentUser.questions[temp].answer = ans;
-                            $scope.questions.updateAnswer(question, ans);
+                            $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
                             return;
                         }
                     }
 
                     $scope.currentUser.questions.push({'questionid':question, 'answer': ans});
-                    $scope.questions.updateAnswer(question, ans);
+                    $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
                     return;
                 }
 
@@ -59,7 +60,7 @@ angular.module('weberApp')
                 }
                 // end of questions section
 
-                if($scope.user.interests.length){
+                if($scope.currentUser.interests.length){
                     // success show
                     $scope.show_interests = false;
                     $scope.show_questions = true;
@@ -70,14 +71,14 @@ angular.module('weberApp')
                     $scope.show_questions = false;
                 }
                 $scope.newUserInterests = function(){
-                    for(var temp in $scope.user.interests){
-                        $scope.final_interests_array.push(InterestsService.get($scope.user.interests[temp]).interest_string)
+                    for(var temp in $scope.currentUser.interests){
+                        $scope.final_interests_array.push(InterestsService.get($scope.currentUser.interests[temp]).interest_string)
                     }
                     $scope.Interests_busy = $timeout(function() {
                         $http.post('/get_interested_ids',
                         {
                             interests: $scope.final_interests_array,
-                            username: $scope.user.username
+                            username: $scope.currentUser.username
                         })
                         .success(function(data, status, headers, config) {
                             console.log("======return success of interests of ids",data);
@@ -333,7 +334,7 @@ angular.module('weberApp')
  * Controller of the weberApp
  */
 angular.module('weberApp')
-    .controller('WeberSearchCtrl', function($scope, $q, $auth, Restangular,$route,$window, InterestsService,
+    .controller('WeberSearchCtrl', function($scope, $timeout, $q, $auth, Restangular,$route,$window, InterestsService,
 	 										InfinitePosts, $alert, $http,$location,$socket,
 	 										CurrentUser, UserService,CurrentUser1,$rootScope,
 	 										SearchActivity, $routeParams, MatchMeResults) {
@@ -357,22 +358,26 @@ angular.module('weberApp')
 
         // delete search history item
         $scope.delete_searchHistoryItem = function(id){
-            $scope.searchActivity.deleteItem(id);
+            $scope.delete_searchHistory = $timeout(function(){
+                $scope.searchActivity.deleteItem(id);
+            },2000);
         }
 
         $scope.perfomSearch = function(){
-            $scope.search = true;
-            if($scope.present_search_query == $scope.query) return;
-            if($scope.query){
-                // alredy present searched query no need to search again
-                $location.search('query', $scope.query);
-                $scope.matchResults = new MatchMeResults($scope.query, $scope.location);
-                $scope.matchResults.newSearchResults();
-                if($scope.isAuthenticated()){
-                    store_search_text($scope.query);
+            $scope.load_data = $timeout(function(){
+                $scope.search = true;
+                if($scope.present_search_query == $scope.query) return;
+                if($scope.query){
+                    // alredy present searched query no need to search again
+                    $location.search('query', $scope.query);
+                    $scope.matchResults = new MatchMeResults($scope.query, $scope.location);
+                    $scope.matchResults.newSearchResults();
+                    if($scope.isAuthenticated()){
+                        store_search_text($scope.query);
+                    }
                 }
-            }
-            $scope.present_search_query = $scope.query;
+                $scope.present_search_query = $scope.query;
+            },2000);
         }
 
         $scope.storequestion = function(){
@@ -422,7 +427,7 @@ angular.module('weberApp')
  */
 angular.module('weberApp')
 	.controller('SettingsCtrl',
-	    function($route, $location, $timeout, $scope, $auth, $q, $rootScope,InterestsService,
+	    function($route, $location, $timeout, $window, $scope, $auth, $q, $rootScope,InterestsService,
 	                Restangular, InfinitePosts, $alert, $http, CurrentUser, UserService) {
 
 
@@ -430,6 +435,7 @@ angular.module('weberApp')
 	 	$scope.searchBusy = false;
 		$scope.UserService = UserService;
         $scope.InterestsService = InterestsService;
+        console.log("interests", $scope.InterestsService)
 
         $scope.$watchCollection('data.tags',function(val){
             console.log("----->>>> this controller")
@@ -503,7 +509,7 @@ angular.module('weberApp')
                                 userNameAlert.hide();
                             }, 5000);
                             $timeout(function(){
-                                $route.reload();
+                                $window.location.reload();
                             },1000);
                             //console.log(self.InstancesearchResult)
                        });
@@ -651,7 +657,7 @@ angular.module('weberApp')
                                     }).then(function(response){
                                         var userNameAlert = $alert({
                                             title: 'Success',
-                                            content: 'Updated your Name',
+                                            content: 'Updated your Password',
                                             placement: 'top',
                                             type: 'success',
                                             show: true
@@ -708,41 +714,39 @@ angular.module('weberApp')
                 };
 
                 $scope.updatechangelocation = function() {
-                    $scope.location = function(){
-                        $scope.Location_busy = $timeout(function(){
-                            var Get_location_details = Restangular.one('people', $scope.user._id).get({seed:Math.random()});
-                                Get_location_details.then(function(response){
-                                $scope.user = response;
+                    $scope.Location_busy = $timeout(function(){
+                        var Get_location_details = Restangular.one('people', $scope.user._id).get({seed:Math.random()});
+                            Get_location_details.then(function(response){
+                            $scope.user = response;
 
-                                $scope.user.location.state = $scope.location_state;
-                                $scope.user.location.city = $scope.location_city;
-                                $scope.user.location.street = $scope.location_street;
+                            $scope.user.location.state = $scope.location_state;
+                            $scope.user.location.city = $scope.location_city;
+                            $scope.user.location.street = $scope.location_street;
 
-                                $scope.user.patch({
-                                    'location':{
-                                        'state':$scope.location_state,
-                                        'city':$scope.location_city,
-                                        'street':$scope.location_street
-                                    }
-                                },{},{'If-Match':$scope.user._etag})
-                                .then(function(response){
-                                    var interestsAlert = $alert({
-                                        title: 'Success',
-                                        content: 'Updated your Location',
-                                        placement: 'top',
-                                        type: 'success',
-                                        show: true
-                                    });
-                                    $timeout(function() {
-                                        interestsAlert.hide();
-                                    }, 5000);
-                                    $timeout(function(){
-                                        $('#5').collapse("hide");
-                                    },1000);
+                            $scope.user.patch({
+                                'location':{
+                                    'state':$scope.location_state,
+                                    'city':$scope.location_city,
+                                    'street':$scope.location_street
+                                }
+                            },{},{'If-Match':$scope.user._etag})
+                            .then(function(response){
+                                var interestsAlert = $alert({
+                                    title: 'Success',
+                                    content: 'Updated your Location',
+                                    placement: 'top',
+                                    type: 'success',
+                                    show: true
                                 });
+                                $timeout(function() {
+                                    interestsAlert.hide();
+                                }, 5000);
+                                $timeout(function(){
+                                    $('#5').collapse("hide");
+                                },1000);
                             });
-                        },2000);
-                    }
+                        });
+                    },2000);
                 };
                 $scope.updatechangestudy = function() {
                     $scope.Study_busy = $timeout(function(){
@@ -789,13 +793,12 @@ angular.module('weberApp')
 
             templateUrl:'/static/app/views/autocomplete-template.html',
             link:function(scope,elem,attrs,Restangular){
-
-                console.log("===>>>>Hai surya", scope.user);
                 scope.suggestions=[];
                 scope.selectedTags=[];
                 scope.selectedIndex=-1;
                 scope.removeTag=function(index){
                     scope.selectedTags.splice(index,1);
+                    console.log("remove tags===", scope.selectedTags)
                 }
 
                 scope.search=function(){
@@ -1014,7 +1017,7 @@ angular.module('weberApp')
 
 
                 $scope.answered = function(question, ans){
-                    $scope.questions.updateAnswer(question, ans);
+                    $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
                     console.log(question, ans)
                 }
 
@@ -1837,8 +1840,7 @@ angular.module('weberApp')
         $scope.show_c_user_info = false;
         $scope.show_p_user_info = true;
 
-        Restangular.one('people', $routeParams.username)
-        .get({ seed : Math.random()}).then(function(profileuser) {
+        Restangular.one('people', $routeParams.username).get({ seed : Math.random()}).then(function(profileuser) {
     		// profile user information
 	    	$scope.profileuser = profileuser;
             // questions section functions
@@ -1868,88 +1870,101 @@ angular.module('weberApp')
             }
 
              $scope.answered = function(question, ans){
-                 $scope.questions.updateAnswer(question, ans);
+                 $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
                  console.log(question, ans)
              }
 
+
+
+
         // end of profile user information
-        var currentuserobj = new CurrentUser();
-        currentuserobj.getUserId()
-            .then(function(){
-                currentuserobj.getCUserDetails(currentuserobj.userId).then(function(user){
-
-                        $scope.checkYouAnswered = function(question_id){
-                            data = $scope.questions.checkYouAnswered(question_id, user);
-                            return data;
-                        }
-
-                        $scope.youAnswered = function(question, ans){
-                            $scope.questions.updateUser2(question, ans);
-                            console.log(question, ans)
-                        }
-                         // end of questions section
-                        $scope.user = user;
-
-                        if($scope.user._id !== $scope.profileuser._id){
-                            var friendsactivity = new friendsActivity($scope.user, $scope.profileuser);
-                            //console.log(friendsactivity)
-                            $scope.check_relation = function(){
-                                $scope.relation = friendsactivity.getRelation();
-                                return $scope.relation;
-                            }
-                        }
-
-                        $scope.pushToPost = function(postauthor, postid){
-                            //console.log('match user id', user._id)
-                            var posts = $scope.infinitePosts.posts;
-                            for(var temp in posts){
-                                if(posts[temp]._id == postid){
-                                    postauthor = posts[temp].author;
-                                    postid = posts[temp]._id;
-
-                                    var iPeople = posts[temp].interestedPeople;
-                                    for(var i in iPeople){
-                                        if(iPeople[i].interested_person == user._id){
-                                            return true;
-                                        }
-                                    }
-                                    iPeople.push({'interested_person': user._id, 'match_date': new Date()});
-                                    //console.log('post author-->', postauthor)
-                                    MatchButtonService.match(postauthor, postid , user._id).then(function(data){
-                                        console.log('match agree succesfully-->', data);
-                                    });
-
-                                }
-                            }
-	                    }
-
-                        $scope.deleteFromPost = function(postauthor, postid){
-
-                            //console.log('unmatch user id', user._id)
-                            var posts = $scope.infinitePosts.posts;
-
-                            for(var temp in posts){
-                                // if post contains with post id
-                                if(posts[temp]._id == postid){
-                                    var iPeople = posts[temp].interestedPeople;
-                                    for(var i in iPeople){
-                                        if(iPeople[i].interested_person == user._id){
-                                           iPeople.splice(i,1);
-                                           MatchButtonService.unmatch(postauthor, postid, user._id).then(function(data){
-                                                console.log('unmatch disagree succesfully-->', data);
-                                           });
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-
-
-                    //
+        if($scope.currentUser === 'undefined'){
+            $http.get('/api/me', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': $auth.getToken()
+                }
+            }).success(function(user_id) {
+                var params = '{"send_add_requests":1}';
+                Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()}).then(function(user) {
+                    $scope.currentUser = user;
+                    questionOperations();
                 });
-           });
-	});
+            });
+
+        }else{
+            questionOperations();
+        }
+
+
+        function questionOperations(){
+
+            $scope.checkYouAnswered = function(question_id){
+                data = $scope.questions.checkYouAnswered(question_id, $scope.currentUser);
+                return data;
+            }
+
+            $scope.youAnswered = function(question, ans){
+                $scope.questions.updateUser2(question, ans);
+                console.log(question, ans)
+            }
+             // end of questions section
+            if($scope.currentUser._id !== $scope.profileuser._id){
+                var friendsactivity = new friendsActivity($scope.currentUser, $scope.profileuser);
+                //console.log(friendsactivity)
+                $scope.check_relation = function(){
+                    $scope.relation = friendsactivity.getRelation();
+                    return $scope.relation;
+                }
+            }
+
+            $scope.pushToPost = function(postauthor, postid){
+                //console.log('match user id', user._id)
+                var posts = $scope.infinitePosts.posts;
+                for(var temp in posts){
+                    if(posts[temp]._id == postid){
+                        postauthor = posts[temp].author;
+                        postid = posts[temp]._id;
+
+                        var iPeople = posts[temp].interestedPeople;
+                        for(var i in iPeople){
+                            if(iPeople[i].interested_person == $scope.currentUser._id){
+                                return true;
+                            }
+                        }
+                        iPeople.push({'interested_person': $scope.currentUser._id, 'match_date': new Date()});
+                        //console.log('post author-->', postauthor)
+                        MatchButtonService.match(postauthor, postid , $scope.currentUser._id).then(function(data){
+                            console.log('match agree succesfully-->', data);
+                        });
+
+                    }
+                }
+            }
+
+            $scope.deleteFromPost = function(postauthor, postid){
+
+                //console.log('unmatch user id', user._id)
+                var posts = $scope.infinitePosts.posts;
+
+                for(var temp in posts){
+                    // if post contains with post id
+                    if(posts[temp]._id == postid){
+                        var iPeople = posts[temp].interestedPeople;
+                        for(var i in iPeople){
+                            if(iPeople[i].interested_person == $scope.currentUser._id){
+                               iPeople.splice(i,1);
+                               MatchButtonService.unmatch(postauthor, postid, $scope.currentUser._id).then(function(data){
+                                    console.log('unmatch disagree succesfully-->', data);
+                               });
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    });
 });angular.module('weberApp')
 .factory('friendsActivity', function($http, Restangular, $alert, $timeout,CurrentUser) {
 
@@ -2543,24 +2558,42 @@ angular.module('weberApp')
 
         }
 
-        questions.prototype.updateAnswer = function(question, answer){
+        questions.prototype.updateAnswer = function(question, answer, cuser_id){
             console.log('----------------service------------')
-            Restangular.one('updateAnswer').get({
+            var self = this;
+            var req = {
+                method: 'POST',
+                url: '/api/updateAnswer',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                        question : question,
+		                answer : answer,
+		                cuserid : cuser_id,
+		                seed:Math.random()
+                }
+            }
+
+            $http(req).success(function (data) {
+                for(var temp in self.canswers){
+                    if(self.canswers[temp].questionid == question){
+                        self.canswers[temp].answer = answer;
+                        return true
+                    }
+		        }
+		        self.canswers.push({'questionid':question, 'answer':answer});
+            }.bind(self));
+
+            /*Restangular.one('updateAnswer').get({
 		        question : question,
 		        answer : answer,
 		        cuserid : this.currentuser._id,
 		        seed:Math.random()
 		    }).then(function(data){
 		        console.log('updated answer', data);
-		        for(var temp in this.canswers){
-                    if(this.canswers[temp].questionid == question){
-                        this.canswers[temp].answer = answer;
-                        return true
-                    }
-		        }
 
-		        this.canswers.push({'questionid':question, 'answer':answer});
-		    }.bind(this));
+		    }.bind(this));*/
         }
 
         questions.prototype.checkAnswer = function(questionid){

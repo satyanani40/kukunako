@@ -9,7 +9,7 @@
  */
 angular.module('weberApp')
 	.controller('SettingsCtrl',
-	    function($route, $location, $timeout, $scope, $auth, $q, $rootScope,InterestsService,
+	    function($route, $location, $timeout, $window, $scope, $auth, $q, $rootScope,InterestsService,
 	                Restangular, InfinitePosts, $alert, $http, CurrentUser, UserService) {
 
 
@@ -17,6 +17,7 @@ angular.module('weberApp')
 	 	$scope.searchBusy = false;
 		$scope.UserService = UserService;
         $scope.InterestsService = InterestsService;
+        console.log("interests", $scope.InterestsService)
 
         $scope.$watchCollection('data.tags',function(val){
             console.log("----->>>> this controller")
@@ -90,7 +91,7 @@ angular.module('weberApp')
                                 userNameAlert.hide();
                             }, 5000);
                             $timeout(function(){
-                                $route.reload();
+                                $window.location.reload();
                             },1000);
                             //console.log(self.InstancesearchResult)
                        });
@@ -238,7 +239,7 @@ angular.module('weberApp')
                                     }).then(function(response){
                                         var userNameAlert = $alert({
                                             title: 'Success',
-                                            content: 'Updated your Name',
+                                            content: 'Updated your Password',
                                             placement: 'top',
                                             type: 'success',
                                             show: true
@@ -295,41 +296,39 @@ angular.module('weberApp')
                 };
 
                 $scope.updatechangelocation = function() {
-                    $scope.location = function(){
-                        $scope.Location_busy = $timeout(function(){
-                            var Get_location_details = Restangular.one('people', $scope.user._id).get({seed:Math.random()});
-                                Get_location_details.then(function(response){
-                                $scope.user = response;
+                    $scope.Location_busy = $timeout(function(){
+                        var Get_location_details = Restangular.one('people', $scope.user._id).get({seed:Math.random()});
+                            Get_location_details.then(function(response){
+                            $scope.user = response;
 
-                                $scope.user.location.state = $scope.location_state;
-                                $scope.user.location.city = $scope.location_city;
-                                $scope.user.location.street = $scope.location_street;
+                            $scope.user.location.state = $scope.location_state;
+                            $scope.user.location.city = $scope.location_city;
+                            $scope.user.location.street = $scope.location_street;
 
-                                $scope.user.patch({
-                                    'location':{
-                                        'state':$scope.location_state,
-                                        'city':$scope.location_city,
-                                        'street':$scope.location_street
-                                    }
-                                },{},{'If-Match':$scope.user._etag})
-                                .then(function(response){
-                                    var interestsAlert = $alert({
-                                        title: 'Success',
-                                        content: 'Updated your Location',
-                                        placement: 'top',
-                                        type: 'success',
-                                        show: true
-                                    });
-                                    $timeout(function() {
-                                        interestsAlert.hide();
-                                    }, 5000);
-                                    $timeout(function(){
-                                        $('#5').collapse("hide");
-                                    },1000);
+                            $scope.user.patch({
+                                'location':{
+                                    'state':$scope.location_state,
+                                    'city':$scope.location_city,
+                                    'street':$scope.location_street
+                                }
+                            },{},{'If-Match':$scope.user._etag})
+                            .then(function(response){
+                                var interestsAlert = $alert({
+                                    title: 'Success',
+                                    content: 'Updated your Location',
+                                    placement: 'top',
+                                    type: 'success',
+                                    show: true
                                 });
+                                $timeout(function() {
+                                    interestsAlert.hide();
+                                }, 5000);
+                                $timeout(function(){
+                                    $('#5').collapse("hide");
+                                },1000);
                             });
-                        },2000);
-                    }
+                        });
+                    },2000);
                 };
                 $scope.updatechangestudy = function() {
                     $scope.Study_busy = $timeout(function(){
@@ -376,13 +375,12 @@ angular.module('weberApp')
 
             templateUrl:'/static/app/views/autocomplete-template.html',
             link:function(scope,elem,attrs,Restangular){
-
-                console.log("===>>>>Hai surya", scope.user);
                 scope.suggestions=[];
                 scope.selectedTags=[];
                 scope.selectedIndex=-1;
                 scope.removeTag=function(index){
                     scope.selectedTags.splice(index,1);
+                    console.log("remove tags===", scope.selectedTags)
                 }
 
                 scope.search=function(){
