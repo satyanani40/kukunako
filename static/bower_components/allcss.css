@@ -1412,7 +1412,23 @@ color:red !important;
         margin-top: 10px;
     }
 
-/* resend button //* chat box css goes here*/
+/* resend button */
+
+.navbar-default .navbar-nav > li .login-button{
+    background:#fff;
+    padding:3px 20px !important;
+    color: #000;
+}
+.navbar-default .navbar-nav > li:hover .login-button{
+    background:#fff;
+    padding:3px 20px !important;
+    color: #000;
+}
+.navbar-default .navbar-nav > li:focus .login-button{
+    background:#fff;
+    padding:3px 20px !important;
+    color: #000;
+}/* chat box css goes here*/
 .ch22at_290_b22ox_2080{
     width:200px;
     position:fixed;
