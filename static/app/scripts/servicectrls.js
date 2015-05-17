@@ -1001,6 +1001,7 @@ angular.module('weberApp')
 	 	$scope.searched = false;
 	 	$scope.UserService = UserService;
 	 	$scope.InterestsService = InterestsService;
+
         $scope.$watch('currentUser', function(){
             if(typeof $scope.currentUser !== 'undefined' && $scope.isAuthenticated()){
                 // check interests and questions answered or not
@@ -1606,6 +1607,10 @@ angular.module('weberApp')
                     $scope.currentUser.questions.push({'questionid':question, 'answer': ans});
                     console.log('pushed answereds', $scope.currentUser.questions)
                     $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                    $scope.$apply(function(){
+                        $scope.currentUser = $scope.currentUser;
+                    });
+
                     return;
                 }
 

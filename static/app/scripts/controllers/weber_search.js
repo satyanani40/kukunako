@@ -15,6 +15,7 @@ angular.module('weberApp')
 	 	$scope.searched = false;
 	 	$scope.UserService = UserService;
 	 	$scope.InterestsService = InterestsService;
+
         $scope.$watch('currentUser', function(){
             if(typeof $scope.currentUser !== 'undefined' && $scope.isAuthenticated()){
                 // check interests and questions answered or not

@@ -53,6 +53,10 @@ angular.module('weberApp')
                     $scope.currentUser.questions.push({'questionid':question, 'answer': ans});
                     console.log('pushed answereds', $scope.currentUser.questions)
                     $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                    $scope.$apply(function(){
+                        $scope.currentUser = $scope.currentUser;
+                    });
+
                     return;
                 }
 
