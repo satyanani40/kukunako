@@ -746,7 +746,7 @@ body {
 .note_22_user_44_repeat{
     padding:4px 5px;
     cursor:pointer;
-    height:63px;
+    height:65px;
     border-bottom:1px solid #F2F2F2;
 }
 .note_22_user_44_repeat>img{
@@ -1412,14 +1412,29 @@ color:red !important;
         margin-top: 10px;
     }
 
-/* resend button //* chat box css goes here*/
+/* resend button */
+
+.navbar-default .navbar-nav > li .login-button{
+    background:#fff;
+    padding:3px 20px !important;
+    color: #000;
+}
+.navbar-default .navbar-nav > li:hover .login-button{
+    background:#fff;
+    padding:3px 20px !important;
+    color: #000;
+}
+.navbar-default .navbar-nav > li:focus .login-button{
+    background:#fff;
+    padding:3px 20px !important;
+    color: #000;
+}/* chat box css goes here*/
 .ch22at_290_b22ox_2080{
     width:200px;
     position:fixed;
     bottom:0px;
     height:200px;
     right:250px;
-    display:none;
 }
 .ch_66_at_bo55x_co00ont3388ent{
     height:250px;

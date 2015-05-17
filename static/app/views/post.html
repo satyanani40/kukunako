@@ -29,8 +29,9 @@
 							<i class="fa fa-dashboard" style="opacity:0.65;font-size:12px;"></i>&nbsp;
 							I am interested in:
                             <a ng-repeat="interest in user.interests"
-                               style="line-height:1.2em;color:;text-decoration:none;">
-								{{ interest }}&nbsp;
+                               style="line-height:1.2em;color:;text-decoration:none;text-transform:capitalize;">
+								<!--{{ interest }}{{$last ? '' : ', '}}&nbsp;-->
+                                {{ InterestsService.get(interest).interest_string }}{{$last ? '' : ', '}}
 							</a>
 						</h6>
 					</div>

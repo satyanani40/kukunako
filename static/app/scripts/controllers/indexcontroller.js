@@ -95,7 +95,6 @@ angular.module('weberApp')
 
         // opens new chat room
         $scope.openchatroom = function(room_user){
-            document.getElementById("show_div").style.display="block";
             if(!(sessionStorage.getItem(room_user._id))){
                 // check room alredy open
                 var json = {

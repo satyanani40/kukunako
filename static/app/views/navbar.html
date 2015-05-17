@@ -64,7 +64,7 @@
                                             Inbox Messages
                                         </strong>
                                         <a href="" class="pull-right">
-                                            30 New
+                                            See all
                                         </a>
                                     </h6>
                                      <!--<a class="close" href="#">Close</a>-->
@@ -149,7 +149,7 @@
                                              ng-if="request_notific.notific_type === 1">
                                         <div class="note_22_user_44_repeat">
                                             <img src="{{  UserService.get(request_notific.friendid).picture.thumbnail }}">
-                                            <p>
+                                            <h5>
                                                 <strong>
                                                     {{ UserService.get(request_notific.friendid).name.first }}
                                                     {{ UserService.get(request_notific.friendid).name.last }}
@@ -171,17 +171,14 @@
                                                         </span>
                                                     </acceptreject>
                                                 </span>
-                                            </p>
-                                            <h6>
-                                                On Friday 09:00PM
-                                            </h6>
+                                            </h5>
                                         </div>
                                     </div>
                                     <div class="inn_30_no_20_bo_23_sc_22_40" ng-repeat="request_notific in currentUser.notifications"
                                          ng-if="request_notific.notific_type === 2 || request_notific.notific_type === 3">
                                         <div class="note_22_user_44_repeat">
-                                            <img src="{{ UserService.get(request_notific.friendid).picture.large}}">
-                                            <p>
+                                            <img src="{{ UserService.get(request_notific.friendid).picture.thumbnail}}">
+                                            <h5>
                                                 <strong>
                                                     <a href="#/profile/{{ UserService.get(request_notific.friendid).username }}">
                                                         {{ UserService.get(request_notific.friendid).name.first }}
@@ -191,13 +188,10 @@
                                                 Accepted your friend request.
                                                 <span>
                                                     <a ng-if="request_notific.notific_type === 3"
-                                                       href="#/post/{{ request_notific.postid }}">Likes your your post.
+                                                       href="#/post/{{ request_notific.postid }}">Matched with you.
                                                     </a>
                                                 </span>
-                                            </p>
-                                            <h6>
-                                                On Friday 09:00PM
-                                            </h6>
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>
