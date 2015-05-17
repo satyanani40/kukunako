@@ -649,7 +649,6 @@ angular.module('weberApp')
                     if(response.data.status == 200){
                         $auth.setToken(response.data.token);
                         $scope.currentUser = response.data.user;
-                        $scope.currentUser._id = response.data.user._id.$oid;
                         $location.path('/enter_interests/' + self.formData.email);
                     }
 
