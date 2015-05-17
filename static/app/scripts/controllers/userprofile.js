@@ -86,7 +86,7 @@ angular.module('weberApp')
             }
 
             $scope.youAnswered = function(question, ans){
-                $scope.questions.updateUser2(question, ans);
+                $scope.questions.updateUser2(question, ans, $scope.currentUser._id);
                 console.log(question, ans)
             }
              // end of questions section

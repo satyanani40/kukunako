@@ -128,8 +128,7 @@
             </div>
             <div class="panel-body">
                 <div class="row" style="padding-bottom:5px;" ng-if="checkYouAnswered(question._id) && isAuthenticated()">
-                    <div class="col-lg-10"
-                         ng-if="checkAnswer(question._id)==1">
+                    <div class="col-lg-10" ng-if="checkAnswer(question._id)==1">
                         <div class="funkyradio">
                             <div class="funkyradio-primary">
                                 <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
