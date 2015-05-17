@@ -9,7 +9,7 @@
  */
 angular.module('weberApp')
 	.controller('SettingsCtrl',
-	    function($route, $location, $timeout, $scope, $auth, $q, $rootScope,InterestsService,
+	    function($route, $location, $timeout, $window, $scope, $auth, $q, $rootScope,InterestsService,
 	                Restangular, InfinitePosts, $alert, $http, CurrentUser, UserService) {
 
 
@@ -17,6 +17,7 @@ angular.module('weberApp')
 	 	$scope.searchBusy = false;
 		$scope.UserService = UserService;
         $scope.InterestsService = InterestsService;
+        console.log("interests", $scope.InterestsService)
 
         $scope.$watchCollection('data.tags',function(val){
             console.log("----->>>> this controller")
@@ -90,7 +91,7 @@ angular.module('weberApp')
                                 userNameAlert.hide();
                             }, 5000);
                             $timeout(function(){
-                                $route.reload();
+                                $window.location.reload();
                             },1000);
                             //console.log(self.InstancesearchResult)
                        });
@@ -110,6 +111,7 @@ angular.module('weberApp')
                             $scope.user.patch({
                                 'username':$scope.u_username
                             }).then(function(response){
+                                $scope.u_username = '';
                                 var userNameAlert = $alert({
                                     title: 'Success',
                                     content: 'Updated your Username',
@@ -142,6 +144,8 @@ angular.module('weberApp')
                                     'last':$scope.edit_last_name
                                 }
                             }).then(function(response){
+                                $scope.edit_first_name = '';
+                                $scope.edit_last_name = '';
                                 var userNameAlert = $alert({
                                     title: 'Success',
                                     content: 'Updated your Name',
@@ -205,51 +209,55 @@ angular.module('weberApp')
 
 
                 $scope.updatePassword = function() {
-                    $scope.Password_busy = $timeout(function(){
+                    console.log("scope----", $scope.if_user_password_is_incorrect)
+                    if ($scope.if_user_password_is_incorrect == false) {
+                        $scope.Password_busy = $timeout(function(){
 
-                        $http.post('/get_new_hash_password',{
-                            user_name:$scope.user.username,
-                            new_password:$scope.formData.password
-                        })
-                        .success(function(data, status, headers, config) {
-
-
-                            $scope.get_hash_new_password = data;
-
+                            $http.post('/get_new_hash_password',{
+                                user_name:$scope.user.username,
+                                new_password:$scope.formData.password
+                            })
+                            .success(function(data, status, headers, config) {
 
 
-                            var updating_user_password = Restangular.one('people', $scope.user._id).get({seed:Math.random()});
-                            updating_user_password.then(function(response){
+                                $scope.get_hash_new_password = data;
 
 
-                                $scope.user_updated_data = response;
-                                $scope.user.password.password_updated = new Date();
-                                $scope.user_updated_data.patch({
-                                    'password':{
-                                        'password':$scope.get_hash_new_password,
-                                        'password_test':$scope.formData.password,
-                                        'password_updated':new Date()
-                                    }
-                                }).then(function(response){
-                                    var userNameAlert = $alert({
-                                        title: 'Success',
-                                        content: 'Updated your Name',
-                                        placement: 'top',
-                                        type: 'success',
-                                        show: true
+
+                                var updating_user_password = Restangular.one('people', $scope.user._id).get({seed:Math.random()});
+                                updating_user_password.then(function(response){
+
+
+                                    $scope.user_updated_data = response;
+                                    $scope.user.password.password_updated = new Date();
+                                    $scope.user_updated_data.patch({
+                                        'password':{
+                                            'password':$scope.get_hash_new_password,
+                                            'password_test':$scope.formData.password,
+                                            'password_updated':new Date()
+                                        }
+                                    }).then(function(response){
+                                        var userNameAlert = $alert({
+                                            title: 'Success',
+                                            content: 'Updated your Password',
+                                            placement: 'top',
+                                            type: 'success',
+                                            show: true
+                                        });
+                                        $timeout(function() {
+                                            userNameAlert.hide();
+                                        }, 5000);
+                                        $timeout(function(){
+                                            $('#7').collapse("hide");
+                                        },1000);
                                     });
-                                    $timeout(function() {
-                                        userNameAlert.hide();
-                                    }, 5000);
-                                    $timeout(function(){
-                                        $('#7').collapse("hide");
-                                    },1000);
+
                                 });
-
                             });
-                        });
-                    },2000);
-
+                        },2000);
+                    }else{
+                        $scope.show_error_password = true;
+                    }
                 };
 
                 $scope.updateInterests = function() {
@@ -367,13 +375,12 @@ angular.module('weberApp')
 
             templateUrl:'/static/app/views/autocomplete-template.html',
             link:function(scope,elem,attrs,Restangular){
-
-                console.log("===>>>>Hai surya", scope.user);
                 scope.suggestions=[];
                 scope.selectedTags=[];
                 scope.selectedIndex=-1;
                 scope.removeTag=function(index){
                     scope.selectedTags.splice(index,1);
+                    console.log("remove tags===", scope.selectedTags)
                 }
 
                 scope.search=function(){

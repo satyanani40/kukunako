@@ -1,4 +1,4 @@
-<textarea ng-model="enterquestion">
+<!--<textarea ng-model="enterquestion">
 
 
 </textarea>
@@ -10,7 +10,9 @@
             <div class="row" ng-if="!(isAuthenticated())">
                 <div class="col-sm-12">
                     <h3 style="font-family: 'open sans',arial,sans-serif;color:#3E4349;font-weight:300;line-height: 1.5em;">
-                        Youpep is a medium to search and find people, based on their activities,interests and location.
+                        <strong>
+                            Youpep is medium to search people, based on their activities,interests and location.
+                        </strong>
                     </h3>
                 </div>
             </div>
@@ -45,7 +47,7 @@
                                          infinite-scroll-distance='0'
                                          infinite-scroll-parent="true">
 
-                <div class="col-lg-12">
+                <div class="col-lg-12" cg-busy="load_data">
                     <div class="panel panel-body post-div" ng-repeat="rs in matchResults.mresults" >
                         <img src="{{ rs.picture.thumbnail }}" class="pull-left" style="width:100px;">
                         <h5 style="">
@@ -65,10 +67,10 @@
 
 
                                 <!-- if post not from you and you logged in-->
-                                <a  style="color: #2196f3;font-size:14px;" name="{{rs._id}}"
+                                <a  style="color:;font-size:14px;" name="{{rs._id}}"
                                    ng-if="isAuthenticated() && currentUser._id != rs._id"
                                    ng-click="openchatroom(rs);addToConversations(rs._id)">
-                                   <i class="fa fa-comment"></i>
+                                   Chat
                                 </a>
                                 <!-- if not logged in -->
                                 <a  ng-if="!(isAuthenticated())" style="color: #2196f3;font-size:14px;" data-placement="top-right" style="width:87px"
@@ -144,7 +146,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4" ng-if="isAuthenticated()">
+        <div class="col-lg-3" style="margin-top:30px;" ng-if="isAuthenticated()">
             <div class="panel panel-default" style="margin-bottom:0px;">
                 <div class="panel-body" style="border-bottom:1px solid #F5F5F5;padding:10px 15px 5px 10px;">
                     <h5>
@@ -153,7 +155,7 @@
                         </strong>
                     </h5>
                 </div>
-                <div class="panel-body" style="padding:5px 15px;">
+                <div class="panel-body" style="padding:5px 15px;" cg-busy="delete_searchHistory">
                     <div class="row" style="border-bottom:1px solid #f5f5f5;margin-bottom:3px;" ng-repeat="search_text in searchActivity.searchHistory">
                         <div class="col-lg-12" style="padding:0px 0px 0px 4px;">
                             <div class="oaerror info">
@@ -175,11 +177,11 @@
         <div class="col-lg-offset-1 col-lg-4" ng-if="!(isAuthenticated())">
             <div class="row">
                 <div class="col-lg-12 colpadding">
-                    <h4>
+                    <h3>
                         <label style="font-family: 'open sans',arial,sans-serif;color:;font-weight:400;">
                             Register with Youpep.. It's free
                         </label>
-                    </h4>
+                    </h3>
                 </div>
             </div>
             <div class="row">
@@ -238,7 +240,7 @@
                             <button ng-click = "registerUser()" style="padding: 8px 12px;background-color:#00BCD4;border:1px solid #00BCD4 !important;"
                                                 type="submit" class="btn btn-block btn-warning"
                                                 ng-disabled="!myForm.$valid">
-                                Register with weber
+                                Register with Youpep
                             </button>
                         </fieldset>
 			      	</form>

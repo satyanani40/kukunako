@@ -47,7 +47,7 @@
 							Studied at:
                             <a style="line-height:1.2em;color:;text-decoration:none;">
 
-									{{ user.study.graduate }}
+								{{ user.study.school }} {{ user.study.graduate }}
 
 							</a>
 						</h6>
@@ -124,9 +124,9 @@
                     <div class="tab-pane fade active in" id="home">
                         <div class="questions_arrow">
                             <div class="panel-group" id="accordion">
-                                <div class="panel panel-default" style="margin-bottom:10px" ng-repeat="question in questions.allquestions">
-                                    <div style="cursor:pointer;padding: 15px;border-top:1px solid #f5f5f5 !important;" class="panel-body"
-                                         data-toggle="collapse" data-parent="#accordion" data-target="#{{ question._id }}">
+                                <div class="" style="margin-bottom:10px" ng-repeat="question in questions.allquestions">
+                                    <div style="cursor:pointer;padding-bottom: 15px;border-top:1px solid #f5f5f5 !important;" class=""
+                                         data-toggle="collapse" data-parent="#accordion" data-target="#">
                                         <h5 class="">
                                             <div class="row">
                                                 <div class="col-lg-12">
@@ -135,9 +135,8 @@
                                             </div>
                                         </h5>
                                     </div>
-                                    <div id="{{ question._id }}" class="panel-collapse collapse out">
-                                        <hr style="margin:0px 15px;" />
-                                        <div class="panel-body" style="padding:;">
+                                    <div id="{{ question._id }}" class="panel-collapse">
+                                        <div class="" style="padding:;">
                                             <div class="row" style="padding-bottom:5px;">
                                                 <div class="col-lg-10" style="margin-left:;" ng-if="checkAnswer(question._id)==1">
                                                     <div class="funkyradio">

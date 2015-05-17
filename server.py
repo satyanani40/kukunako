@@ -560,6 +560,33 @@ def convertedCropedImage():
         return jsonify({'data':True})
     return jsonify({'data':False})
 
+@app.route('/resendActivationLink', methods = ['POST', 'GET'])
+def resendActivationLink():
+    accounts = app.data.driver.db['people']
+    user = accounts.find_one({'email': request.json['resend_email']})
+    if not user:
+        response = jsonify(error = 'Your Email does not Exist')
+        response.status_code = 401
+        return response
+
+    create_random_number = id_generator()
+    update_user = accounts.update({'username': user['username']},{'$set':{'random_string':create_random_number}})
+    user_id = str(user['_id'])
+    msg = Message('Re Confirm your Youpep account',
+                  sender='Team@theweber.in',
+                  recipients=[request.json['resend_email']]
+
+        )
+    msg.html = '<div style="min-height:100px;border:1px solid #dcdcdc;">' \
+               '<h5>Thanks for registering with us, To complete your Youpep registration, Follow this link:</h5>' \
+               '<div style="padding:20px 5px">' \
+               '<a href="104.155.44.72/#/confirm_account/users/'+user_id+'/confirm/'+create_random_number+'">Click Here</a></div></div>'
+    mail.send(msg)
+    response = jsonify(data = 'Activation link has been sent to your email')
+    response.status_code = 200
+    return response
+
+
 @app.route('/forgotpasswordlink', methods=['POST', 'GET'])
 def forgotpassword():
     accounts = app.data.driver.db['people']

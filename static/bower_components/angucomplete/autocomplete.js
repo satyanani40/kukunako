@@ -254,7 +254,7 @@ app.directive('autocomplete', function() {
           <ul ng-show="completing && (suggestions | filter:searchFilter).length > 0">\
             <li style="padding:10px 12px;"\
               suggestion\
-              ng-repeat="suggestion in suggestions | filter:searchFilter | orderBy:\'toString()\' track by $index"\
+              ng-repeat="suggestion in suggestions | filter:searchFilter | limitTo:7 | orderBy:\'toString()\' track by $index"\
               index="{{ $index }}"\
               val="{{ suggestion.name.first }} {{ suggestion.name.last }}"\
               ng-class="{ active: ($index === selectedIndex) }"\

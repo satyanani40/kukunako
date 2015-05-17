@@ -74,7 +74,7 @@
 							<i class="fa fa-graduation-cap" style="opacity:0.65;font-size:12px;"></i>
 							Studied at:
                             <a style="line-height:1.2em;text-decoration:none;">
-								{{ profileuser.study.graduate }}
+								{{ profileuser.study.school }} {{ profileuser.study.graduate }}
 							</a>
 						</h6>
 					</div>
@@ -128,8 +128,14 @@
             </div>
             <div class="panel-body">
                 <div class="row" style="padding-bottom:5px;" ng-if="checkYouAnswered(question._id) && isAuthenticated()">
+<<<<<<< HEAD
                     <div class="col-lg-10" ng-if="checkAnswer(question._id)==1">
                         <div class="funkyradio">
+=======
+                    <div class="col-lg-10"
+                         ng-if="checkAnswer(question._id)==1">
+                        <div ng-hide="true" class="funkyradio">
+>>>>>>> 90b705c04de95cbb7e41807295f13a1ee1c401a7
                             <div class="funkyradio-primary">
                                 <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
                                    ng-change="answered('{{ question._id}}',1)"
@@ -143,12 +149,12 @@
                                 <label for="{{question._id}}_2">Say no</label>
                             </div>
                         </div>
-                        answered : Yes
+                        answered : <strong>Yes</strong>
                     </div>
 
                     <div class="col-lg-10" ng-if="checkAnswer(question._id)==0">
 
-                        <div class="funkyradio">
+                        <div ng-hide="true" class="funkyradio">
                             <div class="funkyradio-primary">
                                 <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
                                    ng-change="answered('{{ question._id}}',1)"
@@ -162,7 +168,7 @@
                                 <label for="{{question._id}}_2">Say no</label>
                             </div>
                         </div>
-                        answered : No
+                        answered : <strong>No</strong>
 
                     </div>
                     <div class="col-lg-10" ng-if="checkAnswer(question._id)==3">
