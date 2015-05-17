@@ -41,6 +41,7 @@ angular.module('weberApp')
                 $scope.questions.getallquestions();
 
                 $scope.answered = function(question, ans){
+
                     for(var temp in $scope.currentUser.questions){
                         if($scope.currentUser.questions[temp].questionid == question){
                             $scope.currentUser.questions[temp].answer = ans;
