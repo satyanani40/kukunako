@@ -20,7 +20,10 @@ angular.module('weberApp')
                 // check interests and questions answered or not
                 if($scope.currentUser.interests.length == 0 &&
                     $scope.currentUser.questions.length < 4){
-                    $location.path("/enter_interests")
+
+                    console.log($scope.currentUser.interests.length,'==>', $scope.currentUser.interests)
+                    console.log($scope.currentUser.questions.length,'==>', $scope.currentUser.questions)
+                    //$location.path("/enter_interests")
                 }
 
                 //console.log($scope.currentUser);
