@@ -6,16 +6,16 @@
                     <a style="cursor:pointer;">
                         <img class="img-rounded" style="" data-placement="center"
                              data-animation="am-fade-and-scale" data-template="modal.showProfileImage.tpl.html"
-                             bs-modal ng-src="{{user.picture.large}}" />
+                             bs-modal ng-src="{{currentUser.picture.large}}" />
                     </a>
                 </div>
             </div>
 			<div class="caption text-center">
 				<h3 style="text-transform: capitalize;">
                     <a href="" data-placement="bottom" style="text-decoration:none;" data-animation="am-fade-and-scale" data-html="true"
-                         data-title="<h6>Lives In {{user.location.city}}</h6>"
+                         data-title="<h6>Lives In {{currentUser.location.city}}</h6>"
                          bs-tooltip>
-                        {{user.name.first}} {{user.name.last}}
+                        {{currentUser.name.first}} {{currentUser.name.last}}
                     </a>
                 </h3>
 			</div>
@@ -32,7 +32,7 @@
 						<h6 style="margin-bottom:5px;margin-top:0px;line-height:1.6em;" class="about-edit">
 							<i class="fa fa-dashboard" style="opacity:0.65;font-size:12px;"></i>&nbsp;
 							I am interested in:
-                            <a ng-repeat="interest in user.interests"
+                            <a ng-repeat="interest in currentUser.interests"
                                style="line-height:1.2em;color:;text-decoration:none;text-transform:capitalize;">
 								<!--{{ interest }}{{$last ? '' : ', '}}&nbsp;-->
                                 {{ InterestsService.get(interest).interest_string }}{{$last ? '' : ', '}}
@@ -47,7 +47,7 @@
 							Studied at:
                             <a style="line-height:1.2em;color:;text-decoration:none;">
 
-								{{ user.study.school }} {{ user.study.graduate }}
+								{{ currentUser.study.school }} {{ currentUser.study.graduate }}
 
 							</a>
 						</h6>
@@ -59,7 +59,7 @@
 							<i class="fa fa-home" style="opacity:0.65;font-size:13px;"></i>&nbsp;
 							Lives in:
                             <a style="line-height:1.2em;color:;text-decoration:none;">
-								{{ user.location.state }}, {{ user.location.city }}
+								{{ currentUser.location.state }}, {{ currentUser.location.city }}
                             </a>
 						</h6>
 					</div>
@@ -71,13 +71,13 @@
                 <h5>
                     <strong>
                         Friends - <span style="opacity:0.70;">
-                        {{user.friends.length}}
+                        {{currentUser.friends.length}}
                     </span>
                     </strong>
                 </h5>
 			</div>
             <div class="panel-body" style="padding:1px;">
-                <a ng-repeat="friend in user.friends " href="#/profile/{{ friend }}">
+                <a ng-repeat="friend in currentUser.friends " href="#/profile/{{ friend }}">
                     <img data-placement="top" style="width:87px" data-animation="am-fade-and-scale" data-html="true"
                          data-title="<h6>{{UserService.get(friend).name.first}} {{UserService.get(friend).name.last}}</h6>
                             <h6>Lives In {{ UserService.get(friend).location.city }}, {{UserService.get(friend).location.state}}</h6>"
@@ -252,7 +252,7 @@
                     </span>
 
                     <a style="cursor:pointer;" class="pull-right delete-div" title="Delete this post"
-                       data-animation="am-fade-and-scale" ng-if="user._id == UserService.get(post.author)._id"
+                       data-animation="am-fade-and-scale" ng-if="currentUser._id == UserService.get(post.author)._id"
                        data-template="modal.deletingPost.tpl.html"
                        bs-modal>
                         Delete
@@ -273,15 +273,15 @@
                         </div>
                     </div>
 
-                    <div class="row" ng-show="post.author != user._id">
+                    <div class="row" ng-show="post.author != currentUser._id">
                         <div class="col-sm-12">
                             <h6>
-                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, user) == false"
+                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, currentUser) == false"
                                    ng-click=" pushToPost(post.author,post._id)"
                                    style="cursor:pointer" >
                                     Match
                                 </a>&nbsp;
-                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, user) == true"
+                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, currentUser) == true"
                                    ng-click="deleteFromPost(post.author,post._id)"
                                    style="cursor:pointer" >
                                     UnMatch
@@ -393,7 +393,7 @@
                   <div class='row'>
                     <div class='col-lg-12'>
                         <div class="thumbnail" style="border:0px solid;margin-bottom:1px;">
-                            <img ng-src="{{ user.picture.large }}">
+                            <img ng-src="{{ currentUser.picture.large }}">
                         </div>
                     </div>
                   </div>
