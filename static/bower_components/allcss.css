@@ -1405,7 +1405,14 @@ color:red !important;
     opacity:1;
     color:#5bc0de;
     display:block;
-}/* chat box css goes here*/
+}
+
+/*resend button */
+    .resend-button{
+        margin-top: 10px;
+    }
+
+/* resend button //* chat box css goes here*/
 .ch22at_290_b22ox_2080{
     width:200px;
     position:fixed;

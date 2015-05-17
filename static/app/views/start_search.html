@@ -10,7 +10,9 @@
             <div class="row" ng-if="!(isAuthenticated())">
                 <div class="col-sm-12">
                     <h3 style="font-family: 'open sans',arial,sans-serif;color:#3E4349;font-weight:300;line-height: 1.5em;">
-                        Youpep is a medium to search and find people, based on their activities,interests and location.
+                        <strong>
+                            Youpep is medium to search people, based on their activities,interests and location.
+                        </strong>
                     </h3>
                 </div>
             </div>
@@ -175,11 +177,11 @@
         <div class="col-lg-offset-1 col-lg-4" ng-if="!(isAuthenticated())">
             <div class="row">
                 <div class="col-lg-12 colpadding">
-                    <h4>
+                    <h3>
                         <label style="font-family: 'open sans',arial,sans-serif;color:;font-weight:400;">
                             Register with Youpep.. It's free
                         </label>
-                    </h4>
+                    </h3>
                 </div>
             </div>
             <div class="row">
@@ -238,7 +240,7 @@
                             <button ng-click = "registerUser()" style="padding: 8px 12px;background-color:#00BCD4;border:1px solid #00BCD4 !important;"
                                                 type="submit" class="btn btn-block btn-warning"
                                                 ng-disabled="!myForm.$valid">
-                                Register with weber
+                                Register with Youpep
                             </button>
                         </fieldset>
 			      	</form>

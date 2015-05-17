@@ -99,7 +99,8 @@ angular
 				reloadOnSearch: false
 			})
 			.when('/login', {
-				templateUrl: '/static/app/views/login.html'
+				templateUrl: '/static/app/views/login.html',
+				controller: 'indexCtrl'
 			})
 			.when('/settings', {
 				templateUrl: '/static/app/views/settings.html',

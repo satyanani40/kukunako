@@ -1437,65 +1437,105 @@ angular.module('weberApp')
         };
 
         /* login functionality code goes here*/
-        $scope.submitLogin = function() {
-            $auth.login({
-				email: this.formData.email,
-				password: this.formData.password
-			}).then(function(response) {
-			    console.log('-----------index user--------------', response)
-			    $auth.setToken(response.data.token);
-				$scope.currentUser = response.data.user;
-				$scope.chatactivity = new ChatActivity($scope.currentUser);
-			}, function(error) {
-				$scope.loginError = error;
-				var loginAlert = $alert({
-					title: 'Login Failed:',
-					content: error.data.error,
-					placement: 'top',
-					type: 'danger',
-					show: true
-				});
-				$timeout(function() {
-                    loginAlert.hide();
-                }, 5000);
-			});
-		};
+            $scope.submitLogin = function() {
+                $auth.login({
+                    email: this.formData.email,
+                    password: this.formData.password
+                }).then(function(response) {
+                    console.log('-----------index user--------------', response)
+                    $auth.setToken(response.data.token);
+                    $scope.currentUser = response.data.user;
+                    $scope.chatactivity = new ChatActivity($scope.currentUser);
+                }, function(error) {
+                    $scope.loginError = error;
+                    var loginAlert = $alert({
+                        title: 'Login Failed:',
+                        content: error.data.error,
+                        placement: 'top',
+                        type: 'danger',
+                        show: true
+                    });
+                    $timeout(function() {
+                        loginAlert.hide();
+                    }, 5000);
+                });
+            };
         /* end of login functionality*/
+        /* ResendMail code*/
+            $scope.ResendMail = function(){
+                $scope.Resend_busy = $timeout(function(){
+                    console.log("email",$scope.ss)
+                    // Simple POST request example (passing data) :
+                    $http.post('/resendActivationLink', {resend_email: $scope.ss}).
+                    success(function(data, status, headers, config) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        console.log("success activation", data.data);
+                        var successAlert = $alert({
+                            title: 'Success:',
+                            content: data.data,
+                            placement: 'top',
+                            type: 'success',
+                            show: true
+                        });
+                        $timeout(function() {
+                            successAlert.hide();
+                        }, 5000);
+                    }).
+                    error(function(error, status, headers, config) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        console.log("error activation", error)
+                        var errorAlert = $alert({
+                            title: 'Failed:',
+                            content: error.error,
+                            placement: 'top',
+                            type: 'danger',
+                            show: true
+                        });
+                        $timeout(function() {
+                            errorAlert.hide();
+                        }, 5000);
+                    });
+                },2000);
+            }
+        /* end of ResendMail code */
 
         //$scope.isAdmin = true;
         /* starting code of signup goes here */
-        $scope.registerUser = function() {
-            var self = this;
-            $scope.signupBusy = $auth.signup({
-                email: self.formData.email,
-                password: self.formData.password,
-                firstname: self.formData.firstname,
-                lastname: self.formData.lastname,
-                username: self.formData.firstname + self.formData.lastname,
-            }).then(function (response) {
-                if(response.data.status == 200){
-                    $auth.setToken(response.data.token);
-                    $scope.currentUser = response.data.user;
-                    $scope.currentUser._id = response.data.user._id.$oid;
-                    $location.path('/enter_interests/' + self.formData.email);
-                }
+            $scope.registerUser = function() {
+                var self = this;
+                $scope.signupBusy = $auth.signup({
+                    email: self.formData.email,
+                    password: self.formData.password,
+                    firstname: self.formData.firstname,
+                    lastname: self.formData.lastname,
+                    username: self.formData.firstname + self.formData.lastname,
+                }).then(function (response) {
+                    if(response.data.status == 200){
+                        $auth.setToken(response.data.token);
+                        $scope.currentUser = response.data.user;
+                        $scope.currentUser._id = response.data.user._id.$oid;
+                        $location.path('/enter_interests/' + self.formData.email);
+                    }
 
-            }, function (signuperror) {
-                $scope.signUpError = signuperror;
-                var userNameAlert = $alert({
-                    title: 'Registration Failed:',
-                    content: signuperror.data.error,
-                    placement: 'top',
-                    type: 'danger',
-                    show: true
+                }, function (signuperror) {
+                    $scope.signUpError = signuperror;
+                    var userNameAlert = $alert({
+                        title: 'Registration Failed:',
+                        content: signuperror.data.error,
+                        placement: 'top',
+                        type: 'danger',
+                        show: true
+                    });
+                    $timeout(function() {
+                        userNameAlert.hide();
+                    }, 5000);
                 });
-                $timeout(function() {
-                    userNameAlert.hide();
-                }, 5000);
-            });
-        };
+            };
 
         /* ending of signup code */
+
 
         $scope.dropdown = [{
             "text": "Friends",

@@ -68,7 +68,25 @@
                     </span>
                 </div>
                 <div class="panel-footer">
-                    Not Registered?  <a href="#/signup">Register Here</a>
+                    <h5>
+                        Resend activation link?  <a style="cursor:pointer;" data-toggle="collapse"
+                                data-parent="#accordion" data-target="#1">Click Here</a>
+                    </h5>
+                    <div id="1" style="border-top:1px solid #dcdcdc;" cg-busy="Resend_busy" class="panel-collapse collapse out">
+                        <form role="form" name="ResendForm">
+                            <label style="margin-top:10px;">
+                                Enter Email
+                            </label>
+                            <input type="email" class="form-control"
+                                       placeholder="Enter Password" id="resend" name="resend" ng-model="ss" required  />
+                            <span ng-show="ResendForm.resend.$error.required && ResendForm.resend.$dirty" style="color:red">
+                                required<br />
+                            </span>
+                            <button ng-click="ResendMail()" ng-disabled="!ResendForm.$valid" class="resend-button btn btn-sm btn-primary">
+                                Resend Link
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
