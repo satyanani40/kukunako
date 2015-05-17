@@ -128,14 +128,10 @@
             </div>
             <div class="panel-body">
                 <div class="row" style="padding-bottom:5px;" ng-if="checkYouAnswered(question._id) && isAuthenticated()">
-<<<<<<< HEAD
-                    <div class="col-lg-10" ng-if="checkAnswer(question._id)==1">
-                        <div class="funkyradio">
-=======
+
                     <div class="col-lg-10"
                          ng-if="checkAnswer(question._id)==1">
                         <div ng-hide="true" class="funkyradio">
->>>>>>> 90b705c04de95cbb7e41807295f13a1ee1c401a7
                             <div class="funkyradio-primary">
                                 <input type="radio" ng-model="choice" id="{{question._id}}_1" value="{{question._id}}_yes"
                                    ng-change="answered('{{ question._id}}',1)"
