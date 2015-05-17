@@ -97,6 +97,7 @@ angular.module('weberApp')
          }
 
          questions.prototype.updateUser2 = function(question, answer, cuser_id){
+           console.log('update cuser 2===>', cuser_id)
            var self = this;
             var req = {
                 method: 'POST',
