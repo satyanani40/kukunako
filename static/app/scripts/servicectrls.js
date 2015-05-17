@@ -1757,6 +1757,7 @@ angular.module('weberApp')
             });
 
         }else{
+            console.log('else part user', $scope.currentUser)
             questionOperations();
         }
 
