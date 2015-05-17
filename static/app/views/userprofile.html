@@ -248,15 +248,15 @@
                             </p>
                         </div>
                     </div>
-                    <div class="row" ng-show="post.author != user._id && isAuthenticated()">
+                    <div class="row" ng-show="post.author != currentUser._id && isAuthenticated()">
                         <div class="col-sm-12">
                             <h6>
-                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, user) == false"
+                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, currentUser) == false"
                                    ng-click=" pushToPost(post.author,post._id)"
                                    style="cursor:pointer" >
                                     Match
                                 </a>&nbsp;
-                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, user) == true"
+                                <a ng-show="MatchButtonService.checkMatchUnMatch(post, currentUser) == true"
                                    ng-click="deleteFromPost(post.author,post._id)"
                                    style="cursor:pointer" >
                                     UnMatch
