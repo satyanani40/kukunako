@@ -15,20 +15,46 @@ angular.module('weberApp')
 	 	$scope.searched = false;
 	 	$scope.UserService = UserService;
 	 	$scope.InterestsService = InterestsService;
-        $scope.$watch('currentUser', function(){
-            if(typeof $scope.currentUser !== 'undefined' && $scope.isAuthenticated()){
-                // check interests and questions answered or not
-                if($scope.currentUser.interests.length == 0 &&
-                    $scope.currentUser.questions.length < 4){
-                    $location.path("/enter_interests")
-                }
 
-                //console.log($scope.currentUser);
-                $scope.searchActivity = new SearchActivity($scope.currentUser);
-                $scope.searchActivity.getMysearches();
-                store_search_text($routeParams.query);
+        if(typeof $scope.currentUser === 'undefined' && !($scope.isAuthenticated())){
+            $http.get('/api/me', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': $auth.getToken()
+                }
+            }).success(function(user_id) {
+                var params = '{"send_add_requests":1}';
+                Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()}).then(function(user) {
+                    $scope.currentUser = user;
+                    // check interests and questions answered or not
+                    if($scope.currentUser.interests.length == 0 &&
+                        $scope.currentUser.questions.length < 4){
+
+                        console.log($scope.currentUser.interests.length,'==>', $scope.currentUser.interests)
+                        console.log($scope.currentUser.questions.length,'==>', $scope.currentUser.questions)
+                        //$location.path("/enter_interests")
+                    }
+
+                    //console.log($scope.currentUser);
+                    $scope.searchActivity = new SearchActivity($scope.currentUser);
+                    $scope.searchActivity.getMysearches();
+                    store_search_text($routeParams.query);
+
+                });
+            });
+
+        }else{
+            if($scope.currentUser.interests.length == 0 &&
+                $scope.currentUser.questions.length < 4){
+                console.log($scope.currentUser.interests.length,'==>', $scope.currentUser.interests)
+                console.log($scope.currentUser.questions.length,'==>', $scope.currentUser.questions)
+                //$location.path("/enter_interests")
             }
-        });
+            //console.log($scope.currentUser);
+            $scope.searchActivity = new SearchActivity($scope.currentUser);
+            $scope.searchActivity.getMysearches();
+            store_search_text($routeParams.query);
+        }
 
         // delete search history item
         $scope.delete_searchHistoryItem = function(id){

@@ -74,15 +74,7 @@ angular.module('weberApp')
 		        self.canswers.push({'questionid':question, 'answer':answer});
             }.bind(self));
 
-            /*Restangular.one('updateAnswer').get({
-		        question : question,
-		        answer : answer,
-		        cuserid : this.currentuser._id,
-		        seed:Math.random()
-		    }).then(function(data){
-		        console.log('updated answer', data);
 
-		    }.bind(this));*/
         }
 
         questions.prototype.checkAnswer = function(questionid){
@@ -104,27 +96,35 @@ angular.module('weberApp')
             return false;
          }
 
-         questions.prototype.updateUser2 = function(question, answer){
-            console.log('----------------service------------')
-            Restangular.one('updateAnswer').get({
-		        question : question,
-		        answer : answer,
-		        cuserid : this.user2._id,
-		        seed:Math.random()
-		    }).then(function(data){
-		        console.log('updated answer', data);
-		        for(var temp in this.user2.questions){
-                    if(this.user2.questions[temp].questionid == question){
-                        this.user2.questions[temp].answer = answer;
+         questions.prototype.updateUser2 = function(question, answer, cuser_id){
+           console.log('update cuser 2===>', cuser_id)
+           var self = this;
+            var req = {
+                method: 'POST',
+                url: '/api/updateAnswer',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                        question : question,
+		                answer : answer,
+		                cuserid : cuser_id,
+		                seed:Math.random()
+                }
+            }
+
+            $http(req).success(function (data) {
+               console.log('updated answer', data);
+		       for(var temp in self.user2.questions){
+                    if(self.user2.questions[temp].questionid == question){
+                        self.user2.questions[temp].answer = answer;
                         return true
                     }
 		        }
-		       this.user2.questions.push({'questionid':question, 'answer':answer});
+		       self.user2.questions.push({'questionid':question, 'answer':answer});
 		    }.bind(this));
          }
-
-
-        return questions;
+         return questions;
     })
 
 	.factory('InstanceSearch', function($http, Restangular, $alert, $timeout) {

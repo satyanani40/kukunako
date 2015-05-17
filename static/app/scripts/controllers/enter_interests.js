@@ -41,6 +41,7 @@ angular.module('weberApp')
                 $scope.questions.getallquestions();
 
                 $scope.answered = function(question, ans){
+
                     for(var temp in $scope.currentUser.questions){
                         if($scope.currentUser.questions[temp].questionid == question){
                             $scope.currentUser.questions[temp].answer = ans;
@@ -50,6 +51,7 @@ angular.module('weberApp')
                     }
 
                     $scope.currentUser.questions.push({'questionid':question, 'answer': ans});
+                    console.log('pushed answereds', $scope.currentUser.questions)
                     $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
                     return;
                 }

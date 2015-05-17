@@ -74,6 +74,7 @@ angular.module('weberApp')
             });
 
         }else{
+            console.log('else part user', $scope.currentUser)
             questionOperations();
         }
 
@@ -86,7 +87,8 @@ angular.module('weberApp')
             }
 
             $scope.youAnswered = function(question, ans){
-                $scope.questions.updateUser2(question, ans);
+                console.log('------------->>> user id', $scope.currentUser._id);
+                $scope.questions.updateUser2(question, ans, $scope.currentUser._id);
                 console.log(question, ans)
             }
              // end of questions section
