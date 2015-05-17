@@ -28,13 +28,12 @@ angular.module('weberApp')
 
 
                 // checking enter minimum interests
-                if($scope.currentUser.interests.length == 0){
-                    $location.path("/enter_interests")
+                if($scope.currentUser.interests.length == 0 && $scope.currentUser.questions.length < 4){
+                    console.log('interests length', $scope.currentUser.questions.length, $scope.currentUser.interests.length)
+                    //$location.path("/enter_interests")
                 }
 
-                if($scope.currentUser.questions.length < 4){
-                    $location.path("/enter_interests")
-                }
+
 
                 //delete the post from infinite posts of the current user
                 function checkdeletepost(post_id){
