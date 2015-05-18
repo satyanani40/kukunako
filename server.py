@@ -694,9 +694,9 @@ def signup():
             },
             'email_confirmed':False,
             'picture' : {
-                'large' : "static/app/images/w-logo.jpg",
-                'medium' : "static/app/images/w-logo.jpg",
-                'thumbnail' : "static/app/images/w-logo.jpg"
+                'large' : "static/app/images/yp-logo-500X500.png",
+                'medium' : "static/app/images/yp-logo-300X300.png",
+                'thumbnail' : "static/app/images/yp-logo-300X300.png"
             },
             'phone': "",
             'study': {

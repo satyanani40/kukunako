@@ -404,7 +404,7 @@ angular.module('weberApp')
                     }
                 }
                 $scope.present_search_query = $scope.query;
-            },2000);
+            },3000);
         }
 
         $scope.storequestion = function(){
