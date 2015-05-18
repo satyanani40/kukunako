@@ -9,7 +9,7 @@
  */
 angular.module('weberApp')
   .controller('FriendsCtrl', function($scope, $auth, Restangular, InterestsService,
-                InfinitePosts, $alert, $http, CurrentUser, UserService) {
+                InfinitePosts, $alert, $http, CurrentUser, UserService, $rootScope) {
 		$scope.UserService = UserService;
 		$scope.InterestsService = InterestsService;
 		$http.get('/api/me', {

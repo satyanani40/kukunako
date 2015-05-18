@@ -1689,7 +1689,7 @@ angular.module('weberApp')
  */
 angular.module('weberApp')
 	.controller('UserprofileCtrl', function($scope, $routeParams,$templateCache, sortIListService, questions,
-	                                        Restangular, InfinitePosts, UserService,MatchButtonService,
+	                                        Restangular, InfinitePosts, UserService,MatchButtonService,$rootScope,
 	                                        CurrentUser, InterestsService, friendsActivity) {
 
 		$scope.UserService = UserService;
@@ -1945,7 +1945,7 @@ angular.module('weberApp')
  */
 angular.module('weberApp')
   .controller('FriendsCtrl', function($scope, $auth, Restangular, InterestsService,
-                InfinitePosts, $alert, $http, CurrentUser, UserService) {
+                InfinitePosts, $alert, $http, CurrentUser, UserService, $rootScope) {
 		$scope.UserService = UserService;
 		$scope.InterestsService = InterestsService;
 		$http.get('/api/me', {
