@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 /**
  * @ngdoc function
@@ -7,7 +7,7 @@
  * # NavbarCtrl
  * Controller of the weberApp
  */
-angular.module('weberApp')
+/*angular.module('weberApp')
 .directive('getuserdata', function () {
     return {
         controller:function($scope, CurrentUser1,$http,Restangular,$auth){
@@ -23,4 +23,4 @@ angular.module('weberApp')
             });
         }
     }
-});
+});*/

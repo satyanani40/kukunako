@@ -1,5 +1,6 @@
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
+                {{ data }}
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".upper-navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -232,6 +233,7 @@
                             </script>
                         </li>
                         <li id="menu-item-4">
+
                             <a href="" bs-dropdown="dropdown" style="padding-top: 11px; padding-bottom: 11px;">
                                 <img style="width:28px; border: 2px solid; margin-right: 5px;" class="img-circle" ng-src="{{currentUser.picture.thumbnail}}" alt="">
                                 {{currentUser.username}}

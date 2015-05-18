@@ -15,8 +15,7 @@ angular.module('weberApp')
 	 	$scope.searched = false;
 	 	$scope.UserService = UserService;
 	 	$scope.InterestsService = InterestsService;
-
-        if(typeof $scope.currentUser === 'undefined' && !($scope.isAuthenticated())){
+	 	if(typeof $rootScope.currentUser === 'undefined'){
             $http.get('/api/me', {
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,18 +24,18 @@ angular.module('weberApp')
             }).success(function(user_id) {
                 var params = '{"send_add_requests":1}';
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()}).then(function(user) {
-                    $scope.currentUser = user;
-                    // check interests and questions answered or not
-                    if($scope.currentUser.interests.length == 0 &&
-                        $scope.currentUser.questions.length < 4){
 
-                        console.log($scope.currentUser.interests.length,'==>', $scope.currentUser.interests)
-                        console.log($scope.currentUser.questions.length,'==>', $scope.currentUser.questions)
-                        //$location.path("/enter_interests")
+
+                    $rootScope.currentUser = user;
+                    //$rootScope.temp_user = user;
+                    if($rootScope.currentUser.interests.length == 0 &&
+                        $rootScope.currentUser.questions.length < 4){
+
+                       $location.path("/enter_interests")
                     }
 
                     //console.log($scope.currentUser);
-                    $scope.searchActivity = new SearchActivity($scope.currentUser);
+                    $scope.searchActivity = new SearchActivity($rootScope.currentUser);
                     $scope.searchActivity.getMysearches();
                     store_search_text($routeParams.query);
 
@@ -44,11 +43,9 @@ angular.module('weberApp')
             });
 
         }else{
-            if($scope.currentUser.interests.length == 0 &&
-                $scope.currentUser.questions.length < 4){
-                console.log($scope.currentUser.interests.length,'==>', $scope.currentUser.interests)
-                console.log($scope.currentUser.questions.length,'==>', $scope.currentUser.questions)
-                //$location.path("/enter_interests")
+            if($rootScope.currentUser.interests.length == 0 &&
+                $rootScope.currentUser.questions.length < 4){
+                $location.path("/enter_interests")
             }
             //console.log($scope.currentUser);
             $scope.searchActivity = new SearchActivity($scope.currentUser);
@@ -68,7 +65,7 @@ angular.module('weberApp')
                 $scope.search = true;
                 if($scope.present_search_query == $scope.query) return;
                 if($scope.query){
-                    // alredy present searched query no need to search again
+                    //alredy present searched query no need to search again
                     $location.search('query', $scope.query);
                     $scope.matchResults = new MatchMeResults($scope.query, $scope.location);
                     $scope.matchResults.newSearchResults();

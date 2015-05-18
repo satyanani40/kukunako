@@ -51,7 +51,7 @@ angular.module('weberApp')
             }
 
              $scope.answered = function(question, ans){
-                 $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                 $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
                  console.log(question, ans)
              }
 
@@ -59,7 +59,7 @@ angular.module('weberApp')
 
 
         // end of profile user information
-        if($scope.currentUser === 'undefined'){
+        if($rootScope.currentUser === 'undefined'){
             $http.get('/api/me', {
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,13 +68,13 @@ angular.module('weberApp')
             }).success(function(user_id) {
                 var params = '{"send_add_requests":1}';
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()}).then(function(user) {
-                    $scope.currentUser = user;
+                    $rootScope.currentUser = user;
                     questionOperations();
                 });
             });
 
         }else{
-            console.log('else part user', $scope.currentUser)
+            console.log('else part user', $rootScope.currentUser)
             questionOperations();
         }
 
@@ -82,18 +82,18 @@ angular.module('weberApp')
         function questionOperations(){
 
             $scope.checkYouAnswered = function(question_id){
-                data = $scope.questions.checkYouAnswered(question_id, $scope.currentUser);
+                data = $scope.questions.checkYouAnswered(question_id, $rootScope.currentUser);
                 return data;
             }
 
             $scope.youAnswered = function(question, ans){
-                console.log('------------->>> user id', $scope.currentUser._id);
-                $scope.questions.updateUser2(question, ans, $scope.currentUser._id);
+                console.log('------------->>> user id', $rootScope.currentUser._id);
+                $scope.questions.updateUser2(question, ans, $rootScope.currentUser._id);
                 console.log(question, ans)
             }
              // end of questions section
-            if($scope.currentUser._id !== $scope.profileuser._id){
-                var friendsactivity = new friendsActivity($scope.currentUser, $scope.profileuser);
+            if($rootScope.currentUser._id !== $scope.profileuser._id){
+                var friendsactivity = new friendsActivity($rootScope.currentUser, $scope.profileuser);
                 //console.log(friendsactivity)
                 $scope.check_relation = function(){
                     $scope.relation = friendsactivity.getRelation();
@@ -111,13 +111,13 @@ angular.module('weberApp')
 
                         var iPeople = posts[temp].interestedPeople;
                         for(var i in iPeople){
-                            if(iPeople[i].interested_person == $scope.currentUser._id){
+                            if(iPeople[i].interested_person == $rootScope.currentUser._id){
                                 return true;
                             }
                         }
-                        iPeople.push({'interested_person': $scope.currentUser._id, 'match_date': new Date()});
+                        iPeople.push({'interested_person': $rootScope.currentUser._id, 'match_date': new Date()});
                         //console.log('post author-->', postauthor)
-                        MatchButtonService.match(postauthor, postid , $scope.currentUser._id).then(function(data){
+                        MatchButtonService.match(postauthor, postid , $rootScope.currentUser._id).then(function(data){
                             console.log('match agree succesfully-->', data);
                         });
 
@@ -135,9 +135,9 @@ angular.module('weberApp')
                     if(posts[temp]._id == postid){
                         var iPeople = posts[temp].interestedPeople;
                         for(var i in iPeople){
-                            if(iPeople[i].interested_person == $scope.currentUser._id){
+                            if(iPeople[i].interested_person == $rootScope.currentUser._id){
                                iPeople.splice(i,1);
-                               MatchButtonService.unmatch(postauthor, postid, $scope.currentUser._id).then(function(data){
+                               MatchButtonService.unmatch(postauthor, postid, $rootScope.currentUser._id).then(function(data){
                                     console.log('unmatch disagree succesfully-->', data);
                                });
                             }

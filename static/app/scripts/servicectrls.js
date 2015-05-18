@@ -8,7 +8,8 @@
  * Controller of the weberApp
  */
 angular.module('weberApp')
-	.controller('enterInterestsCtrl', function($timeout, questions, InterestsService, $http, Restangular, $scope, $auth, $alert, $location, $routeParams) {
+	.controller('enterInterestsCtrl', function($timeout, questions, InterestsService, $http,
+	 Restangular, $scope, $auth, $alert, $location, $routeParams, $rootScope) {
 
         //var element = $routeParams.userId;
         //console.log(element)
@@ -31,7 +32,7 @@ angular.module('weberApp')
 		}).success(function(userId) {
             Restangular.one('people', JSON.parse(userId)).get({seed:Math.random()}).then(function(user) {
 
-                $scope.currentUser = user;
+                $rootScope.currentUser = user;
 
                 $scope.afterFinishQuestions = function(){
                     $location.path('/home');
@@ -42,17 +43,17 @@ angular.module('weberApp')
 
                 $scope.answered = function(question, ans){
 
-                    for(var temp in $scope.currentUser.questions){
-                        if($scope.currentUser.questions[temp].questionid == question){
-                            $scope.currentUser.questions[temp].answer = ans;
-                            $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                    for(var temp in $rootScope.currentUser.questions){
+                        if($rootScope.currentUser.questions[temp].questionid == question){
+                            $rootScope.currentUser.questions[temp].answer = ans;
+                            $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
                             return;
                         }
                     }
 
-                    $scope.currentUser.questions.push({'questionid':question, 'answer': ans});
-                    console.log('pushed answereds', $scope.currentUser.questions)
-                    $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                    $rootScope.currentUser.questions.push({'questionid':question, 'answer': ans});
+                    console.log('pushed answereds', $rootScope.currentUser.questions)
+                    $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
                     return;
                 }
 
@@ -62,7 +63,7 @@ angular.module('weberApp')
                 }
                 // end of questions section
 
-                if($scope.currentUser.interests.length){
+                if($rootScope.currentUser.interests.length){
                     // success show
                     $scope.show_interests = false;
                     $scope.show_questions = true;
@@ -73,18 +74,18 @@ angular.module('weberApp')
                     $scope.show_questions = false;
                 }
                 $scope.newUserInterests = function(){
-                    for(var temp in $scope.currentUser.interests){
-                        $scope.final_interests_array.push(InterestsService.get($scope.currentUser.interests[temp]).interest_string)
+                    for(var temp in $rootScope.currentUser.interests){
+                        $scope.final_interests_array.push(InterestsService.get($rootScope.currentUser.interests[temp]).interest_string)
                     }
                     $scope.Interests_busy = $timeout(function() {
                         $http.post('/get_interested_ids',
                         {
                             interests: $scope.final_interests_array,
-                            username: $scope.currentUser.username
+                            username: $rootScope.currentUser.username
                         })
                         .success(function(data, status, headers, config) {
                             console.log("======return success of interests of ids",data);
-                            $scope.currentUser.interests = data.interests;
+                            $rootScope.currentUser.interests = data.interests;
                             $scope.show_interests = false;
                             $scope.show_questions = true;
                             var interestsAlert = $alert({
@@ -176,7 +177,7 @@ angular.module('weberApp')
 				}
                 // getting suggested friends
 
-                 console.log('before request', $scope.currentUser)
+                 console.log('before request', $rootScope.currentUser)
                  var req = {
 
                         method: 'POST',
@@ -185,10 +186,10 @@ angular.module('weberApp')
                             'Content-Type': 'application/json'
                         },
                         data: {
-                            location: $scope.currentUser['location']['state'],
-                            friends: $scope.currentUser['friends'],
-                            username: $scope.currentUser['username'],
-                            _id: $scope.currentUser['_id'],
+                            location: $rootScope.currentUser['location']['state'],
+                            friends: $rootScope.currentUser['friends'],
+                            username: $rootScope.currentUser['username'],
+                            _id: $rootScope.currentUser['_id'],
                             seed: Math.random()
                         }
                  }
@@ -301,7 +302,7 @@ angular.module('weberApp')
 			});
 		});
 
-	});'use strict';
+	});/*'use strict';
 
 /**
  * @ngdoc function
@@ -310,7 +311,7 @@ angular.module('weberApp')
  * # NavbarCtrl
  * Controller of the weberApp
  */
-angular.module('weberApp')
+/*angular.module('weberApp')
 .directive('getuserdata', function () {
     return {
         controller:function($scope, CurrentUser1,$http,Restangular,$auth){
@@ -326,7 +327,7 @@ angular.module('weberApp')
             });
         }
     }
-});
+});*/
 'use strict';
 
 /**
@@ -344,8 +345,7 @@ angular.module('weberApp')
 	 	$scope.searched = false;
 	 	$scope.UserService = UserService;
 	 	$scope.InterestsService = InterestsService;
-
-        if(typeof $scope.currentUser === 'undefined' && !($scope.isAuthenticated())){
+	 	if(typeof $rootScope.currentUser === 'undefined'){
             $http.get('/api/me', {
                 headers: {
                     'Content-Type': 'application/json',
@@ -354,18 +354,18 @@ angular.module('weberApp')
             }).success(function(user_id) {
                 var params = '{"send_add_requests":1}';
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()}).then(function(user) {
-                    $scope.currentUser = user;
-                    // check interests and questions answered or not
-                    if($scope.currentUser.interests.length == 0 &&
-                        $scope.currentUser.questions.length < 4){
 
-                        console.log($scope.currentUser.interests.length,'==>', $scope.currentUser.interests)
-                        console.log($scope.currentUser.questions.length,'==>', $scope.currentUser.questions)
-                        //$location.path("/enter_interests")
+
+                    $rootScope.currentUser = user;
+                    //$rootScope.temp_user = user;
+                    if($rootScope.currentUser.interests.length == 0 &&
+                        $rootScope.currentUser.questions.length < 4){
+
+                       $location.path("/enter_interests")
                     }
 
                     //console.log($scope.currentUser);
-                    $scope.searchActivity = new SearchActivity($scope.currentUser);
+                    $scope.searchActivity = new SearchActivity($rootScope.currentUser);
                     $scope.searchActivity.getMysearches();
                     store_search_text($routeParams.query);
 
@@ -373,11 +373,9 @@ angular.module('weberApp')
             });
 
         }else{
-            if($scope.currentUser.interests.length == 0 &&
-                $scope.currentUser.questions.length < 4){
-                console.log($scope.currentUser.interests.length,'==>', $scope.currentUser.interests)
-                console.log($scope.currentUser.questions.length,'==>', $scope.currentUser.questions)
-                //$location.path("/enter_interests")
+            if($rootScope.currentUser.interests.length == 0 &&
+                $rootScope.currentUser.questions.length < 4){
+                $location.path("/enter_interests")
             }
             //console.log($scope.currentUser);
             $scope.searchActivity = new SearchActivity($scope.currentUser);
@@ -397,7 +395,7 @@ angular.module('weberApp')
                 $scope.search = true;
                 if($scope.present_search_query == $scope.query) return;
                 if($scope.query){
-                    // alredy present searched query no need to search again
+                    //alredy present searched query no need to search again
                     $location.search('query', $scope.query);
                     $scope.matchResults = new MatchMeResults($scope.query, $scope.location);
                     $scope.matchResults.newSearchResults();
@@ -1009,12 +1007,12 @@ angular.module('weberApp')
 		    console.log('authorize token', $auth.getToken())
 			Restangular.one('people',JSON.parse(user_id)).get({seed:Math.random()},{'Authorization': $auth.getToken()}).then(function(user) {
                 console.log('user==>', user)
-                $scope.currentUser = user;
+                $rootScope.currentUser = user;
 
 
                 // checking enter minimum interests
-                if($scope.currentUser.interests.length == 0 && $scope.currentUser.questions.length < 4){
-                    console.log('interests length', $scope.currentUser.questions.length, $scope.currentUser.interests.length)
+                if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
+                    console.log('interests length', $rootScope.currentUser.questions.length, $rootScope.currentUser.interests.length)
                     $location.path("/enter_interests")
                 }
 
@@ -1026,7 +1024,7 @@ angular.module('weberApp')
                     var post = null;
                     for(var k in $scope.infinitePosts.posts){
                         if($scope.infinitePosts.posts[k]._id == post_id &&
-                            $scope.infinitePosts.posts[k].author == $scope.currentUser._id){
+                            $scope.infinitePosts.posts[k].author == $rootScope.currentUser._id){
                                 status = true;
                                 post =  $scope.infinitePosts.posts[k];
                             }
@@ -1040,12 +1038,12 @@ angular.module('weberApp')
                     }
                 }
                 // questions section functions
-                $scope.questions = new questions($scope.currentUser);
+                $scope.questions = new questions($rootScope.currentUser);
                 $scope.questions.getallquestions();
 
 
                 $scope.answered = function(question, ans){
-                    $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                    $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
                     console.log(question, ans)
                 }
 
@@ -1054,11 +1052,11 @@ angular.module('weberApp')
                     return data;
                 }
                 // end of questions section
-				var loadPostIds = angular.copy($scope.currentUser.friends);
-                loadPostIds.push($scope.currentUser._id);
+				var loadPostIds = angular.copy($rootScope.currentUser.friends);
+                loadPostIds.push($rootScope.currentUser._id);
                 loadPostIds = "[\"" + loadPostIds.join("\",\"") + "\"]";
 
-                $scope.infinitePosts = new InfinitePosts($scope.currentUser, loadPostIds);
+                $scope.infinitePosts = new InfinitePosts($rootScope.currentUser, loadPostIds);
                 $scope.infinitePosts.getEarlyPosts();
 
 				$scope.submit_post = function(){
@@ -1081,9 +1079,9 @@ angular.module('weberApp')
                 $socket.on('postNotifications', function(data){
 
                     if(data.data.postnotific){
-                        if($scope.currentUser.friends.indexOf(data.author) == -1){
+                        if($rootScope.currentUser.friends.indexOf(data.author) == -1){
                             //console.log('no a friend')
-                        }else if($scope.currentUser.friends.indexOf(data.author != -1) && data.postid != 'undefined'){
+                        }else if($rootScope.currentUser.friends.indexOf(data.author != -1) && data.postid != 'undefined'){
                             $scope.infinitePosts.loadNotificPost(data.postid, data.author);
                         }else{
                             //console.log('nothing to do')
@@ -1103,13 +1101,13 @@ angular.module('weberApp')
 
 				            var iPeople = posts[temp].interestedPeople;
 				            for(var i in iPeople){
-				                if(iPeople[i].interested_person == $scope.currentUser._id){
+				                if(iPeople[i].interested_person == $rootScope.currentUser._id){
 				                    return true;
 				                }
                             }
-                            iPeople.push({'interested_person': $scope.currentUser._id, 'match_date': new Date()});
+                            iPeople.push({'interested_person': $rootScope.currentUser._id, 'match_date': new Date()});
                             //console.log('post author-->', postauthor)
-                            MatchButtonService.match(postauthor, postid , $scope.currentUser._id).then(function(data){
+                            MatchButtonService.match(postauthor, postid , $rootScope.currentUser._id).then(function(data){
                                 //console.log('match agree succesfully-->', data);
                             });
 
@@ -1127,9 +1125,9 @@ angular.module('weberApp')
 				        if(posts[temp]._id == postid){
 				            var iPeople = posts[temp].interestedPeople;
 				            for(var i in iPeople){
-				                if(iPeople[i].interested_person == $scope.currentUser._id){
+				                if(iPeople[i].interested_person == $rootScope.currentUser._id){
 				                   iPeople.splice(i,1);
-				                   MatchButtonService.unmatch(postauthor, postid, $scope.currentUser._id).then(function(data){
+				                   MatchButtonService.unmatch(postauthor, postid, $rootScope.currentUser._id).then(function(data){
                                         //console.log('unmatch disagree succesfully-->', data);
                                    });
 				                }
@@ -1146,7 +1144,7 @@ angular.module('weberApp')
 'use strict';
 
 angular.module('weberApp')
-    .controller('indexCtrl', function($auth,$scope, $window, CurrentUser,$route,
+    .controller('indexCtrl', function($auth,$scope, $window, CurrentUser,$route,$rootScope,
                                       $alert,$timeout,InstanceSearchHistory, PostService,
                                       Friends,$location, $http, Restangular,ChatActivity,UserService,
                                       CurrentUser1,SearchActivity, friendsActivity,$socket) {
@@ -1165,7 +1163,7 @@ angular.module('weberApp')
 
         // socket functions execution
         function socket_operations(){
-            $socket.emit('connecting', {id:$scope.currentUser._id});
+            $socket.emit('connecting', {id:$rootScope.currentUser._id});
 
             $socket.on('joiningstatus', function(data) {
                 console.log('joing==>', data)
@@ -1173,9 +1171,9 @@ angular.module('weberApp')
 
             $socket.on('FMnotific', function(data){
                 if(data.data.FMnotific){
-                    Restangular.one('people',JSON.parse(user_id)).get({seed: Math.random()})
+                    Restangular.one('people', $rootScope.currentUser._id).get({seed: Math.random()})
                     .then(function(user) {
-                            $scope.currentUser = user;
+                            $rootScope.currentUser = user;
                             console.log('got notifications to this user', user.name.first)
                             get_friend_notifications(user);
                     });
@@ -1186,9 +1184,9 @@ angular.module('weberApp')
                 //console.log('message received', msg)
                 var new_message = {};
                 var details = JSON.parse(sessionStorage.getItem(msg.senderid));
-                if($scope.currentUser._id == msg.senderid){
+                if($rootScope.currentUser._id == msg.senderid){
 
-                }else if($scope.currentUser._id != msg.senderid){
+                }else if($rootScope.currentUser._id != msg.senderid){
                     // no chat rooms opened push message into latest Notifications
                     if(sessionStorage.getItem(msg.senderid) == null){
                        // console.log('no chat div opened')
@@ -1252,7 +1250,7 @@ angular.module('weberApp')
                     height:'364px'
                 }
 
-                $scope.chatactivity.loadMessages($scope.currentUser._id, room_user._id, json);
+                $scope.chatactivity.loadMessages($rootScope.currentUser._id, room_user._id, json);
                 sessionStorage.setItem(room_user._id, JSON.stringify(json));
                 $socket.emit('connect', {data:room_user._id});
                 // load messages into new open chat room
@@ -1266,13 +1264,13 @@ angular.module('weberApp')
                 var pushNewMessage = {
                     sender :{
                         name:{
-                            first:$scope.currentUser.name.first
+                            first:$rootScope.currentUser.name.first
                         },
                         picture :{
-                            medium:$scope.currentUser.picture.medium
+                            medium:$rootScope.currentUser.picture.medium
 
                         },
-                        _id:$scope.currentUser._id
+                        _id:$rootScope.currentUser._id
                     },
 
                     receiver:{
@@ -1287,7 +1285,7 @@ angular.module('weberApp')
 
                 //$scope.chatactivity.messages = data;
 
-                $socket.emit('send_message', {receiverid: Recept, senderid :$scope.currentUser._id  ,message: text});
+                $socket.emit('send_message', {receiverid: Recept, senderid :$rootScope.currentUser._id  ,message: text});
                 $scope.chatactivity.sendMessage(Recept, text);
             }else{
                 return false;
@@ -1354,12 +1352,12 @@ angular.module('weberApp')
              //console.log('--------called make seen-------------')
              if($scope.notifications_count){
                 $scope.notifications_count = 0;
-                for(var k in $scope.currentUser.notifications){
-                    if($scope.currentUser.notifications[k].seen == false){
-                        $scope.currentUser.notifications[k].seen = true;
+                for(var k in $rootScope.currentUser.notifications){
+                    if($rootScope.currentUser.notifications[k].seen == false){
+                        $rootScope.currentUser.notifications[k].seen = true;
                     }
 
-                    Friends.makeSeen($scope.currentUser._id).then(function(data){
+                    Friends.makeSeen($rootScope.currentUser._id).then(function(data){
                         return true;
                     });
                 }
@@ -1398,7 +1396,7 @@ angular.module('weberApp')
             var chatrooms = getData();
             console.log('chat room opened previously', chatrooms)
             for(var k in  chatrooms){
-                $scope.chatactivity.loadMessages($scope.currentUser._id, chatrooms[k].id, chatrooms[k]);
+                $scope.chatactivity.loadMessages($rootScope.currentUser._id, chatrooms[k].id, chatrooms[k]);
            }
 
 
@@ -1469,7 +1467,7 @@ angular.module('weberApp')
                     email: this.formData.email,
                     password: this.formData.password
                 }).then(function(response) {
-                    console.log('-----------index user--------------', response)
+                    //console.log('-----------index user--------------', response)
                     $auth.setToken(response.data.token);
                     $scope.currentUser = response.data.user;
                     $scope.chatactivity = new ChatActivity($scope.currentUser);
@@ -1542,7 +1540,7 @@ angular.module('weberApp')
                 }).then(function (response) {
                     if(response.data.status == 200){
                         $auth.setToken(response.data.token);
-                        $scope.currentUser = response.data.user;
+                        $rootScope.currentUser = response.data.user;
                         $location.path('/enter_interests/' + self.formData.email);
                     }
 
@@ -1584,18 +1582,18 @@ angular.module('weberApp')
 
 
         // check user empty or not at controller load
-        if(typeof $scope.currentUser !== 'undefined'){
+        if(typeof $rootScope.currentUser !== 'undefined'){
             // checking questions answered or not and place interests or not
-            if($scope.currentUser.interests.length == 0 && $scope.currentUser.questions.length < 4){
+            if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
                 $location.path("/enter_interests")
             }
 
              $scope.chatactivity = new ChatActivity(user);
-             $scope.searchActivity = new SearchActivity($scope.currentUser);
-             get_friend_notifications($scope.currentUser);
+             $scope.searchActivity = new SearchActivity($rootScope.currentUser);
+             get_friend_notifications($rootScope.currentUser);
 
              $scope.MessageNotifcations();
-             if($scope.currentUser.friends.length !== 0){
+             if($rootScope.currentUser.friends.length !== 0){
                 $scope.chatactivity.getChatFriends();
              }
              socket_operations();
@@ -1610,12 +1608,12 @@ angular.module('weberApp')
                 var params = '{"send_add_requests":1}';
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()})
                 .then(function(user) {
-
+                   $rootScope.currentUser = user;
                    $scope.chatactivity = new ChatActivity(user);
-                   $scope.searchActivity = new SearchActivity($scope.currentUser);
+                   $scope.searchActivity = new SearchActivity($rootScope.currentUser);
 
-                   $scope.currentUser = user;
-                   if($scope.currentUser.interests.length == 0 && $scope.currentUser.questions.length < 4){
+
+                   if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
                         $location.path("/enter_interests")
                    }
 
@@ -1623,7 +1621,7 @@ angular.module('weberApp')
                    get_friend_notifications($scope.currentUser);
 
                    $scope.MessageNotifcations();
-                   if($scope.currentUser.friends.length !== 0){
+                   if($rootScope.currentUser.friends.length !== 0){
                     $scope.chatactivity.getChatFriends();
                    }
                    socket_operations();
@@ -1937,7 +1935,7 @@ angular.module('weberApp')
             }
 
              $scope.answered = function(question, ans){
-                 $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                 $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
                  console.log(question, ans)
              }
 
@@ -1945,7 +1943,7 @@ angular.module('weberApp')
 
 
         // end of profile user information
-        if($scope.currentUser === 'undefined'){
+        if($rootScope.currentUser === 'undefined'){
             $http.get('/api/me', {
                 headers: {
                     'Content-Type': 'application/json',
@@ -1954,13 +1952,13 @@ angular.module('weberApp')
             }).success(function(user_id) {
                 var params = '{"send_add_requests":1}';
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()}).then(function(user) {
-                    $scope.currentUser = user;
+                    $rootScope.currentUser = user;
                     questionOperations();
                 });
             });
 
         }else{
-            console.log('else part user', $scope.currentUser)
+            console.log('else part user', $rootScope.currentUser)
             questionOperations();
         }
 
@@ -1968,18 +1966,18 @@ angular.module('weberApp')
         function questionOperations(){
 
             $scope.checkYouAnswered = function(question_id){
-                data = $scope.questions.checkYouAnswered(question_id, $scope.currentUser);
+                data = $scope.questions.checkYouAnswered(question_id, $rootScope.currentUser);
                 return data;
             }
 
             $scope.youAnswered = function(question, ans){
-                console.log('------------->>> user id', $scope.currentUser._id);
-                $scope.questions.updateUser2(question, ans, $scope.currentUser._id);
+                console.log('------------->>> user id', $rootScope.currentUser._id);
+                $scope.questions.updateUser2(question, ans, $rootScope.currentUser._id);
                 console.log(question, ans)
             }
              // end of questions section
-            if($scope.currentUser._id !== $scope.profileuser._id){
-                var friendsactivity = new friendsActivity($scope.currentUser, $scope.profileuser);
+            if($rootScope.currentUser._id !== $scope.profileuser._id){
+                var friendsactivity = new friendsActivity($rootScope.currentUser, $scope.profileuser);
                 //console.log(friendsactivity)
                 $scope.check_relation = function(){
                     $scope.relation = friendsactivity.getRelation();
@@ -1997,13 +1995,13 @@ angular.module('weberApp')
 
                         var iPeople = posts[temp].interestedPeople;
                         for(var i in iPeople){
-                            if(iPeople[i].interested_person == $scope.currentUser._id){
+                            if(iPeople[i].interested_person == $rootScope.currentUser._id){
                                 return true;
                             }
                         }
-                        iPeople.push({'interested_person': $scope.currentUser._id, 'match_date': new Date()});
+                        iPeople.push({'interested_person': $rootScope.currentUser._id, 'match_date': new Date()});
                         //console.log('post author-->', postauthor)
-                        MatchButtonService.match(postauthor, postid , $scope.currentUser._id).then(function(data){
+                        MatchButtonService.match(postauthor, postid , $rootScope.currentUser._id).then(function(data){
                             console.log('match agree succesfully-->', data);
                         });
 
@@ -2021,9 +2019,9 @@ angular.module('weberApp')
                     if(posts[temp]._id == postid){
                         var iPeople = posts[temp].interestedPeople;
                         for(var i in iPeople){
-                            if(iPeople[i].interested_person == $scope.currentUser._id){
+                            if(iPeople[i].interested_person == $rootScope.currentUser._id){
                                iPeople.splice(i,1);
-                               MatchButtonService.unmatch(postauthor, postid, $scope.currentUser._id).then(function(data){
+                               MatchButtonService.unmatch(postauthor, postid, $rootScope.currentUser._id).then(function(data){
                                     console.log('unmatch disagree succesfully-->', data);
                                });
                             }
@@ -3514,7 +3512,7 @@ angular.module('weberApp')
                     var e = null;
                     $element.html(html);
                     $compile($element.contents())($scope);
-                    var data = Friends.addFriend($scope.currentUser._id, profileuser_id);
+                    var data = Friends.addFriend($rootScope.currentUser._id, profileuser_id);
                     data.then(function(data){
                         if(data.data && !(fromRequest)){
                              var html ='<addfriend><button ng-click="frndcancelrequest(\''+profileuser_id+'\', 0)"'
@@ -3562,7 +3560,7 @@ angular.module('weberApp')
                    $element.html(html);
                    $compile($element.contents())($scope);
 
-                   var data = Friends.cancelRequest($scope.currentUser._id, profile_user_id);
+                   var data = Friends.cancelRequest($rootScope.currentUser._id, profile_user_id);
 
                    data.then(function(data){
                         if(data.data && !(requestFrom)){
@@ -3642,8 +3640,8 @@ angular.module('weberApp')
                 var e = null;
                 $element.html(html);
                 $compile($element.contents())($scope);
-                console.log("----------------------->", $scope.currentUser._id, profile_user_id)
-                var data = Friends.acceptRequest($scope.currentUser._id, profile_user_id);
+                console.log("----------------------->", $rootScope.currentUser._id, profile_user_id)
+                var data = Friends.acceptRequest($rootScope.currentUser._id, profile_user_id);
                 data.then(function(data){
                     if(data.data){
                          if(navbar_request){
@@ -3678,8 +3676,8 @@ angular.module('weberApp')
                 var e = null;
                 $element.html(html);
                 $compile($element.contents())($scope);
-                console.log("----------------------->", $scope.currentUser._id, profile_user_id)
-                var data = Friends.rejectRequest($scope.currentUser._id, profile_user_id);
+                console.log("----------------------->", $rootScope.currentUser._id, profile_user_id)
+                var data = Friends.rejectRequest($rootScope.currentUser._id, profile_user_id);
                 data.then(function(data){
                     if(data.data){
                         if(requestFrom){
@@ -3712,7 +3710,7 @@ angular.module('weberApp')
                     var e = null;
                     $element.html(html);
                     $compile($element.contents())($scope);
-                    var data = Friends.unFreind($scope.currentUser._id, profile_user_id);
+                    var data = Friends.unFreind($rootScope.currentUser._id, profile_user_id);
                     data.then(function(data){
                         if(data.data){
                             if(requestFrom){
