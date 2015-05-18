@@ -8,7 +8,8 @@
  * Controller of the weberApp
  */
 angular.module('weberApp')
-	.controller('enterInterestsCtrl', function($timeout, questions, InterestsService, $http, Restangular, $scope, $auth, $alert, $location, $routeParams) {
+	.controller('enterInterestsCtrl', function($timeout, questions, InterestsService, $http,
+	 Restangular, $scope, $auth, $alert, $location, $routeParams, $rootScope) {
 
         //var element = $routeParams.userId;
         //console.log(element)
@@ -31,7 +32,7 @@ angular.module('weberApp')
 		}).success(function(userId) {
             Restangular.one('people', JSON.parse(userId)).get({seed:Math.random()}).then(function(user) {
 
-                $scope.currentUser = user;
+                $rootScope.currentUser = user;
 
                 $scope.afterFinishQuestions = function(){
                     $location.path('/home');
@@ -42,17 +43,17 @@ angular.module('weberApp')
 
                 $scope.answered = function(question, ans){
 
-                    for(var temp in $scope.currentUser.questions){
-                        if($scope.currentUser.questions[temp].questionid == question){
-                            $scope.currentUser.questions[temp].answer = ans;
-                            $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                    for(var temp in $rootScope.currentUser.questions){
+                        if($rootScope.currentUser.questions[temp].questionid == question){
+                            $rootScope.currentUser.questions[temp].answer = ans;
+                            $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
                             return;
                         }
                     }
 
-                    $scope.currentUser.questions.push({'questionid':question, 'answer': ans});
-                    console.log('pushed answereds', $scope.currentUser.questions)
-                    $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                    $rootScope.currentUser.questions.push({'questionid':question, 'answer': ans});
+                    console.log('pushed answereds', $rootScope.currentUser.questions)
+                    $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
                     return;
                 }
 
@@ -62,7 +63,7 @@ angular.module('weberApp')
                 }
                 // end of questions section
 
-                if($scope.currentUser.interests.length){
+                if($rootScope.currentUser.interests.length){
                     // success show
                     $scope.show_interests = false;
                     $scope.show_questions = true;
@@ -73,18 +74,18 @@ angular.module('weberApp')
                     $scope.show_questions = false;
                 }
                 $scope.newUserInterests = function(){
-                    for(var temp in $scope.currentUser.interests){
-                        $scope.final_interests_array.push(InterestsService.get($scope.currentUser.interests[temp]).interest_string)
+                    for(var temp in $rootScope.currentUser.interests){
+                        $scope.final_interests_array.push(InterestsService.get($rootScope.currentUser.interests[temp]).interest_string)
                     }
                     $scope.Interests_busy = $timeout(function() {
                         $http.post('/get_interested_ids',
                         {
                             interests: $scope.final_interests_array,
-                            username: $scope.currentUser.username
+                            username: $rootScope.currentUser.username
                         })
                         .success(function(data, status, headers, config) {
                             console.log("======return success of interests of ids",data);
-                            $scope.currentUser.interests = data.interests;
+                            $rootScope.currentUser.interests = data.interests;
                             $scope.show_interests = false;
                             $scope.show_questions = true;
                             var interestsAlert = $alert({

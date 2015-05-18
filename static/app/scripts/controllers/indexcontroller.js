@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('weberApp')
-    .controller('indexCtrl', function($auth,$scope, $window, CurrentUser,$route,
+    .controller('indexCtrl', function($auth,$scope, $window, CurrentUser,$route,$rootScope,
                                       $alert,$timeout,InstanceSearchHistory, PostService,
                                       Friends,$location, $http, Restangular,ChatActivity,UserService,
                                       CurrentUser1,SearchActivity, friendsActivity,$socket) {
@@ -20,7 +20,7 @@ angular.module('weberApp')
 
         // socket functions execution
         function socket_operations(){
-            $socket.emit('connecting', {id:$scope.currentUser._id});
+            $socket.emit('connecting', {id:$rootScope.currentUser._id});
 
             $socket.on('joiningstatus', function(data) {
                 console.log('joing==>', data)
@@ -28,9 +28,9 @@ angular.module('weberApp')
 
             $socket.on('FMnotific', function(data){
                 if(data.data.FMnotific){
-                    Restangular.one('people',JSON.parse(user_id)).get({seed: Math.random()})
+                    Restangular.one('people', $rootScope.currentUser._id).get({seed: Math.random()})
                     .then(function(user) {
-                            $scope.currentUser = user;
+                            $rootScope.currentUser = user;
                             console.log('got notifications to this user', user.name.first)
                             get_friend_notifications(user);
                     });
@@ -41,9 +41,9 @@ angular.module('weberApp')
                 //console.log('message received', msg)
                 var new_message = {};
                 var details = JSON.parse(sessionStorage.getItem(msg.senderid));
-                if($scope.currentUser._id == msg.senderid){
+                if($rootScope.currentUser._id == msg.senderid){
 
-                }else if($scope.currentUser._id != msg.senderid){
+                }else if($rootScope.currentUser._id != msg.senderid){
                     // no chat rooms opened push message into latest Notifications
                     if(sessionStorage.getItem(msg.senderid) == null){
                        // console.log('no chat div opened')
@@ -108,7 +108,7 @@ angular.module('weberApp')
                     height:'364px'
                 }
 
-                $scope.chatactivity.loadMessages($scope.currentUser._id, room_user._id, json);
+                $scope.chatactivity.loadMessages($rootScope.currentUser._id, room_user._id, json);
                 sessionStorage.setItem(room_user._id, JSON.stringify(json));
                 $socket.emit('connect', {data:room_user._id});
                 // load messages into new open chat room
@@ -122,13 +122,13 @@ angular.module('weberApp')
                 var pushNewMessage = {
                     sender :{
                         name:{
-                            first:$scope.currentUser.name.first
+                            first:$rootScope.currentUser.name.first
                         },
                         picture :{
-                            medium:$scope.currentUser.picture.medium
+                            medium:$rootScope.currentUser.picture.medium
 
                         },
-                        _id:$scope.currentUser._id
+                        _id:$rootScope.currentUser._id
                     },
 
                     receiver:{
@@ -143,7 +143,7 @@ angular.module('weberApp')
 
                 //$scope.chatactivity.messages = data;
 
-                $socket.emit('send_message', {receiverid: Recept, senderid :$scope.currentUser._id  ,message: text});
+                $socket.emit('send_message', {receiverid: Recept, senderid :$rootScope.currentUser._id  ,message: text});
                 $scope.chatactivity.sendMessage(Recept, text);
             }else{
                 return false;
@@ -210,12 +210,12 @@ angular.module('weberApp')
              //console.log('--------called make seen-------------')
              if($scope.notifications_count){
                 $scope.notifications_count = 0;
-                for(var k in $scope.currentUser.notifications){
-                    if($scope.currentUser.notifications[k].seen == false){
-                        $scope.currentUser.notifications[k].seen = true;
+                for(var k in $rootScope.currentUser.notifications){
+                    if($rootScope.currentUser.notifications[k].seen == false){
+                        $rootScope.currentUser.notifications[k].seen = true;
                     }
 
-                    Friends.makeSeen($scope.currentUser._id).then(function(data){
+                    Friends.makeSeen($rootScope.currentUser._id).then(function(data){
                         return true;
                     });
                 }
@@ -254,7 +254,7 @@ angular.module('weberApp')
             var chatrooms = getData();
             console.log('chat room opened previously', chatrooms)
             for(var k in  chatrooms){
-                $scope.chatactivity.loadMessages($scope.currentUser._id, chatrooms[k].id, chatrooms[k]);
+                $scope.chatactivity.loadMessages($rootScope.currentUser._id, chatrooms[k].id, chatrooms[k]);
            }
 
 
@@ -325,10 +325,10 @@ angular.module('weberApp')
                     email: this.formData.email,
                     password: this.formData.password
                 }).then(function(response) {
-                    console.log('-----------index user--------------', response)
+                    //console.log('-----------index user--------------', response)
                     $auth.setToken(response.data.token);
-                    $scope.currentUser = response.data.user;
-                    $scope.chatactivity = new ChatActivity($scope.currentUser);
+                    $rootScope.currentUser = response.data.user;
+                    $scope.chatactivity = new ChatActivity($rootScope.currentUser);
                 }, function(error) {
                     $scope.loginError = error;
                     var loginAlert = $alert({
@@ -397,7 +397,7 @@ angular.module('weberApp')
                 }).then(function (response) {
                     if(response.data.status == 200){
                         $auth.setToken(response.data.token);
-                        $scope.currentUser = response.data.user;
+                        $rootScope.currentUser = response.data.user;
                         $location.path('/enter_interests/' + self.formData.email);
                     }
 
@@ -439,18 +439,18 @@ angular.module('weberApp')
 
 
         // check user empty or not at controller load
-        if(typeof $scope.currentUser !== 'undefined'){
+        if(typeof $rootScope.currentUser !== 'undefined'){
             // checking questions answered or not and place interests or not
-            if($scope.currentUser.interests.length == 0 && $scope.currentUser.questions.length < 4){
+            if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
                 $location.path("/enter_interests")
             }
 
              $scope.chatactivity = new ChatActivity(user);
-             $scope.searchActivity = new SearchActivity($scope.currentUser);
-             get_friend_notifications($scope.currentUser);
+             $scope.searchActivity = new SearchActivity($rootScope.currentUser);
+             get_friend_notifications($rootScope.currentUser);
 
              $scope.MessageNotifcations();
-             if($scope.currentUser.friends.length !== 0){
+             if($rootScope.currentUser.friends.length !== 0){
                 $scope.chatactivity.getChatFriends();
              }
              socket_operations();
@@ -465,12 +465,12 @@ angular.module('weberApp')
                 var params = '{"send_add_requests":1}';
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()})
                 .then(function(user) {
-
+                   $rootScope.currentUser = user;
                    $scope.chatactivity = new ChatActivity(user);
-                   $scope.searchActivity = new SearchActivity($scope.currentUser);
+                   $scope.searchActivity = new SearchActivity($rootScope.currentUser);
 
-                   $scope.currentUser = user;
-                   if($scope.currentUser.interests.length == 0 && $scope.currentUser.questions.length < 4){
+
+                   if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
                         $location.path("/enter_interests")
                    }
 
@@ -478,7 +478,7 @@ angular.module('weberApp')
                    get_friend_notifications($scope.currentUser);
 
                    $scope.MessageNotifcations();
-                   if($scope.currentUser.friends.length !== 0){
+                   if($rootScope.currentUser.friends.length !== 0){
                     $scope.chatactivity.getChatFriends();
                    }
                    socket_operations();

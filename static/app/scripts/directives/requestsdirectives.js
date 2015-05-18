@@ -70,7 +70,7 @@ angular.module('weberApp')
                     var e = null;
                     $element.html(html);
                     $compile($element.contents())($scope);
-                    var data = Friends.addFriend($scope.currentUser._id, profileuser_id);
+                    var data = Friends.addFriend($rootScope.currentUser._id, profileuser_id);
                     data.then(function(data){
                         if(data.data && !(fromRequest)){
                              var html ='<addfriend><button ng-click="frndcancelrequest(\''+profileuser_id+'\', 0)"'
@@ -118,7 +118,7 @@ angular.module('weberApp')
                    $element.html(html);
                    $compile($element.contents())($scope);
 
-                   var data = Friends.cancelRequest($scope.currentUser._id, profile_user_id);
+                   var data = Friends.cancelRequest($rootScope.currentUser._id, profile_user_id);
 
                    data.then(function(data){
                         if(data.data && !(requestFrom)){
@@ -198,8 +198,8 @@ angular.module('weberApp')
                 var e = null;
                 $element.html(html);
                 $compile($element.contents())($scope);
-                console.log("----------------------->", $scope.currentUser._id, profile_user_id)
-                var data = Friends.acceptRequest($scope.currentUser._id, profile_user_id);
+                console.log("----------------------->", $rootScope.currentUser._id, profile_user_id)
+                var data = Friends.acceptRequest($rootScope.currentUser._id, profile_user_id);
                 data.then(function(data){
                     if(data.data){
                          if(navbar_request){
@@ -234,8 +234,8 @@ angular.module('weberApp')
                 var e = null;
                 $element.html(html);
                 $compile($element.contents())($scope);
-                console.log("----------------------->", $scope.currentUser._id, profile_user_id)
-                var data = Friends.rejectRequest($scope.currentUser._id, profile_user_id);
+                console.log("----------------------->", $rootScope.currentUser._id, profile_user_id)
+                var data = Friends.rejectRequest($rootScope.currentUser._id, profile_user_id);
                 data.then(function(data){
                     if(data.data){
                         if(requestFrom){
@@ -268,7 +268,7 @@ angular.module('weberApp')
                     var e = null;
                     $element.html(html);
                     $compile($element.contents())($scope);
-                    var data = Friends.unFreind($scope.currentUser._id, profile_user_id);
+                    var data = Friends.unFreind($rootScope.currentUser._id, profile_user_id);
                     data.then(function(data){
                         if(data.data){
                             if(requestFrom){

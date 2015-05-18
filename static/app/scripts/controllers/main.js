@@ -24,12 +24,12 @@ angular.module('weberApp')
 		    console.log('authorize token', $auth.getToken())
 			Restangular.one('people',JSON.parse(user_id)).get({seed:Math.random()},{'Authorization': $auth.getToken()}).then(function(user) {
                 console.log('user==>', user)
-                $scope.currentUser = user;
+                $rootScope.currentUser = user;
 
 
                 // checking enter minimum interests
-                if($scope.currentUser.interests.length == 0 && $scope.currentUser.questions.length < 4){
-                    console.log('interests length', $scope.currentUser.questions.length, $scope.currentUser.interests.length)
+                if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
+                    console.log('interests length', $rootScope.currentUser.questions.length, $rootScope.currentUser.interests.length)
                     $location.path("/enter_interests")
                 }
 
@@ -41,7 +41,7 @@ angular.module('weberApp')
                     var post = null;
                     for(var k in $scope.infinitePosts.posts){
                         if($scope.infinitePosts.posts[k]._id == post_id &&
-                            $scope.infinitePosts.posts[k].author == $scope.currentUser._id){
+                            $scope.infinitePosts.posts[k].author == $rootScope.currentUser._id){
                                 status = true;
                                 post =  $scope.infinitePosts.posts[k];
                             }
@@ -55,12 +55,12 @@ angular.module('weberApp')
                     }
                 }
                 // questions section functions
-                $scope.questions = new questions($scope.currentUser);
+                $scope.questions = new questions($rootScope.currentUser);
                 $scope.questions.getallquestions();
 
 
                 $scope.answered = function(question, ans){
-                    $scope.questions.updateAnswer(question, ans, $scope.currentUser._id);
+                    $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
                     console.log(question, ans)
                 }
 
@@ -69,11 +69,11 @@ angular.module('weberApp')
                     return data;
                 }
                 // end of questions section
-				var loadPostIds = angular.copy($scope.currentUser.friends);
-                loadPostIds.push($scope.currentUser._id);
+				var loadPostIds = angular.copy($rootScope.currentUser.friends);
+                loadPostIds.push($rootScope.currentUser._id);
                 loadPostIds = "[\"" + loadPostIds.join("\",\"") + "\"]";
 
-                $scope.infinitePosts = new InfinitePosts($scope.currentUser, loadPostIds);
+                $scope.infinitePosts = new InfinitePosts($rootScope.currentUser, loadPostIds);
                 $scope.infinitePosts.getEarlyPosts();
 
 				$scope.submit_post = function(){
@@ -96,9 +96,9 @@ angular.module('weberApp')
                 $socket.on('postNotifications', function(data){
 
                     if(data.data.postnotific){
-                        if($scope.currentUser.friends.indexOf(data.author) == -1){
+                        if($rootScope.currentUser.friends.indexOf(data.author) == -1){
                             //console.log('no a friend')
-                        }else if($scope.currentUser.friends.indexOf(data.author != -1) && data.postid != 'undefined'){
+                        }else if($rootScope.currentUser.friends.indexOf(data.author != -1) && data.postid != 'undefined'){
                             $scope.infinitePosts.loadNotificPost(data.postid, data.author);
                         }else{
                             //console.log('nothing to do')
@@ -118,13 +118,13 @@ angular.module('weberApp')
 
 				            var iPeople = posts[temp].interestedPeople;
 				            for(var i in iPeople){
-				                if(iPeople[i].interested_person == $scope.currentUser._id){
+				                if(iPeople[i].interested_person == $rootScope.currentUser._id){
 				                    return true;
 				                }
                             }
-                            iPeople.push({'interested_person': $scope.currentUser._id, 'match_date': new Date()});
+                            iPeople.push({'interested_person': $rootScope.currentUser._id, 'match_date': new Date()});
                             //console.log('post author-->', postauthor)
-                            MatchButtonService.match(postauthor, postid , $scope.currentUser._id).then(function(data){
+                            MatchButtonService.match(postauthor, postid , $rootScope.currentUser._id).then(function(data){
                                 //console.log('match agree succesfully-->', data);
                             });
 
@@ -142,9 +142,9 @@ angular.module('weberApp')
 				        if(posts[temp]._id == postid){
 				            var iPeople = posts[temp].interestedPeople;
 				            for(var i in iPeople){
-				                if(iPeople[i].interested_person == $scope.currentUser._id){
+				                if(iPeople[i].interested_person == $rootScope.currentUser._id){
 				                   iPeople.splice(i,1);
-				                   MatchButtonService.unmatch(postauthor, postid, $scope.currentUser._id).then(function(data){
+				                   MatchButtonService.unmatch(postauthor, postid, $rootScope.currentUser._id).then(function(data){
                                         //console.log('unmatch disagree succesfully-->', data);
                                    });
 				                }

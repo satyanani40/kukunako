@@ -36,7 +36,7 @@ angular.module('weberApp')
 				}
                 // getting suggested friends
 
-                 console.log('before request', $scope.currentUser)
+                 console.log('before request', $rootScope.currentUser)
                  var req = {
 
                         method: 'POST',
@@ -45,10 +45,10 @@ angular.module('weberApp')
                             'Content-Type': 'application/json'
                         },
                         data: {
-                            location: $scope.currentUser['location']['state'],
-                            friends: $scope.currentUser['friends'],
-                            username: $scope.currentUser['username'],
-                            _id: $scope.currentUser['_id'],
+                            location: $rootScope.currentUser['location']['state'],
+                            friends: $rootScope.currentUser['friends'],
+                            username: $rootScope.currentUser['username'],
+                            _id: $rootScope.currentUser['_id'],
                             seed: Math.random()
                         }
                  }
