@@ -9,7 +9,7 @@
  */
 angular.module('weberApp')
 	.controller('UserprofileCtrl', function($scope, $routeParams,$templateCache, sortIListService, questions,
-	                                        Restangular, InfinitePosts, UserService,MatchButtonService,
+	                                        Restangular, InfinitePosts, UserService,MatchButtonService,$rootScope,
 	                                        CurrentUser, InterestsService, friendsActivity) {
 
 		$scope.UserService = UserService;

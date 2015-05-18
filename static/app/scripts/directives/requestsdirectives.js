@@ -56,7 +56,8 @@ angular.module('weberApp')
 })
 
 
-.directive('cancelrequest', function ($compile, $timeout, CurrentUser, Restangular, $routeParams, $route,friendsActivity, Friends) {
+.directive('cancelrequest', function ($compile, $timeout, CurrentUser, Restangular, $rootScope,
+                                        $routeParams, $route,friendsActivity, Friends) {
     return {
         restrict: 'E',
         replace: true,
@@ -105,7 +106,8 @@ angular.module('weberApp')
     };
 })
 
-.directive('addfriend', function ($compile, $timeout, CurrentUser, Restangular,$route, $routeParams, friendsActivity, Friends) {
+.directive('addfriend', function ($compile, $timeout, CurrentUser, Restangular,$route, $routeParams,
+                                                                $rootScope,friendsActivity, Friends) {
     return {
         restrict: 'E',
         replace: true,
@@ -185,7 +187,8 @@ angular.module('weberApp')
     };
 })
 
-.directive('acceptreject', function ($compile, $window, CurrentUser, Restangular,$route, $routeParams,Friends, friendsActivity) {
+.directive('acceptreject', function ($compile, $window, CurrentUser, Restangular,$route, $routeParams,
+                    Friends, $rootScope, friendsActivity) {
     return {
         restrict: 'E',
         replace: true,
@@ -257,7 +260,8 @@ angular.module('weberApp')
         }
     };
 })
-.directive('unaddfriend', function ($compile, CurrentUser,$window, Restangular, $routeParams, Friends, friendsActivity,$route) {
+.directive('unaddfriend', function ($compile, CurrentUser,$window, Restangular, $routeParams,
+                                    Friends, $rootScope, friendsActivity,$route) {
     return {
         restrict: 'E',
         replace: true,
