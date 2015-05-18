@@ -114,7 +114,7 @@ angular.module('weberApp')
         link: function ($scope, $element, attrs) {},
          controller:function($scope, $element, $attrs, $transclude){
          $scope.frndcancelrequest = function(profile_user_id, requestFrom){
-               $scope.load_add_friend = $timeout(function() {
+               $scope.load_cancel_request = $timeout(function() {
                    var html = '<image src="/static/app/images/pleasewait.gif" alt="no image found" style="position:absolute">';
                    var e = null;
                    $element.html(html);

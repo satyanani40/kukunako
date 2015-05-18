@@ -13,7 +13,6 @@ angular.module('weberApp')
 
         //var element = $routeParams.userId;
         //console.log(element)
-
         $scope.email = $routeParams.email;
         //console.log($scope.user);
         $scope.show_interests = true;
@@ -31,8 +30,16 @@ angular.module('weberApp')
 			}
 		}).success(function(userId) {
             Restangular.one('people', JSON.parse(userId)).get({seed:Math.random()}).then(function(user) {
-
                 $rootScope.currentUser = user;
+                if($rootScope.currentUser.email_confirmed == false){
+                    var userNameAlert = $alert({
+                        title: 'Thanks for Registering: ',
+                        content: 'Your email is not confirmed',
+                        placement: 'top-left',
+                        type: 'danger',
+                        show: true
+                    });
+                }
 
                 $scope.afterFinishQuestions = function(){
                     $location.path('/home');
@@ -3556,7 +3563,7 @@ angular.module('weberApp')
         link: function ($scope, $element, attrs) {},
          controller:function($scope, $element, $attrs, $transclude){
          $scope.frndcancelrequest = function(profile_user_id, requestFrom){
-               $scope.load_add_friend = $timeout(function() {
+               $scope.load_cancel_request = $timeout(function() {
                    var html = '<image src="/static/app/images/pleasewait.gif" alt="no image found" style="position:absolute">';
                    var e = null;
                    $element.html(html);
