@@ -167,11 +167,12 @@ angular.module('weberApp')
  * Controller of the weberApp
  */
 angular.module('weberApp')
-	.controller('PostLoadController', function($http, $auth, Restangular, $scope,
+	.controller('PostLoadController', function($http, $auth, InterestsService, Restangular, $scope,
 	                                           $routeParams, PostService, InfinitePosts,MatchButtonService) {
 
 	    $scope.postid = $routeParams.postid;
 	    $scope.MatchButtonService = MatchButtonService;
+	    $scope.InterestsService = InterestsService;
 	    $http.get('/api/me', {
 			headers: {
 				'Content-Type': 'application/json',
@@ -346,7 +347,6 @@ angular.module('weberApp')
 
         // opens new chat room
         $scope.openchatroom = function(room_user){
-            document.getElementById("show_div").style.display="block";
             if(!(sessionStorage.getItem(room_user._id))){
                 // check room alredy open
                 var json = {

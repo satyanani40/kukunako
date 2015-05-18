@@ -746,7 +746,7 @@ body {
 .note_22_user_44_repeat{
     padding:4px 5px;
     cursor:pointer;
-    height:63px;
+    height:65px;
     border-bottom:1px solid #F2F2F2;
 }
 .note_22_user_44_repeat>img{
@@ -1435,7 +1435,6 @@ color:red !important;
     bottom:0px;
     height:200px;
     right:250px;
-    display:none;
 }
 .ch_66_at_bo55x_co00ont3388ent{
     height:250px;

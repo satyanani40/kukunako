@@ -7,11 +7,12 @@
  * Controller of the weberApp
  */
 angular.module('weberApp')
-	.controller('PostLoadController', function($http, $auth, Restangular, $scope,
+	.controller('PostLoadController', function($http, $auth, InterestsService, Restangular, $scope,
 	                                           $routeParams, PostService, InfinitePosts,MatchButtonService) {
 
 	    $scope.postid = $routeParams.postid;
 	    $scope.MatchButtonService = MatchButtonService;
+	    $scope.InterestsService = InterestsService;
 	    $http.get('/api/me', {
 			headers: {
 				'Content-Type': 'application/json',
