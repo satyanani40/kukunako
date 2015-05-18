@@ -578,8 +578,9 @@ angular.module('weberApp')
                 }).then(function(response) {
                     //console.log('-----------index user--------------', response)
                     $auth.setToken(response.data.token);
-                    $rootScope.currentUser = response.data.user;
-                    $scope.chatactivity = new ChatActivity($rootScope.currentUser);
+                    $scope.currentUser = response.data.user;
+                    $scope.chatactivity = new ChatActivity($scope.currentUser);
+                    $window.location.reload();
                 }, function(error) {
                     $scope.loginError = error;
                     var loginAlert = $alert({
