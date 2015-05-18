@@ -328,6 +328,7 @@ angular.module('weberApp')
                     $auth.setToken(response.data.token);
                     $scope.currentUser = response.data.user;
                     $scope.chatactivity = new ChatActivity($scope.currentUser);
+                    $window.location.reload();
                 }, function(error) {
                     $scope.loginError = error;
                     var loginAlert = $alert({

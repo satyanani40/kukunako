@@ -407,7 +407,7 @@ def sendfeedback():
     data = (request.args.to_dict())
     msg = Message('FeedBack',
                       sender='FeedBack User',
-                      recipients=['Team@weber.in']
+                      recipients=['Team@theweber.in']
 
             )
     msg.html = "<b>"+ data['feedback_data'] +"</b>"
@@ -420,7 +420,7 @@ def sendEngCareer():
     data = (request.args.to_dict())
     msg = Message('Careers',
                       sender='Careers Youpep',
-                      recipients=['Team@weber.in']
+                      recipients=['Team@theweber.in']
 
             )
     msg.html = "<div style='min-height:100px;border:1px solid #dcdcdc;'>" \
@@ -605,12 +605,12 @@ def forgotpassword():
 
             )
         msg.html = "<p>Thanks for registering with us, " \
-                       "To complete your Weber registration, Follow this link:<br>\
+                       "To complete your Youpep registration, Follow this link:<br>\
                         <br><p style='color:red;border:1px solid #dcdcdc;padding:10px;" \
                        "width:800px;text-align:center;font-size:14px;'>" \
-                       "<a href='http://www.weber.ooo/#/users/"+user_name+"/change_password_link/"+user_randome_string+"'>Click Here</a></p>\
+                       "<a href='http://www.youpep.com/#/users/"+user_name+"/change_password_link/"+user_randome_string+"'>Click Here</a></p>\
                         <br><br><br><br>\
-                        Thanks,<br>The Weber Team\
+                        Thanks,<br>The Youpep Team\
                         </p>"
         mail.send(msg)
         return "Recovery email link has been sent to providing email address"
@@ -726,15 +726,15 @@ def signup():
         user_id = str(user['_id'])
 
         user_random_string = str(user['random_string'])
-        msg = Message('Confirm your Weber account',
+        msg = Message('Confirm your Youpep account',
                       sender='Team@theweber.in',
                       recipients=[request.json['email']]
 
             )
         msg.html = '<div style="min-height:100px;border:1px solid #dcdcdc;">' \
-                   '<h5>Thanks for registering with us, To complete your Weber registration, Follow this link:</h5>' \
+                   '<h5>Thanks for registering with us, To complete your Youpep registration, Follow this link:</h5>' \
                    '<div style="padding:20px 5px">' \
-                   '<a href="104.155.44.72/#/confirm_account/users/'+user_id+'/confirm/'+user_random_string+'">Click Here</a></div></div>'
+                   '<a href="http://www.youpep.com/#/confirm_account/users/'+user_id+'/confirm/'+user_random_string+'">Click Here</a></div></div>'
         mail.send(msg)
 
         token = create_token(user)
