@@ -578,9 +578,9 @@ angular.module('weberApp')
                 }).then(function(response) {
                     //console.log('-----------index user--------------', response)
                     $auth.setToken(response.data.token);
-                    $scope.currentUser = response.data.user;
-                    $scope.chatactivity = new ChatActivity($scope.currentUser);
-                    $window.location.reload();
+                    $rootScope.currentUser = response.data.user;
+                    $scope.chatactivity = new ChatActivity($rootScope.currentUser);
+
                 }, function(error) {
                     $scope.loginError = error;
                     var loginAlert = $alert({
@@ -727,7 +727,7 @@ angular.module('weberApp')
                    }
 
 
-                   get_friend_notifications($scope.currentUser);
+                   get_friend_notifications($rootScope.currentUser);
 
                    $scope.MessageNotifcations();
                    if($rootScope.currentUser.friends.length !== 0){
