@@ -13,7 +13,6 @@ angular.module('weberApp')
 
         //var element = $routeParams.userId;
         //console.log(element)
-
         $scope.email = $routeParams.email;
         //console.log($scope.user);
         $scope.show_interests = true;
@@ -31,8 +30,16 @@ angular.module('weberApp')
 			}
 		}).success(function(userId) {
             Restangular.one('people', JSON.parse(userId)).get({seed:Math.random()}).then(function(user) {
-
                 $rootScope.currentUser = user;
+                if($rootScope.currentUser.email_confirmed == false){
+                    var userNameAlert = $alert({
+                        title: 'Thanks for Registering: ',
+                        content: 'Your email is not confirmed',
+                        placement: 'top-left',
+                        type: 'danger',
+                        show: true
+                    });
+                }
 
                 $scope.afterFinishQuestions = function(){
                     $location.path('/home');
