@@ -185,8 +185,10 @@
                                                         {{ UserService.get(request_notific.friendid).name.first }}
                                                         &nbsp;{{ UserService.get(request_notific.friendid).name.last }}
                                                     </a>
+                                                    <span ng-if="request_notific.notific_type === 2">
+                                                        Accepted your friend request.
+                                                    </span>
                                                 </strong>
-                                                Accepted your friend request.
                                                 <span>
                                                     <a ng-if="request_notific.notific_type === 3"
                                                        href="#/post/{{ request_notific.postid }}">Matched with you.

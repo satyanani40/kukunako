@@ -14,7 +14,7 @@
                         {{profileuser.name.first}} {{profileuser.name.last}}
                     </a>
                 </h3>
-                <div ng-switch on="check_relation()">
+                <div ng-switch on="check_relation()" ng-if="isAuthenticated()">
                     <div ng-switch-when="addfriend">
                         <cancelrequest>
                             <button  ng-click="frndaddrequest(profileuser._id, 0)" class="btn btn-block btn-sm btn-primary">Add Friend</button>
@@ -39,7 +39,7 @@
                     <div class="animate-switch" ng-switch-default></div>
 
                 </div>
-                <div ng-if="profileuser._id != currentUser._id" style="margin-top:10px;">
+                <div ng-if="profileuser._id != currentUser._id;isAuthenticated()" style="margin-top:10px;">
                     <button ng-click="openchatroom(profileuser);addToConversations(profileuser._id)"
                             class="btn btn-block btn-sm btn-success">
                         chat
