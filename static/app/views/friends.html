@@ -207,7 +207,7 @@
                                     <img ng-src="{{ friend.picture.thumbnail }}" class="pull-left"
                                          style="width:60px;border-radius:3px;margin-right:10px;" />
                                     <h5 style="">
-                                        <a href="#/profile/{{UserService.get(friend)._id}}">
+                                        <a href="#/profile/{{ friend._id }}">
                                             {{ friend.name.first }} {{ friend.name.last }}
                                         </a>
                                         <addfriend>
