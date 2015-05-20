@@ -265,7 +265,7 @@ angular.module('weberApp')
         $scope.get_screen_height = window.innerHeight-52;
         $scope.get_inner_div_height = (window.innerHeight-210)/2;
         $scope.UserService = UserService;
-        $scope.notifications_count = 0;
+        $rootScope.notifications_count = 0;
         $scope.instanceSearchHistory = {};
         $scope.PostService = PostService;
         $scope.chatdivnotification = [];
@@ -284,7 +284,7 @@ angular.module('weberApp')
                     .then(function(user) {
                             $rootScope.currentUser = user;
                             console.log('got notifications to this user', user.name.first)
-                            get_friend_notifications(user);
+                            get_friend_notifications($rootScope.currentUser);
                     });
                 }
             });
@@ -299,7 +299,7 @@ angular.module('weberApp')
                     // no chat rooms opened push message into latest Notifications
                     if(sessionStorage.getItem(msg.senderid) == null){
                        // console.log('no chat div opened')
-                        $scope.chatactivity.pushLatestMessage(msg);
+                        $rootScope.chatactivity.pushLatestMessage(msg);
                     }
                     else{
                     //console.log('yes chat room opened')
@@ -324,7 +324,7 @@ angular.module('weberApp')
                     if(JSON.parse(sessionStorage.getItem(msg.senderid)).minimize){
                         $scope.chatdivnotification.push({ id:msg.senderid,message: true});
                     }
-                     $scope.chatactivity.pushMessage(msg.senderid, new_message);
+                     $rootScope.chatactivity.pushMessage(msg.senderid, new_message);
                      msg = null;
                    }
                 }else{}
@@ -336,13 +336,13 @@ angular.module('weberApp')
             console.log('calling get friend notifications', user.notifications)
             for(var k in user.notifications){
                 if(user.notifications[k].seen == false){
-                    $scope.notifications_count += 1;
+                    $rootScope.notifications_count += 1;
                 }
             }
         }
         $scope.loadLatestMessages = function(){
             //console.log('load message')
-            $scope.chatactivity.loadLatestMessages();
+            $rootScope.chatactivity.loadLatestMessages();
         }
 
         // opens new chat room
@@ -359,7 +359,7 @@ angular.module('weberApp')
                     height:'364px'
                 }
 
-                $scope.chatactivity.loadMessages($rootScope.currentUser._id, room_user._id, json);
+                $rootScope.chatactivity.loadMessages($rootScope.currentUser._id, room_user._id, json);
                 sessionStorage.setItem(room_user._id, JSON.stringify(json));
                 $socket.emit('connect', {data:room_user._id});
                 // load messages into new open chat room
@@ -390,23 +390,23 @@ angular.module('weberApp')
                     _created: new Date()
                 }
 
-                $scope.chatactivity.pushMessage(Recept, pushNewMessage);
+                $rootScope.chatactivity.pushMessage(Recept, pushNewMessage);
 
                 //$scope.chatactivity.messages = data;
 
                 $socket.emit('send_message', {receiverid: Recept, senderid :$rootScope.currentUser._id  ,message: text});
-                $scope.chatactivity.sendMessage(Recept, text);
+                $rootScope.chatactivity.sendMessage(Recept, text);
             }else{
                 return false;
             }
         }
 
         $scope.addToConversations = function(id){
-            $scope.chatactivity.addToConversations(id);
+            $rootScope.chatactivity.addToConversations(id);
         }
 
         $scope.deleteConversation = function(id){
-            $scope.chatactivity.deleteConversation(id);
+            $rootScope.chatactivity.deleteConversation(id);
             sessionStorage.removeItem(id);
         }
 
@@ -420,17 +420,17 @@ angular.module('weberApp')
          // closing open div
         $scope.close_div = function(id){
 
-            for(var k in $scope.chatactivity.messages){
-                console.log($scope.chatactivity)
-                if($scope.chatactivity.messages[k].id == id){
+            for(var k in $rootScope.chatactivity.messages){
+                console.log($rootScope.chatactivity)
+                if($rootScope.chatactivity.messages[k].id == id){
                     // remove get chat room
-                    $scope.chatactivity.messages.splice(k,1);
+                    $rootScope.chatactivity.messages.splice(k,1);
                 }
             }
 
-            for(var i in $scope.chatactivity.pages){
-                if($scope.chatactivity.pages[i].id == id){
-                    $scope.chatactivity.pages.splice(k,1);
+            for(var i in $rootScope.chatactivity.pages){
+                if($rootScope.chatactivity.pages[i].id == id){
+                    $rootScope.chatactivity.pages.splice(k,1);
                 }
             }
             // remove from chat room
@@ -438,12 +438,12 @@ angular.module('weberApp')
         }
 
          $scope.MessageNotifcations = function(){
-           $scope.chatactivity.getMessageNotifcations();
+           $rootScope.chatactivity.getMessageNotifcations();
          }
 
 
         $scope.makeMessagesSeen = function(senderid){
-            $scope.chatactivity.makeMessagesSeen(senderid);
+            $rootScope.chatactivity.makeMessagesSeen(senderid);
         }
 
         $scope.checknotific = function(id){
@@ -459,8 +459,8 @@ angular.module('weberApp')
 
         $scope.makeSeen = function(){
              //console.log('--------called make seen-------------')
-             if($scope.notifications_count){
-                $scope.notifications_count = 0;
+             if($rootScope.notifications_count){
+                $rootScope.notifications_count = 0;
                 for(var k in $rootScope.currentUser.notifications){
                     if($rootScope.currentUser.notifications[k].seen == false){
                         $rootScope.currentUser.notifications[k].seen = true;
@@ -505,7 +505,7 @@ angular.module('weberApp')
             var chatrooms = getData();
             console.log('chat room opened previously', chatrooms)
             for(var k in  chatrooms){
-                $scope.chatactivity.loadMessages($rootScope.currentUser._id, chatrooms[k].id, chatrooms[k]);
+                $rootScope.chatactivity.loadMessages($rootScope.currentUser._id, chatrooms[k].id, chatrooms[k]);
            }
 
 
@@ -578,8 +578,24 @@ angular.module('weberApp')
                 }).then(function(response) {
                     //console.log('-----------index user--------------', response)
                     $auth.setToken(response.data.token);
+
                     $rootScope.currentUser = response.data.user;
-                    $scope.chatactivity = new ChatActivity($rootScope.currentUser);
+
+                    $rootScope.chatactivity = new ChatActivity($rootScope.currentUser);
+                    $scope.searchActivity = new SearchActivity($rootScope.currentUser);
+
+                    if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
+                        $location.path("/enter_interests")
+                    }
+
+                    get_friend_notifications($rootScope.currentUser);
+                    $scope.MessageNotifcations();
+
+                   if($rootScope.currentUser.friends.length !== 0){
+                    $rootScope.chatactivity.getChatFriends();
+                   }
+
+                   socket_operations();
 
                 }, function(error) {
                     $scope.loginError = error;
@@ -650,6 +666,11 @@ angular.module('weberApp')
                     if(response.data.status == 200){
                         $auth.setToken(response.data.token);
                         $rootScope.currentUser = response.data.user;
+
+                        $rootScope.chatactivity = new ChatActivity($rootScope.currentUser);
+                        $scope.searchActivity = new SearchActivity($rootScope.currentUser);
+                        socket_operations();
+
                         $location.path('/enter_interests/' + self.formData.email);
                     }
 
@@ -697,14 +718,15 @@ angular.module('weberApp')
                 $location.path("/enter_interests")
             }
 
-             $scope.chatactivity = new ChatActivity(user);
+             $rootScope.chatactivity = new ChatActivity($rootScope.currentUser);
              $scope.searchActivity = new SearchActivity($rootScope.currentUser);
              get_friend_notifications($rootScope.currentUser);
 
              $scope.MessageNotifcations();
              if($rootScope.currentUser.friends.length !== 0){
-                $scope.chatactivity.getChatFriends();
+                $rootScope.chatactivity.getChatFriends();
              }
+
              socket_operations();
              loadintodivs();
         }else{
@@ -718,7 +740,7 @@ angular.module('weberApp')
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()})
                 .then(function(user) {
                    $rootScope.currentUser = user;
-                   $scope.chatactivity = new ChatActivity(user);
+                   $rootScope.chatactivity = new ChatActivity(user);
                    $scope.searchActivity = new SearchActivity($rootScope.currentUser);
 
 
@@ -731,7 +753,7 @@ angular.module('weberApp')
 
                    $scope.MessageNotifcations();
                    if($rootScope.currentUser.friends.length !== 0){
-                    $scope.chatactivity.getChatFriends();
+                    $rootScope.chatactivity.getChatFriends();
                    }
                    socket_operations();
                    loadintodivs();
@@ -755,7 +777,7 @@ angular.module('weberApp')
         $element.bind('scroll', function(){
 
             if($element[0].scrollTop == 0){
-                $scope.chatactivity.nextPage($element[0].id);
+                $rootScope.chatactivity.nextPage($element[0].id);
             }
          });
 
