@@ -37,16 +37,13 @@
 						</unaddfriend>
                     </div>
                     <div class="animate-switch" ng-switch-default></div>
-
+                    <div ng-if="profileuser._id != currentUser._id" style="margin-top:10px;">
+                        <button ng-click="openchatroom(profileuser);addToConversations(profileuser._id)"
+                                class="btn btn-block btn-sm btn-success">
+                            chat
+                        </button>
+                    </div>
                 </div>
-                <div ng-if="profileuser._id != currentUser._id;isAuthenticated()" style="margin-top:10px;">
-                    <button ng-click="openchatroom(profileuser);addToConversations(profileuser._id)"
-                            class="btn btn-block btn-sm btn-success">
-                        chat
-                    </button>
-                </div>
-
-
 			</div>
 		</div>
         <div class="panel panel-default">
