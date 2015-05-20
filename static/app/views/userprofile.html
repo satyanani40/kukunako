@@ -14,32 +14,32 @@
                         {{profileuser.name.first}} {{profileuser.name.last}}
                     </a>
                 </h3>
-                <div ng-switch on="check_relation()" ng-if="isAuthenticated()">
+                <div cg-busy="load_cancel_request" ng-switch on="check_relation()" ng-if="isAuthenticated()">
                     <div ng-switch-when="addfriend">
                         <cancelrequest>
-                            <button  ng-click="frndaddrequest(profileuser._id, 0)" class="btn btn-block btn-sm btn-primary">Add Friend</button>
+                            <button  ng-click="frndaddrequest(profileuser._id, 0)" class="btn btn-sm btn-primary">Add Friend</button>
                         </cancelrequest>
                     </div>
                     <div ng-switch-when="cancelrequest">
                         <addfriend>
-							<button ng-click="frndcancelrequest(profileuser._id, 0)" class="btn btn-block btn-sm btn-primary">cancel request</button>
+							<button ng-click="frndcancelrequest(profileuser._id, 0)" class="btn btn-sm btn-primary">cancel request</button>
 						</addfriend>
                     </div>
                     <div ng-switch-when="reject_accept">
 						<acceptreject>
-                        	<button ng-click="acceptrequest(profileuser._id, 0)" class="btn btn-block btn-sm btn-primary">accept request</button>
-							<button ng-click="rejectrequest(profileuser._id, 0)" class="btn btn-block btn-sm btn-primary">reject request</button>
+                        	<button ng-click="acceptrequest(profileuser._id, 0)" class="btn  btn-sm btn-primary">accept request</button>
+							<button ng-click="rejectrequest(profileuser._id, 0)" class="btn btn-sm btn-primary">reject request</button>
 						</acceptreject>
                     </div>
                      <div ng-switch-when="unfriend">
 						<unaddfriend>
-                        	<button ng-click="friendunfriend(profileuser._id)" class="btn btn-block btn-sm btn-primary">unfriend</button>
+                        	<button ng-click="friendunfriend(profileuser._id)" class="btn btn-sm btn-primary">unfriend</button>
 						</unaddfriend>
                     </div>
                     <div class="animate-switch" ng-switch-default></div>
                     <div ng-if="profileuser._id != currentUser._id" style="margin-top:10px;">
                         <button ng-click="openchatroom(profileuser);addToConversations(profileuser._id)"
-                                class="btn btn-block btn-sm btn-success">
+                                class="btn btn-sm btn-success">
                             chat
                         </button>
                     </div>

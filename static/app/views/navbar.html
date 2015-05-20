@@ -148,7 +148,7 @@
                                 <div class="no_30_te_bo_22_div div_scroll">
                                     <div class="inn_30_no_20_bo_23_sc_22_40" ng-repeat="request_notific in currentUser.notifications"
                                              ng-if="request_notific.notific_type === 1">
-                                        <div class="note_22_user_44_repeat">
+                                        <div class="note_22_user_44_repeat" cg-busy="load_cancel_request">
                                             <img src="{{  UserService.get(request_notific.friendid).picture.thumbnail }}">
                                             <h5>
                                                 <strong>
