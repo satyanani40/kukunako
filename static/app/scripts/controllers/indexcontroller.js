@@ -407,9 +407,9 @@ angular.module('weberApp')
                 $scope.signupBusy = $auth.signup({
                     email: self.formData.email,
                     password: self.formData.password,
-                    firstname: self.formData.firstname,
-                    lastname: self.formData.lastname,
-                    username: self.formData.firstname + self.formData.lastname,
+                    firstname: self.formData.firstname.toLowerCase(),
+                    lastname: self.formData.lastname.toLowerCase(),
+                    username: self.formData.firstname.toLowerCase() + self.formData.lastname.toLowerCase(),
                 }).then(function (response) {
                     if(response.data.status == 200){
                         $auth.setToken(response.data.token);
