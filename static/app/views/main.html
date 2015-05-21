@@ -92,7 +92,7 @@
             <div class="panel-heading" style="padding:2px;border-top: 1px solid #ECEAEA;">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist" style="border-bottom:0px solid #fff;">
-                    <li class="active">
+                    <li>
                       <a data-target="#home" role="tab" data-toggle="tab"
                          style="background:#f5f5f5;border:0px solid #fff;">
                           <h6 style="margin-top:0px;margin-bottom:0px;">
@@ -105,7 +105,7 @@
                           </h6>
                       </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a data-target="#profile" role="tab" data-toggle="tab"
                                  style="background:#f5f5f5;border:0px solid #fff;">
                             <h6 style="margin-top:0px;margin-bottom:0px;">
@@ -217,7 +217,7 @@
                 </div>
             </div>
         </div>
-		<div ng-if="show_none_posts">
+		<div ng-show="show_none_posts">
 			<div class="row" ng-if="!(infinitePosts.posts.length)" class="well clearfix"
                 style="background-color:#fff;">
 				<div class="col-sm-12">
