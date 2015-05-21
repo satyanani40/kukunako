@@ -10,7 +10,12 @@ angular.module('weberApp')
 	.controller('MainCtrl', function($scope, $timeout, $auth, $rootScope, $socket, Restangular, InfinitePosts,questions,
 	                                $alert, $http, CurrentUser,sortIListService, InterestsService,$location,
 	                                UserService, fileUpload, MatchButtonService) {
+
+	    $scope.show_none_posts = false;
 	    $scope.load_main = $timeout(function(){
+            $timeout(function(){
+                $scope.show_none_posts = true;
+            },4000);
             $scope.UserService = UserService;
             $scope.MatchButtonService = MatchButtonService;
             $scope.sortIListService = sortIListService;
@@ -158,5 +163,5 @@ angular.module('weberApp')
 
                 });
             });
-        },2000);
+        },1000);
 	});

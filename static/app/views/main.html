@@ -87,7 +87,7 @@
             </div>
 		</div>
 	</div>
-	<div class="col-md-6 colpadding" cg-busy="load_main" style="min-height:2000px">
+	<div class="col-md-6 colpadding" style="min-height:2000px">
         <div class="panel panel-default">
             <div class="panel-heading" style="padding:2px;border-top: 1px solid #ECEAEA;">
                 <!-- Nav tabs -->
@@ -122,7 +122,7 @@
             </div>
             <div class="panel-body">
                 <div class="tab-content">
-                    <div class="tab-pane fade active in" id="home">
+                    <div class="tab-pane fade" id="home">
                         <div class="questions_arrow">
                             <div class="panel-group" id="accordion">
                                 <div class="" style="margin-bottom:10px" ng-repeat="question in questions.allquestions">
@@ -201,7 +201,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="profile" cg-busy="new_submit_busy_post">
+                    <div class="tab-pane fade active in" id="profile" cg-busy="new_submit_busy_post">
                         <form role="form" class="post-to-timeline status_arrow clearfix">
                             <textarea ng-model="new_post" class="form-control"
                                       style="height: 70px;margin-bottom: 10px;resize: none;" placeholder="Whats happening?" required></textarea>
@@ -217,9 +217,9 @@
                 </div>
             </div>
         </div>
-		<div ng-if="!(infinitePosts.posts.length)" class="well clearfix"
-             style="background-color:#fff;">
-			<div class="row">
+		<div ng-if="show_none_posts">
+			<div class="row" ng-if="!(infinitePosts.posts.length)" class="well clearfix"
+                style="background-color:#fff;">
 				<div class="col-sm-12">
 					<h2 class="text-center">
 						No Posts to Show
@@ -231,7 +231,7 @@
 			</div>
 		</div>
 
-		<div id='userposts' infinite-scroll='infinitePosts.nextPage()' infinite-scroll-disabled='infinitePosts.busy'
+		<div cg-busy="load_main" id='userposts' infinite-scroll='infinitePosts.nextPage()' infinite-scroll-disabled='infinitePosts.busy'
              infinite-scroll-distance='0' infinite-scroll-container="'#userposts'">
 
 			<div class="media panel panel-default" ng-repeat="post in infinitePosts.posts">
