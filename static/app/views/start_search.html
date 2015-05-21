@@ -160,7 +160,7 @@
                     </h5>
                 </div>
                 <div class="panel-body" style="padding:5px 15px;" cg-busy="delete_searchHistory">
-                    <div class="row" style="border-bottom:1px solid #f5f5f5;margin-bottom:3px;" ng-repeat="search_text in searchActivity.searchHistory">
+                    <div class="row" style="border-bottom:1px solid #f5f5f5;margin-bottom:3px;" ng-repeat="search_text in searchActivity.searchHistory | limitTo:15">
                         <div class="col-lg-12" style="padding:0px 0px 0px 4px;">
                             <div class="oaerror info">
                                 <h5 class="truncate">
