@@ -196,7 +196,7 @@ angular.module('weberApp')
 
 
         ChatActivity.prototype.loadLatestMessages = function(){
-            console.log('load latest')
+            //console.log('load latest')
             var params = null;
             var getResults = false;
            // console.log(getResults)
@@ -204,7 +204,7 @@ angular.module('weberApp')
             params =  '{ "receiver" : "'+this.currentuser._id+'" }';
 
             if(this.messageNotifc.length){
-                console.log('yess message notification length not zero')
+                //console.log('yess message notification length not zero')
                 params = '{ "$and" : [ { "timestamp":{"$gte": '+this.currentuser.lastmessageseen +' }},'+
                                        '{ "receiver" : "'+this.currentuser._id+'" }, { "seen" : '+false+' } ] }';
                 getResults = true;
@@ -217,7 +217,7 @@ angular.module('weberApp')
             var embedded_param = '{"sender":1,"receiver":1}';
             var self = this;
 
-            console.log(params)
+            //console.log(params)
             if(getResults){
                 Restangular.all('updatetimestamp').post({
                     timestamp:self.currentuser.lastmessageseen,
@@ -277,7 +277,7 @@ angular.module('weberApp')
         ChatActivity.prototype.makeMessagesSeen = function(latestMessages){
             var messageids = [];
             var self = this;
-            console.log('makeMessagesSeen')
+            //console.log('makeMessagesSeen')
             for(var x in this.updateseenmessages){
                 messageids.push(this.updateseenmessages[x]._id);
             }
@@ -357,7 +357,7 @@ angular.module('weberApp')
 		        conversationid : id,
 		        seed:Math.random()
 		      }).then(function(data){
-		          console.log('delete conversation-->', data)
+		          //console.log('delete conversation-->', data)
 		      }.bind(this));
 
             }

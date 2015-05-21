@@ -23,6 +23,13 @@
         display:none;
     }
 
+    .btn-width-48{
+        margin-bottom:100px;
+    }
+    .be-margin{
+        margin-top:15px;
+    }
+
 }
 body {
 	background-color: #e9eaed;

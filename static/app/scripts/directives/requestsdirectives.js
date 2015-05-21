@@ -202,7 +202,7 @@ angular.module('weberApp')
                     var e = null;
                     $element.html(html);
                     $compile($element.contents())($scope);
-                    console.log("----------------------->", $rootScope.currentUser._id, profile_user_id)
+                    //console.log("----------------------->", $rootScope.currentUser._id, profile_user_id)
                     var data = Friends.acceptRequest($rootScope.currentUser._id, profile_user_id);
                     data.then(function(data){
                         if(data.data){
@@ -239,7 +239,7 @@ angular.module('weberApp')
                     var e = null;
                     $element.html(html);
                     $compile($element.contents())($scope);
-                    console.log("----------------------->", $rootScope.currentUser._id, profile_user_id)
+                    //console.log("----------------------->", $rootScope.currentUser._id, profile_user_id)
                     var data = Friends.rejectRequest($rootScope.currentUser._id, profile_user_id);
                     data.then(function(data){
                         if(data.data){

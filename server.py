@@ -580,7 +580,7 @@ def resendActivationLink():
     msg.html = '<div style="min-height:100px;border:1px solid #dcdcdc;">' \
                '<h5>Thanks for registering with us, To complete your Youpep registration, Follow this link:</h5>' \
                '<div style="padding:20px 5px">' \
-               '<a href="104.155.44.72/#/confirm_account/users/'+user_id+'/confirm/'+create_random_number+'">Click Here</a></div></div>'
+               '<a href="http://www.youpep.com/#/confirm_account/users/'+user_id+'/confirm/'+create_random_number+'">Click Here</a></div></div>'
     mail.send(msg)
     response = jsonify(data = 'Activation link has been sent to your email')
     response.status_code = 200

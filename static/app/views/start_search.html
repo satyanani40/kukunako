@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="padding-bottom:20px;">
-                                        <div class="col-lg-4" style="padding:0px 0px 0px 15px;">
+                                        <div class="col-lg-4 colpadding" style="">
                                             <i class="fa fa-search"
                                                style="padding:17px;font-size:18px;background-color:#3090C7;color:#FFF;border-radius:50%;">
 
@@ -124,7 +124,7 @@
                                                 Search
                                             </label>
                                         </div>
-                                        <div class="col-lg-4" style="padding:0px 0px 0px 10px;">
+                                        <div class="col-lg-4 be-margin colpadding" style="">
                                             <i class="fa fa-user"
                                                style="padding:17px;font-size:18px;background-color:#4E9258;color:#FFF;border-radius:50%;">
 
@@ -133,7 +133,7 @@
                                                 Find a person
                                             </label>
                                         </div>
-                                        <div class="col-lg-4" style="padding:0px;">
+                                        <div class="col-lg-4 be-margin colpadding" style="">
                                             <i class="fa fa-check-circle"
                                                 style="padding:17px;text-align:center;font-size:18px;background-color:#FFA62F;color:#FFF;border-radius:50%;">
 
@@ -208,14 +208,14 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-sm-6" style="padding-right:2px;">
+                                    <div class="col-lg-6 col-sm-12" style="">
                                         <input class="form-control input-box input-md" autocomplete="off" type="text" placeholder="Enter first name"
                                            id="name" name="name" ng-model="formData.firstname" required/>
                                         <span ng-show="myForm.name.$error.required && myForm.name.$dirty" style="color:red">
                                             required
                                         </span>
                                     </div>
-                                    <div class="col-sm-6" style="padding-left:2px;">
+                                    <div class="col-lg-6 be-margin col-sm-12" style="">
                                         <input class="form-control input-box input-md" autocomplete="off" type="text" placeholder="Enter last name"
                                            id="lastname" name="lastname" ng-model="formData.lastname" required  />
                                         <span ng-show="myForm.lastname.$error.required && myForm.lastname.$dirty" style="color:red">
@@ -242,7 +242,7 @@
                             </div>
 
                             <button ng-click = "registerUser()" style="padding: 8px 12px;background-color:#00BCD4;border:1px solid #00BCD4 !important;"
-                                                type="submit" class="btn btn-block btn-warning"
+                                                type="submit" class="btn btn-block btn-warning btn-width-48"
                                                 ng-disabled="!myForm.$valid">
                                 Register with Youpep
                             </button>

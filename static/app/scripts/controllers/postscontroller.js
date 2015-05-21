@@ -57,7 +57,7 @@ angular.module('weberApp')
                             //console.log('postid -->', postid)
                             //console.log('user id-->', user._id)
                             MatchButtonService.match(postauthor, postid , user._id).then(function(data){
-                                console.log('match agree succesfully-->', data);
+                                //console.log('match agree succesfully-->', data);
                             });
 
                         }

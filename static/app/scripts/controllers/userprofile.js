@@ -52,7 +52,7 @@ angular.module('weberApp')
 
              $scope.answered = function(question, ans){
                  $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
-                 console.log(question, ans)
+                 //console.log(question, ans)
              }
 
 
@@ -74,7 +74,7 @@ angular.module('weberApp')
             });
 
         }else{
-            console.log('else part user', $rootScope.currentUser)
+            //console.log('else part user', $rootScope.currentUser)
             questionOperations();
         }
 
@@ -87,9 +87,9 @@ angular.module('weberApp')
             }
 
             $scope.youAnswered = function(question, ans){
-                console.log('------------->>> user id', $rootScope.currentUser._id);
+                //console.log('------------->>> user id', $rootScope.currentUser._id);
                 $scope.questions.updateUser2(question, ans, $rootScope.currentUser._id);
-                console.log(question, ans)
+                //console.log(question, ans)
             }
              // end of questions section
             if($rootScope.currentUser._id !== $scope.profileuser._id){
@@ -118,7 +118,7 @@ angular.module('weberApp')
                         iPeople.push({'interested_person': $rootScope.currentUser._id, 'match_date': new Date()});
                         //console.log('post author-->', postauthor)
                         MatchButtonService.match(postauthor, postid , $rootScope.currentUser._id).then(function(data){
-                            console.log('match agree succesfully-->', data);
+                            //console.log('match agree succesfully-->', data);
                         });
 
                     }
@@ -138,7 +138,7 @@ angular.module('weberApp')
                             if(iPeople[i].interested_person == $rootScope.currentUser._id){
                                iPeople.splice(i,1);
                                MatchButtonService.unmatch(postauthor, postid, $rootScope.currentUser._id).then(function(data){
-                                    console.log('unmatch disagree succesfully-->', data);
+                                    //console.log('unmatch disagree succesfully-->', data);
                                });
                             }
                         }

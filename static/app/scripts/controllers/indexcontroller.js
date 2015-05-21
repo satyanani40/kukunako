@@ -641,7 +641,7 @@ angular.module('weberApp')
                         email_career : email_career,
                         phone_career : phone_career
                 }).then(function(data){
-                    console.log("dataaaaaa", data)
+                    //console.log("dataaaaaa", data)
                     var careerAlert = $alert({
                         title: 'Successfully Submitted! :)',
                         placement: 'top',

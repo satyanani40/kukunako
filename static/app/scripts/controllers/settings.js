@@ -17,15 +17,15 @@ angular.module('weberApp')
 	 	$scope.searchBusy = false;
 		$scope.UserService = UserService;
         $scope.InterestsService = InterestsService;
-        console.log("interests", $scope.InterestsService)
+        //console.log("interests", $scope.InterestsService)
 
         $scope.$watchCollection('data.tags',function(val){
-            console.log("----->>>> this controller")
-            console.log(val);
+            //console.log("----->>>> this controller")
+            //console.log(val);
 
 
             $scope.final_interests_array = val;
-            console.log("array of interests====>>>>>", $scope.final_interests_array);
+            //console.log("array of interests====>>>>>", $scope.final_interests_array);
         });
 
 		$http.get('/api/me', {
@@ -47,7 +47,7 @@ angular.module('weberApp')
                   reader.onload = function (evt) {
                     $scope.$apply(function($scope){
                       $scope.myImage=evt.target.result;
-                        console.log($scope.myImage)
+                        //console.log($scope.myImage)
                     });
                   };
                   reader.readAsDataURL(file);
@@ -56,14 +56,14 @@ angular.module('weberApp')
                angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
 
                $scope.$watch('myCroppedImage',function(){
-                    console.log('ddd')
-                    console.log('Res image==->', $scope.myCroppedImage);
+                    //console.log('ddd')
+                    //console.log('Res image==->', $scope.myCroppedImage);
                });
 
                $scope.update_image = function(){
-                    console.log('called')
-                    console.log('---------->',    $scope.myImage)
-                    console.log('=============>', $scope.myCroppedImage)
+                    //console.log('called')
+                    //console.log('---------->',    $scope.myImage)
+                    //console.log('=============>', $scope.myCroppedImage)
 
                     $scope.UploadImage_busy = $timeout(function() {
                        var req = {
@@ -209,7 +209,7 @@ angular.module('weberApp')
 
 
                 $scope.updatePassword = function() {
-                    console.log("scope----", $scope.if_user_password_is_incorrect)
+                    //console.log("scope----", $scope.if_user_password_is_incorrect)
                     if ($scope.if_user_password_is_incorrect == false) {
                         $scope.Password_busy = $timeout(function(){
 
@@ -273,7 +273,7 @@ angular.module('weberApp')
                             username: $scope.user.username
                         })
                         .success(function(data, status, headers, config) {
-                            console.log("======return success of interests of ids",data.data);
+                            //console.log("======return success of interests of ids",data.data);
                             $scope.InterestsService = InterestsService;
                             var interestsAlert = $alert({
                                 title: 'Success',
@@ -290,7 +290,7 @@ angular.module('weberApp')
                             },1000);
                         }).
                         error(function(data, status, headers, config) {
-                            console.log("====error of interests", data.data)
+                            //console.log("====error of interests", data.data)
                         });
                     },2000);
                 };
@@ -380,7 +380,7 @@ angular.module('weberApp')
                 scope.selectedIndex=-1;
                 scope.removeTag=function(index){
                     scope.selectedTags.splice(index,1);
-                    console.log("remove tags===", scope.selectedTags)
+                    //console.log("remove tags===", scope.selectedTags)
                 }
 
                 scope.search=function(){
@@ -388,16 +388,16 @@ angular.module('weberApp')
                     var interests = [];
                     $http.get('/api/interests?where='+param1)
                     .success(function(data){
-                        console.log("sss",data)
+                        //console.log("sss",data)
                         for(var temp in data._items){
-                            console.log(data._items[temp].interest_string)
+                            //console.log(data._items[temp].interest_string)
                             interests.push(data._items[temp].interest_string)
                         }
                         if(interests.indexOf(scope.searchText) === -1){
                             interests.unshift(scope.searchText);
                         }
 
-                        console.log('interests===>', interests)
+                        //console.log('interests===>', interests)
                         scope.suggestions= interests;
                         scope.selectedIndex=-1;
                     });
@@ -406,7 +406,7 @@ angular.module('weberApp')
                 scope.addToSelectedTags=function(index){
                     if(scope.selectedTags.indexOf(scope.suggestions[index])===-1){
                         scope.selectedTags.push(scope.suggestions[index]);
-                        console.log("selected tags-->>>>", scope.selectedTags);
+                        //console.log("selected tags-->>>>", scope.selectedTags);
                         scope.searchText='';
                         scope.suggestions=[];
                     }

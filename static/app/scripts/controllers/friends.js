@@ -36,7 +36,7 @@ angular.module('weberApp')
 				}
                 // getting suggested friends
 
-                 console.log('before request', $rootScope.currentUser)
+                 //console.log('before request', $rootScope.currentUser)
                  var req = {
 
                         method: 'POST',
@@ -53,11 +53,11 @@ angular.module('weberApp')
                         }
                  }
                  $http(req).then(function(data){
-                     console.log('-----------at suggested people', data)
+                     //console.log('-----------at suggested people', data)
                      if(data.data.status != false){
-                        console.log("user suggestion", data.data.data)
+                        //console.log("user suggestion", data.data.data)
                         $scope.suggested_people = data.data.data;
-                        console.log($scope.suggested_people)
+                        //console.log($scope.suggested_people)
                      }
                  })
 

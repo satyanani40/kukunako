@@ -59,7 +59,7 @@ angular.module('weberApp')
                     }
 
                     $rootScope.currentUser.questions.push({'questionid':question, 'answer': ans});
-                    console.log('pushed answereds', $rootScope.currentUser.questions)
+                    //console.log('pushed answereds', $rootScope.currentUser.questions)
                     $scope.questions.updateAnswer(question, ans, $rootScope.currentUser._id);
                     return;
                 }
@@ -91,7 +91,7 @@ angular.module('weberApp')
                             username: $rootScope.currentUser.username
                         })
                         .success(function(data, status, headers, config) {
-                            console.log("======return success of interests of ids",data);
+                            //console.log("======return success of interests of ids",data);
                             $rootScope.currentUser.interests = data.interests;
                             $scope.show_interests = false;
                             $scope.show_questions = true;

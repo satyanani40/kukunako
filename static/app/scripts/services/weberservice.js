@@ -16,7 +16,7 @@ angular.module('weberApp')
             this.cuserquestions = [];
             this.user2 = {},
             this.canswers = this.currentuser.questions;
-            console.log(this.currentuser.username)
+            //console.log(this.currentuser.username)
         }
 
         questions.prototype.getallquestions = function(){
@@ -36,11 +36,11 @@ angular.module('weberApp')
             for(var temp in this.currentuser.questions){
                 cuserquestionids.push((this.currentuser.questions[temp].questionid).toString())
             }
-            console.log('cuser question ids', cuserquestionids)
+            //console.log('cuser question ids', cuserquestionids)
 
             var params = '{"_id": {"$in":['+combine_ids(cuserquestionids)+']}}';
 
-            console.log(params)
+            //console.log(params)
             Restangular.all('questions').getList({where:params, seed: Math.random()}).then(function(data){
             this.cuserquestions.push.apply(this.cuserquestions, data);
           }.bind(this));
@@ -48,7 +48,7 @@ angular.module('weberApp')
         }
 
         questions.prototype.updateAnswer = function(question, answer, cuser_id){
-            console.log('----------------service------------')
+            //console.log('----------------service------------')
             var self = this;
             var req = {
                 method: 'POST',
@@ -97,7 +97,7 @@ angular.module('weberApp')
          }
 
          questions.prototype.updateUser2 = function(question, answer, cuser_id){
-           console.log('update cuser 2===>', cuser_id)
+           //console.log('update cuser 2===>', cuser_id)
            var self = this;
             var req = {
                 method: 'POST',
@@ -114,7 +114,7 @@ angular.module('weberApp')
             }
 
             $http(req).success(function (data) {
-               console.log('updated answer', data);
+               //console.log('updated answer', data);
 		       for(var temp in self.user2.questions){
                     if(self.user2.questions[temp].questionid == question){
                         self.user2.questions[temp].answer = answer;
@@ -562,7 +562,7 @@ angular.module('weberApp')
                         data: {'_id': id}
                     }
                     $http(req).then(function(data){
-                        console.log(data);
+                        //console.log(data);
                     })
 
 		        }

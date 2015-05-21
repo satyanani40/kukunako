@@ -71,7 +71,7 @@ angular.module('weberApp')
 		}
 
 		this.cancelRequest = function(cuserid, puserid){
-		    console.log(cuserid, puserid)
+		    //console.log(cuserid, puserid)
 		    return Restangular.one('cancelfriend').get({
 		        cuserid : cuserid,
 		        puserid : puserid,

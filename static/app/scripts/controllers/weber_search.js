@@ -83,7 +83,7 @@ angular.module('weberApp')
             Restangular.all('questions').post({
                 'question':question
             }).then(function(data){
-                console.log('questions posted',data)
+                //console.log('questions posted',data)
             });
         }
 
