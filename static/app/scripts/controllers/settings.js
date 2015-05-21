@@ -13,6 +13,8 @@ angular.module('weberApp')
 	                Restangular, InfinitePosts, $alert, $http, CurrentUser, UserService) {
 
 
+
+
         $scope.searched = false;
 	 	$scope.searchBusy = false;
 		$scope.UserService = UserService;

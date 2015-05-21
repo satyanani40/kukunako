@@ -627,7 +627,7 @@
                                         <i class="glyphicon glyphicon-camera"></i>&nbsp;
                                         Upload Picture
                                     </strong>
-                                    <input type="file" id="fileInput" />
+                                    <input type="file" id="fileInput" onchange="return ValidateFileUpload()" />
                                 </span>
                             </div>
                         </div>
@@ -659,3 +659,48 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    function ValidateFileUpload() {
+
+        var fuData = document.getElementById('fileInput');
+        var FileUploadPath = fuData.value;
+
+
+        if (FileUploadPath == '') {
+            alert("Please upload an image");
+
+        } else {
+            var Extension = FileUploadPath.substring(FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
+
+
+
+            if (Extension == "gif" || Extension == "png" || Extension == "bmp"
+                        || Extension == "jpeg" || Extension == "jpg") {
+
+
+                    if (fuData.files && fuData.files[0]) {
+
+                        var size = fuData.files[0].size;
+
+                        if(size > MAX_SIZE){
+                            alert("Maximum file size exceeds");
+                            return;
+                        }else{
+                            var reader = new FileReader();
+
+                            reader.onload = function(e) {
+                                $('#blah').attr('src', e.target.result);
+                            }
+
+                            reader.readAsDataURL(fuData.files[0]);
+                        }
+                    }
+
+            }
+
+
+        else {
+                alert("Photo only allows file types of GIF, PNG, JPG, JPEG and BMP. ");
+            }
+        }}
+</script>

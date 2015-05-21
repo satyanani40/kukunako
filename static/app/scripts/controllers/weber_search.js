@@ -75,7 +75,9 @@ angular.module('weberApp')
                     }
                 }
                 $scope.present_search_query = $scope.query;
-                $scope.show_no_results = true;
+                $timeout(function(){
+                    $scope.show_no_results = true;
+                },6000);
             },3000);
         }
 

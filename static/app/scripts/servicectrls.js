@@ -419,7 +419,9 @@ angular.module('weberApp')
                     }
                 }
                 $scope.present_search_query = $scope.query;
-                $scope.show_no_results = true;
+                $timeout(function(){
+                    $scope.show_no_results = true;
+                },6000);
             },3000);
         }
 
@@ -472,6 +474,8 @@ angular.module('weberApp')
 	.controller('SettingsCtrl',
 	    function($route, $location, $timeout, $window, $scope, $auth, $q, $rootScope,InterestsService,
 	                Restangular, InfinitePosts, $alert, $http, CurrentUser, UserService) {
+
+
 
 
         $scope.searched = false;
@@ -1565,17 +1569,31 @@ angular.module('weberApp')
                 },2000);
             }
         /* end of ResendMail code */
+        function makeid()
+        {
+            var text = "";
+            var possible = "0123456789";
+
+            for( var i=0; i < 4; i++ )
+            {
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+
+            return text;
+        }
 
         //$scope.isAdmin = true;
         /* starting code of signup goes here */
             $scope.registerUser = function() {
                 var self = this;
+                var random_string = makeid();
+                var email = self.formData.email.split('@');
                 $scope.signupBusy = $auth.signup({
                     email: self.formData.email,
                     password: self.formData.password,
                     firstname: self.formData.firstname.toLowerCase(),
                     lastname: self.formData.lastname.toLowerCase(),
-                    username: self.formData.firstname.toLowerCase() + self.formData.lastname.toLowerCase(),
+                    username: email[0]+random_string
                 }).then(function (response) {
                     if(response.data.status == 200){
                         $auth.setToken(response.data.token);
