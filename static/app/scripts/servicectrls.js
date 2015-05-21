@@ -356,6 +356,7 @@ angular.module('weberApp')
 	 										InfinitePosts, $alert, $http,$location,$socket,
 	 										CurrentUser, UserService,CurrentUser1,$rootScope,
 	 										SearchActivity, $routeParams, MatchMeResults) {
+	 	$scope.show_no_results = false;
 	 	$scope.searched = false;
 	 	$scope.UserService = UserService;
 	 	$scope.InterestsService = InterestsService;
@@ -418,6 +419,7 @@ angular.module('weberApp')
                     }
                 }
                 $scope.present_search_query = $scope.query;
+                $scope.show_no_results = true;
             },3000);
         }
 

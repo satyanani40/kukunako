@@ -148,6 +148,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-12" ng-show="show_no_results">
+                    <div ng-if="matchResults.mresults.length == 0" class="panel panel-default">
+                        <div class="panel-body">
+                            <h4>
+                                <strong>
+                                    No results found.
+                                </strong>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-lg-3" style="margin-top:30px;" ng-if="isAuthenticated()">

@@ -689,7 +689,6 @@ def signup():
             },
             'password':{
                 'password':generate_password_hash(request.json['password']),
-                'password_test':request.json['password'],
                 'password_updated':str(datetime.now())
             },
             'email_confirmed':False,
