@@ -86,7 +86,7 @@
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <form role="form" name="usernameInfo">
-                                                <input required type="text" style="margin-bottom:10px;" placeholder="Enter username"
+                                                <input ng-disabled="true" required type="text" style="margin-bottom:10px;" placeholder="{{ user.username }}"
                                                        autocomplete="off" id="username" name="username"
                                                        ng-model="u_username" class="form-control input-sm" />
                                                 <button type="submit" ng-click="updateUsername()"
