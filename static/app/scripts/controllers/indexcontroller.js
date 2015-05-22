@@ -461,6 +461,12 @@ angular.module('weberApp')
             "text": "Settings",
             "href": "#/settings"
         },{
+            "text": "Feedback",
+            "href": "#/feedback"
+        },{
+            "text": "Careers",
+            "href": "#/careers"
+        },{
             "text": "Logout",
             "click": "logout()"
         }];

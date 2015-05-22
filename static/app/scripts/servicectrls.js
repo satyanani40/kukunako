@@ -1631,6 +1631,12 @@ angular.module('weberApp')
             "text": "Settings",
             "href": "#/settings"
         },{
+            "text": "Feedback",
+            "href": "#/feedback"
+        },{
+            "text": "Careers",
+            "href": "#/careers"
+        },{
             "text": "Logout",
             "click": "logout()"
         }];
@@ -1849,7 +1855,7 @@ angular.module('weberApp')
  * Controller of the weberApp
  */
 angular.module('weberApp')
-	.directive('passwordrecovery', function ($compile, CurrentUser, Restangular, $routeParams, friendsActivity) {
+	.directive('passwordrecovery', function ($compile,$location, CurrentUser, Restangular, $routeParams, friendsActivity) {
         return {
             restrict: 'E',
             replace: true,
@@ -1879,7 +1885,7 @@ angular.module('weberApp')
             }
         };
     })
-    .directive('changepassworddirective', function ($compile, CurrentUser, Restangular, $routeParams, friendsActivity) {
+    .directive('changepassworddirective', function ($compile, $location, $timeout, CurrentUser, Restangular, $routeParams, friendsActivity) {
         return {
             restrict: 'E',
             replace: true,
@@ -1913,7 +1919,6 @@ angular.module('weberApp')
                                 $scope.user.patch({
                                     'password':{
                                         'password':$scope.hashed_password,
-                                        'password_test':$scope.formData.password,
                                         'password_updated':new Date()
                                     }
                                 }).then(function(response){
@@ -1925,6 +1930,10 @@ angular.module('weberApp')
                                     var html = '<b>your password has been changed</b>';
                                     var e =$compile(html)($scope);
                                     $element.replaceWith(e);
+                                    $timeout(function(){
+                                        $location.path('/login');
+                                    },2000);
+
 
                                 });
                             });
@@ -1936,12 +1945,6 @@ angular.module('weberApp')
                             var e =$compile(html)($scope);
                             $element.replaceWith(e);
                     });
-
-
-
-
-
-
                 }
             }
         };

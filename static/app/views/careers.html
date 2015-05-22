@@ -97,12 +97,12 @@
                                                 <form role="form" name="careerEng" method="get"
                                                         ng-submit="formCareerSubmit()">
                                                     <label>Enter First Name</label>
-                                                    <input type="text" ng-model="first_career" placeholder="Enter First name" autofocus
+                                                    <input required type="text" ng-model="first_career" placeholder="Enter First name" autofocus
                                                            autocomplete="off" class="text-box-apply" />
                                                     <label>
                                                         Enter Last Name
                                                     </label>
-                                                    <input type="text" ng-model="last_career" placeholder="Enter Last name" autofocus
+                                                    <input required type="text" ng-model="last_career" placeholder="Enter Last name" autofocus
                                                            autocomplete="off" class="text-box-apply" />
 
                                                     <label>
@@ -136,11 +136,11 @@
                                                     </div>
 
                                                     <label>Enter Email Id</label>
-                                                    <input type="email" ng-model="email_career" placeholder="Enter valid email" autofocus
+                                                    <input required type="email" ng-model="email_career" placeholder="Enter valid email" autofocus
                                                            autocomplete="off" class="text-box-apply" />
 
                                                     <label>Enter Contact Number</label>
-                                                    <input type="tel"  min="10" max="12" ng-model="phone_career" placeholder="Enter contact number" autofocus
+                                                    <input required type="tel"  min="10" max="12" ng-model="phone_career" placeholder="Enter contact number" autofocus
                                                            autocomplete="off" class="text-box-apply" />
 
                                                     <button ng-click="send_eng_career()" ng-disabled="!careerEng.$valid"

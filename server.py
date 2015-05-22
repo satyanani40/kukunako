@@ -92,6 +92,8 @@ def login():
         response = jsonify(error='Wrong Email or Password')
         response.status_code = 401
         return response
+    accounts.update({'_id': ObjectId(user['_id'])},
+                                       { "$set" :{ "send_add_requests": []}})
     token = create_token(user)
     return dumps({'user':filterIdFields(user, all=True), 'token': token})
 
@@ -604,8 +606,7 @@ def forgotpassword():
                       recipients=[request.json['email']]
 
             )
-        msg.html = "<p>Thanks for registering with us, " \
-                       "To complete your Youpep registration, Follow this link:<br>\
+        msg.html = "<p>Please click on the link:<br>\
                         <br><p style='color:red;border:1px solid #dcdcdc;padding:10px;" \
                        "width:800px;text-align:center;font-size:14px;'>" \
                        "<a href='http://www.youpep.com/#/users/"+user_name+"/change_password_link/"+user_randome_string+"'>Click Here</a></p>\
@@ -706,7 +707,6 @@ def signup():
             'accept_notifications':[],
             'born' : "",
             'role': "normal",
-
             'questions':[],
             'gender' : "",
             'lastmessageseen' : dt.strftime('%Y-%m-%dT%H:%M:%SZ'),
