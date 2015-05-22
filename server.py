@@ -92,10 +92,9 @@ def login():
         response = jsonify(error='Wrong Email or Password')
         response.status_code = 401
         return response
-    accounts.update({'_id': ObjectId(user['_id'])},
-                                       { "$set" :{ "send_add_requests": []}})
     token = create_token(user)
     return dumps({'user':filterIdFields(user, all=True), 'token': token})
+
 
 
 def filterIdFields(user, interests = None, questions = None, conversations = None, _id = None, \
@@ -699,6 +698,7 @@ def signup():
                 'thumbnail' : "static/app/images/yp-logo-300X300.png"
             },
             'phone': "",
+            'send_add_requests':[],
             'study': {
               'intermediate':"",
               'graduate': ""
