@@ -286,7 +286,8 @@ angular.module('weberApp')
                             });
                             $timeout(function() {
                                 interestsAlert.hide();
-                            }, 5000);
+                                $route.reload();
+                            }, 3000);
                             $timeout(function(){
                                 $('#4').collapse("hide");
                             },1000);

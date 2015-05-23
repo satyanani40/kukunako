@@ -29,7 +29,7 @@
                         <li class="pure-menu-item" ng-repeat="chatuser in currentUser.friends"
                             ng-click="openchatroom(UserService.get(chatuser))">
                             <a style="cursor:pointer;text-decoration:none;" class="pure-menu-link">
-                                <img style="margin-right:5px;" src="{{ UserService.get(chatuser).picture.thumbnail}}">
+                                <img style="margin-right:5px;" ng-src="{{ UserService.get(chatuser).picture.thumbnail}}">
                                {{ UserService.get(chatuser).name.first }} {{ UserService.get(chatuser).name.last }}
                             </a>
                         </li>
@@ -40,7 +40,7 @@
                         <li class="pure-menu-item" ng-repeat="conversation in tempconversations = (chatactivity.currentuser.conversations)"
                             ng-click="openchatroom(UserService.get(conversation))">
                             <a style="cursor:pointer;text-decoration:none;" class="pure-menu-link">
-                                <img style="margin-right:5px;" src="{{ UserService.get(conversation).picture.thumbnail }}">
+                                <img style="margin-right:5px;" ng-src="{{ UserService.get(conversation).picture.thumbnail }}">
                                 {{ UserService.get(conversation).name.first }}
                                 {{ UserService.get(conversation).name.last }}
                             </a>

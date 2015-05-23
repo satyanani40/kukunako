@@ -11,12 +11,12 @@
 
                     <a ng-if="!(isAuthenticated())" class="navbar-brand" href="/#/search" title="Youpep" rel="home">
                         <h3 style="margin-top:-4px;color:#fff;">
-                            YouPep
+                            Youpep
                         </h3>
                     </a>
                     <a ng-if="isAuthenticated()" class="navbar-brand" href="/#/home" title="Youpep" rel="home">
                         <h3 style="margin-top:-4px;color:#fff;">
-                            YouPep
+                            Youpep
                         </h3>
                     </a>
                 </div><!-- /.navbar-header -->
@@ -74,7 +74,7 @@
                                     <div class="message-hide inn_30_bo_23_sc_22_40"
                                          ng-repeat="message in chatactivity.latestMessages | limitTo : 6 ">
                                         <div class="con_22_mess_44_repeat" ng-click="openchatroom(message.sender)">
-                                            <img src="{{ message.sender.picture.medium }}">
+                                            <img ng-src="{{ message.sender.picture.medium }}">
                                             <p>
                                                 <strong>
                                                     {{ message.sender.name.first }} {{ message.sender.name.last }}
@@ -149,7 +149,7 @@
                                     <div class="inn_30_no_20_bo_23_sc_22_40" ng-repeat="request_notific in currentUser.notifications"
                                              ng-if="request_notific.notific_type === 1">
                                         <div class="note_22_user_44_repeat" cg-busy="load_cancel_request">
-                                            <img src="{{  UserService.get(request_notific.friendid).picture.thumbnail }}">
+                                            <img ng-src="{{  UserService.get(request_notific.friendid).picture.thumbnail }}">
                                             <h5>
                                                 <strong>
                                                     {{ UserService.get(request_notific.friendid).name.first }}
@@ -178,7 +178,7 @@
                                     <div class="inn_30_no_20_bo_23_sc_22_40" ng-repeat="request_notific in currentUser.notifications"
                                          ng-if="request_notific.notific_type === 2 || request_notific.notific_type === 3">
                                         <div class="note_22_user_44_repeat">
-                                            <img src="{{ UserService.get(request_notific.friendid).picture.thumbnail}}">
+                                            <img ng-src="{{ UserService.get(request_notific.friendid).picture.thumbnail}}">
                                             <h5>
                                                 <strong>
                                                     <a href="#/profile/{{ UserService.get(request_notific.friendid).username }}">

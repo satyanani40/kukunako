@@ -320,7 +320,7 @@ angular.module('weberApp')
 
         /* login functionality code goes here*/
             $scope.submitLogin = function() {
-                $auth.login({
+                $scope.show_login_busy = $auth.login({
                     email: this.formData.email,
                     password: this.formData.password
                 }).then(function(response) {
@@ -346,17 +346,9 @@ angular.module('weberApp')
                    socket_operations();
 
                 }, function(error) {
-                    $scope.loginError = error;
-                    var loginAlert = $alert({
-                        title: 'Login Failed:',
-                        content: error.data.error,
-                        placement: 'top',
-                        type: 'danger',
-                        show: true
-                    });
-                    $timeout(function() {
-                        loginAlert.hide();
-                    }, 5000);
+                    $('#loginError').fadeIn();
+                    $scope.loginError = error.data.error;
+                    $scope.showLoginError = true;
                 });
             };
         /* end of login functionality*/
@@ -438,16 +430,6 @@ angular.module('weberApp')
 
                 }, function (signuperror) {
                     $scope.signUpError = signuperror;
-                    var userNameAlert = $alert({
-                        title: 'Registration Failed:',
-                        content: signuperror.data.error,
-                        placement: 'top',
-                        type: 'danger',
-                        show: true
-                    });
-                    $timeout(function() {
-                        userNameAlert.hide();
-                    }, 5000);
                 });
             };
 
@@ -636,43 +618,151 @@ angular.module('weberApp')
 
     $scope.send_eng_career = function(){
         $scope.formCareerSubmit = function(){
-            $scope.load_careers_eng = $timeout(function() {
-                var first_career = $scope.first_career;
-                $scope.first_career = "";
+            var first_career = $scope.first_career;
+            $scope.first_career = "";
 
-                var last_career = $scope.last_career;
-                $scope.last_career = "";
+            var last_career = $scope.last_career;
+            $scope.last_career = "";
 
-                var selectedQualification = $scope.selectedQualification;
-                var selectedPosition = $scope.selectedPosition;
-                var selectedApplying = $scope.selectedApplying;
+            var selectedQualification = $scope.selectedQualification;
+            var selectedPosition = $scope.selectedPosition;
+            var selectedApplying = $scope.selectedApplying;
 
-                var email_career = $scope.email_career;
-                $scope.email_career = "";
+            var email_career = $scope.email_career;
+            $scope.email_career = "";
 
-                var phone_career = $scope.phone_career;
-                $scope.phone_career = "";
-                Restangular.one('send_eng_career').get({
-                        first_career : first_career,
-                        last_career : last_career,
-                        selectedQualification : selectedQualification,
-                        selectedPosition : selectedPosition,
-                        selectedApplying : selectedApplying,
+            var phone_career = $scope.phone_career;
+            $scope.phone_career = "";
+            $scope.load_careers_eng = Restangular.one('send_eng_career').get({
+                    first_career : first_career,
+                    last_career : last_career,
+                    selectedQualification : selectedQualification,
+                    selectedPosition : selectedPosition,
+                    selectedApplying : selectedApplying,
+                    email_career : email_career,
+                    phone_career : phone_career
+            }).then(function(data){
+                $scope.showAlertP = true;
+                $timeout(function(){
+                    $('#fadeoutP').fadeOut();
+                },5000);
+                $('#py').collapse("hide");
+            });
+        }
+    }
+
+    //selected position code for angularJs developer
+        $scope.positionAngular = [
+            {name:'AngularJs', guid:'AngularJs'}
+        ];
+        $scope.selectedPositionAngular = $scope.positionAngular[0].guid;
+
+        $scope.QualificationAngular = [
+            {name:'Graduate', guid:'Graduate'},
+            {name:'Post Graduate', guid:'Post Graduate'},
+            {name:'Doctorate', guid:'Doctorate'}
+        ];
+        $scope.selectedQualificationAngular = $scope.QualificationAngular[0].guid;
+
+        $scope.ApplyingAngular = [
+            {name:'Intern', guid:'Intern'},
+            {name:'Full Time', guid:'Full Time'}
+        ];
+        $scope.selectedApplyingAngular = $scope.ApplyingAngular[0].guid;
+
+        $scope.send_eng_career_angular = function(){
+            $scope.formCareerAngularSubmit = function(){
+                var first_career_angular = $scope.first_career_angular;
+                $scope.first_career_angular = "";
+
+                var last_career_angular = $scope.last_career_angular;
+                $scope.last_career_angular = "";
+
+                var selectedQualificationAngular = $scope.selectedQualificationAngular;
+                var selectedPositionAngular = $scope.selectedPositionAngular;
+                var selectedApplyingAngular = $scope.selectedApplyingAngular;
+
+                var email_career = $scope.email_career_angular;
+                $scope.email_career_angular = "";
+
+                var phone_career = $scope.phone_career_angular;
+                $scope.phone_career_angular = "";
+                $scope.load_careers_eng = Restangular.one('send_eng_career').get({
+                        first_career : first_career_angular,
+                        last_career : last_career_angular,
+                        selectedQualification : selectedQualificationAngular,
+                        selectedPosition : selectedPositionAngular,
+                        selectedApplying : selectedApplyingAngular,
                         email_career : email_career,
                         phone_career : phone_career
                 }).then(function(data){
-                    //console.log("dataaaaaa", data)
-                    var careerAlert = $alert({
-                        title: 'Successfully Submitted! :)',
-                        placement: 'top',
-                        type: 'success',
-                        show: true
-                    });
-                    $timeout(function() {
-                        careerAlert.hide();
-                    }, 5000);
+                    $scope.showAlert = true;
+                    $timeout(function(){
+                        $('#fadeout').fadeOut();
+                    },5000);
+                    $('#aj').collapse("hide");
                 });
-            },2000);
+            }
         }
-    }
+
+
+    //end of angularjs code
+
+    //selected position code for CssJavascript developer
+        $scope.positionCss = [
+            {name:'Css&Javascript', guid:'Css&Javascript'}
+        ];
+        $scope.selectedPositionCss = $scope.positionCss[0].guid;
+
+        $scope.QualificationCss = [
+            {name:'Graduate', guid:'Graduate'},
+            {name:'Post Graduate', guid:'Post Graduate'},
+            {name:'Doctorate', guid:'Doctorate'}
+        ];
+        $scope.selectedQualificationCss = $scope.QualificationCss[0].guid;
+
+        $scope.ApplyingCss = [
+            {name:'Intern', guid:'Intern'},
+            {name:'Full Time', guid:'Full Time'}
+        ];
+        $scope.selectedApplyingCss = $scope.ApplyingCss[0].guid;
+
+        $scope.send_eng_career_css = function(){
+            $scope.formCareerCSSSubmit = function(){
+                var first_career_css = $scope.first_career_css;
+                $scope.first_career_css = "";
+
+                var last_career_css = $scope.last_career_css;
+                $scope.last_career_css = "";
+
+                var selectedQualificationAngular = $scope.selectedQualificationCss;
+                var selectedPositionAngular = $scope.selectedPositionCss;
+                var selectedApplyingAngular = $scope.selectedApplyingCss;
+
+                var email_css = $scope.email_career_css;
+                $scope.email_career_css = "";
+
+                var phone_css = $scope.phone_career_css;
+                $scope.phone_career_css = "";
+                $scope.load_careers_eng = Restangular.one('send_eng_career').get({
+                        first_career : first_career_css,
+                        last_career : last_career_css,
+                        selectedQualification : selectedQualificationAngular,
+                        selectedPosition : selectedPositionAngular,
+                        selectedApplying : selectedApplyingAngular,
+                        email_career : email_css,
+                        phone_career : phone_css
+                }).then(function(data){
+                    $scope.showAlertCJ = true;
+                    $timeout(function(){
+                        $('#fadeoutCJ').fadeOut();
+                    },5000);
+                    $('#cj').collapse("hide");
+                });
+            }
+        }
+
+
+    //end of CssJavascript code
+
 });

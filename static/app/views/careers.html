@@ -90,6 +90,11 @@
                                         Apply Now
                                     </button>
                                 </div>
+                                <div id="fadeoutP" ng-show="showAlertP" class="col-lg-12">
+                                    <h4 style="color:green;">
+                                        Successfully submitted.
+                                    </h4>
+                                </div>
                                 <div class="col-lg-12">
                                     <div id="py" style="border-top:1px solid #f5f5f5;" class="panel-collapse collapse out">
                                         <div class="row apply-for-eng" style="margin-top:20px;">
@@ -166,9 +171,86 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-4">
-                                    <button ng-hide="true" style="margin-top:20px;" class="btn btn-sm btn-primary">
+                                    <button style="margin-top:20px;" class="btn btn-sm btn-primary" data-toggle="collapse"
+                                        data-parent="#accordion" data-target="#aj">
                                         Apply Now
                                     </button>
+                                </div>
+                                <div id="fadeout" ng-show="showAlert" class="col-lg-12">
+                                    <h4 style="color:green;">
+                                        Successfully submitted.
+                                    </h4>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div id="aj" style="border-top:1px solid #f5f5f5;" class="panel-collapse collapse out">
+                                        <div class="row apply-for-eng" style="margin-top:20px;">
+                                            <div class="col-lg-8" cg-busy="load_careers_eng">
+                                                <form role="form" name="careerEngAngular" method="get"
+                                                        ng-submit="formCareerAngularSubmit()">
+                                                    <label>Enter First Name</label>
+                                                    <input required type="text" ng-model="first_career_angular" placeholder="Enter First name" autofocus
+                                                           autocomplete="off" class="text-box-apply" />
+                                                    <label>
+                                                        Enter Last Name
+                                                    </label>
+                                                    <input required type="text" ng-model="last_career_angular" placeholder="Enter Last name" autofocus
+                                                           autocomplete="off" class="text-box-apply" />
+
+                                                    <label>
+                                                        Select Qualification
+                                                    </label>
+                                                    <div class="bs-docs-example">
+                                                      <select class="selectpicker btn btn-sm btn-block btn-default"
+                                                              ng-model="selectedQualificationAngular" ng-options="Qualification.guid as Qualification.name for Qualification in QualificationAngular">
+
+                                                      </select>
+                                                    </div>
+
+                                                    <label>
+                                                        Applying Position for
+                                                    </label>
+                                                    <div class="bs-docs-example">
+                                                      <select class="selectpicker btn btn-sm btn-block btn-default"
+                                                              ng-model="selectedPositionAngular" ng-options="position.guid as position.name for position in positionAngular">
+
+                                                      </select>
+                                                    </div>
+
+                                                    <label>
+                                                        Applying As
+                                                    </label>
+                                                    <div class="bs-docs-example">
+                                                        <select class="selectpicker btn btn-sm btn-block btn-default"
+                                                              ng-model="selectedApplyingAngular" ng-options="Applying.guid as Applying.name for Applying in ApplyingAngular">
+
+                                                        </select>
+                                                    </div>
+
+                                                    <label>Enter Email Id</label>
+                                                    <input required type="email" ng-model="email_career_angular" placeholder="Enter valid email" autofocus
+                                                           autocomplete="off" class="text-box-apply" />
+
+                                                    <label>Enter Contact Number</label>
+                                                    <input required type="tel"  min="10" max="12" ng-model="phone_career_angular" placeholder="Enter contact number" autofocus
+                                                           autocomplete="off" class="text-box-apply" />
+
+
+                                                    <button style="margin-left:15px;" ng-click="send_eng_career_angular()" ng-disabled="!careerEngAngular.$valid"
+                                                            class="btn btn-sm btn-danger pull-right">
+                                                        <strong>
+                                                            Submit Form
+                                                        </strong>
+                                                    </button>
+                                                    <button data-toggle="collapse" data-parent="#accordion" data-target="#aj"
+                                                            class="btn btn-sm btn-default pull-right">
+                                                        <strong>
+                                                            Cancel
+                                                        </strong>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -176,7 +258,7 @@
                                 <div class="col-lg-8">
                                     <h5>
                                         <strong>
-                                            Css&JavaScript Developer
+                                            CSS&Javascript Developer
                                         </strong>
                                     </h5>
                                     <p>
@@ -184,9 +266,86 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-4">
-                                    <button ng-hide="true" style="margin-top:20px;" class="btn btn-sm btn-primary">
+                                    <button style="margin-top:20px;" class="btn btn-sm btn-primary" data-toggle="collapse"
+                                        data-parent="#accordion" data-target="#cj">
                                         Apply Now
                                     </button>
+                                </div>
+                                <div id="fadeoutCJ" ng-show="showAlertCJ" class="col-lg-12">
+                                    <h4 style="color:green;">
+                                        Successfully submitted.
+                                    </h4>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div id="cj" style="border-top:1px solid #f5f5f5;" class="panel-collapse collapse out">
+                                        <div class="row apply-for-eng" style="margin-top:20px;">
+                                            <div class="col-lg-8" cg-busy="load_careers_eng">
+                                                <form role="form" name="careerEngCSS" method="get"
+                                                        ng-submit="formCareerCSSSubmit()">
+                                                    <label>Enter First Name</label>
+                                                    <input required type="text" ng-model="first_career_css" placeholder="Enter First name" autofocus
+                                                           autocomplete="off" class="text-box-apply" />
+                                                    <label>
+                                                        Enter Last Name
+                                                    </label>
+                                                    <input required type="text" ng-model="last_career_css" placeholder="Enter Last name" autofocus
+                                                           autocomplete="off" class="text-box-apply" />
+
+                                                    <label>
+                                                        Select Qualification
+                                                    </label>
+                                                    <div class="bs-docs-example">
+                                                      <select class="selectpicker btn btn-sm btn-block btn-default"
+                                                              ng-model="selectedQualificationCss" ng-options="Qualification.guid as Qualification.name for Qualification in QualificationCss">
+
+                                                      </select>
+                                                    </div>
+
+                                                    <label>
+                                                        Applying Position for
+                                                    </label>
+                                                    <div class="bs-docs-example">
+                                                      <select class="selectpicker btn btn-sm btn-block btn-default"
+                                                              ng-model="selectedPositionCss" ng-options="position.guid as position.name for position in positionCss">
+
+                                                      </select>
+                                                    </div>
+
+                                                    <label>
+                                                        Applying As
+                                                    </label>
+                                                    <div class="bs-docs-example">
+                                                        <select class="selectpicker btn btn-sm btn-block btn-default"
+                                                              ng-model="selectedApplyingCss" ng-options="Applying.guid as Applying.name for Applying in ApplyingCss">
+
+                                                        </select>
+                                                    </div>
+
+                                                    <label>Enter Email Id</label>
+                                                    <input required type="email" ng-model="email_career_css" placeholder="Enter valid email" autofocus
+                                                           autocomplete="off" class="text-box-apply" />
+
+                                                    <label>Enter Contact Number</label>
+                                                    <input required type="tel"  min="10" max="12" ng-model="phone_career_css" placeholder="Enter contact number" autofocus
+                                                           autocomplete="off" class="text-box-apply" />
+
+
+                                                    <button style="margin-left:15px;" ng-click="send_eng_career_css()" ng-disabled="!careerEngCSS.$valid"
+                                                            class="btn btn-sm btn-danger pull-right">
+                                                        <strong>
+                                                            Submit Form
+                                                        </strong>
+                                                    </button>
+                                                    <button data-toggle="collapse" data-parent="#accordion" data-target="#cj"
+                                                            class="btn btn-sm btn-default pull-right">
+                                                        <strong>
+                                                            Cancel
+                                                        </strong>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +360,7 @@
                             Administration
                         </h3>
                         <p>
-                            2 Positions
+                            0 Positions
                         </p>
                     </div>
                     <div id="2" class="panel-collapse collapse out">
@@ -221,7 +380,7 @@
                             Business Development
                         </h3>
                         <p>
-                            2 Positions
+                            0 Positions
                         </p>
                     </div>
                     <div id="3" class="panel-collapse collapse out">

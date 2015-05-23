@@ -14,7 +14,7 @@
 			<div class="caption text-center">
 				<h3 style="text-transform: capitalize;">
                     <a href="" data-placement="bottom" style="text-decoration:none;" data-animation="am-fade-and-scale" data-html="true"
-                         data-title="<h6>Lives In {{currentUser.location.city}}</h6>"
+                         data-title="Lives In {{currentUser.location.city}}"
                          bs-tooltip>
                         {{currentUser.name.first}} {{currentUser.name.last}}
                     </a>
@@ -24,6 +24,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading" style="background-color:#fff;">
 				<h5 style="">
+                    <i style="color:#337ab7" class="fa fa-bullhorn"></i>&nbsp;
 					<strong>About</strong>
 				</h5>
 			</div>
@@ -70,6 +71,7 @@
 		<div class="panel panel-default">
 			<div class="clearfix panel-heading" style="background-color:#fff;">
                 <h5>
+                    <i style="color:#337ab7" class="fa fa-user"></i>&nbsp;
                     <strong>
                         Friends - <span style="opacity:0.70;">
                         {{currentUser.friends.length}}
@@ -80,8 +82,7 @@
             <div class="panel-body" style="padding:1px;">
                 <a ng-repeat="friend in currentUser.friends " href="#/profile/{{ friend }}">
                     <img data-placement="top" style="width:87px" data-animation="am-fade-and-scale" data-html="true"
-                         data-title="<h6>{{UserService.get(friend).name.first}} {{UserService.get(friend).name.last}}</h6>
-                            <h6>Lives In {{ UserService.get(friend).location.city }}, {{UserService.get(friend).location.state}}</h6>"
+                         data-title="{{UserService.get(friend).name.first}} {{UserService.get(friend).name.last}}"
                          bs-tooltip ng-src="{{UserService.get(friend).picture.thumbnail}}">
                 </a>
             </div>
@@ -204,7 +205,11 @@
                     <div class="tab-pane fade active in" id="profile" cg-busy="new_submit_busy_post">
                         <form role="form" class="post-to-timeline status_arrow clearfix">
                             <textarea ng-model="new_post" class="form-control"
-                                      style="height: 70px;margin-bottom: 10px;resize: none;" placeholder="Whats happening?" required></textarea>
+                                      style="height: 70px;margin-bottom: 10px;resize: none;" placeholder="Whats happening?" required data-placement="bottom"
+                                      data-animation="am-fade-and-scale" data-html="true"
+                                      data-title="Post anything in youpep" bs-tooltip>
+
+                            </textarea>
                             <div class="row">
                                 <div class="col-sm-2 pull-right">
                                     <button ng-click="submit_post()" type="submit" class="btn btn-primary btn-block btn-sm">
@@ -234,7 +239,7 @@
 		<div cg-busy="load_main" id='userposts' infinite-scroll='infinitePosts.nextPage()' infinite-scroll-disabled='infinitePosts.busy'
              infinite-scroll-distance='0' infinite-scroll-container="'#userposts'">
 
-			<div class="media panel panel-default" ng-repeat="post in infinitePosts.posts">
+			<div class="media panel panel-default posts_d_bord" ng-repeat="post in infinitePosts.posts">
 
 				<div class="panel-heading post-div" style="background-color:#fff;border-bottom:1px solid #F2F2F2;">
 					<a class="pull-left" style="padding: 5px;" href="#/profile/{{UserService.get(post.author)._id}}">
@@ -244,10 +249,10 @@
                             bs-tooltip ng-src="{{UserService.get(post.author).picture.thumbnail}}" />
 					</a>
 					<strong>
-						<a href="#/profile/{{UserService.get(post.author)._id}}" style="color:#2196F3">
+						<a href="#/profile/{{UserService.get(post.author)._id}}" style="">
 							{{UserService.get(post.author).name.first}} {{UserService.get(post.author).name.last}}
 						</a>
-					</strong>&nbsp;
+					</strong>
                     <span style="opacity:0.7;">
                         wrote on his story.
                     </span>

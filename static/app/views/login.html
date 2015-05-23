@@ -4,21 +4,19 @@
 <meta name="keywords" content="youpep,login,login youpep,youpep login,people,search,find,location,activity,activities of people,activity search,interests,interests search,people interests,looking people,meeting people,making friends,friends,meeting,dating,looking,searching for classmate,searching friend,."/>
 <div class="container" style="padding-top:80px;">
     <div class="row" style="">
-        <div class="col-md-5 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-lock" style="opacity:0.70"></span>
-                    <strong>Youpep</strong>
-                    Login Credentials</div>
-                <div class="panel-body">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default" style="margin-bottom:0px;border-top:1px solid #ddd !important;">
+                <div class="panel-body" cg-busy="show_login_busy">
+                    <h2 style="margin-bottom:20px;">
+                        <strong>
+                            Log in to Youpep
+                        </strong>
+                    </h2>
                     <form class="form-horizontal" role="form" ng-submit="login()" name="myForm">
                         <div class="form-group">
-                            <label  class="col-sm-3 control-label">
-                                Email
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="email"
-                                       class="form-control" id="email"
+                            <div class="col-sm-5">
+                                <input type="email" style="box-shadow:none !important;" autofocus
+                                       class="form-control login-input" id="email"
                                        name="email" ng-model="formData.email" placeholder="Enter Email" required/>
                                 <span ng-show="myForm.email.$error.required && myForm.email.$dirty" style="color:red">
                                     Email is required
@@ -30,57 +28,50 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                Password
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="password" class="form-control"
+                            <div class="col-sm-5">
+                                <input type="password" class="form-control login-input" style="box-shadow:none !important;"
                                        placeholder="Enter Password" id="password" name="password" ng-model="formData.password" required  />
                                 <span ng-show="myForm.password.$error.required && myForm.password.$dirty" style="color:red">
                                     required
                                 </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-5">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"/>
-                                        Remember me
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <a href="#/forgotpassword">
-                                    Forgot Password?
-                                </a>
+                                <h5 style="color:red" ng-if="showLoginError">
+                                    {{ loginError }}
+                                </h5>
                             </div>
                         </div>
                         <div class="form-group last">
-                            <div class="col-sm-offset-3 col-sm-9">
+                            <div class="col-sm-5">
                                 <button type="submit" ng-disabled="!myForm.$valid" class="btn btn-success btn-sm" ng-click="submitLogin()">
-                                    Sign in</button>
-
+                                    Sign in
+                                </button>
+                                <a href="#/forgotpassword" class="pull-right">
+                                    Forgot Password?
+                                </a>
                             </div>
 
                         </div>
                     </form>
                 </div>
-                <div ng-if="error" class="panel-footer" style="color:red">
-                    <span style="color:red;">
-                        {{ error }}
-                    </span>
-                </div>
-                <div class="panel-footer">
+                <div class="panel-footer" style="background-color: #FCFCFC;">
                     <h5>
-                        Resend activation link?  <a style="cursor:pointer;" data-toggle="collapse"
-                                data-parent="#accordion" data-target="#1">Click Here</a>
+                        <span style="opacity:0.50">
+                            New to Youpep?
+                        </span>&nbsp;
+                        <a href="#/search">
+                            Signup Here
+                        </a>
+                    </h5>
+                    <h5>
+                        <span style="opacity:0.50">
+                            Already registered? Want to resend activation link?
+                        </span>
+                        <a style="cursor:pointer;" data-toggle="collapse"
+                                data-parent="#accordion" data-target="#1">
+                            Resend activation
+                        </a>
                     </h5>
                     <div id="1" style="border-top:1px solid #dcdcdc;" cg-busy="Resend_busy" class="panel-collapse collapse out">
-                        <form role="form" name="ResendForm">
-                            <label style="margin-top:10px;">
-                                Enter Email
-                            </label>
+                        <form role="form" name="ResendForm" class="col-sm-5">
                             <input type="email" class="form-control"
                                        placeholder="Enter registered mail" id="resend" name="resend" ng-model="ss" required  />
                             <span ng-show="ResendForm.resend.$error.required && ResendForm.resend.$dirty" style="color:red">
@@ -94,6 +85,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <style ng-if="!(isAuthenticated())">

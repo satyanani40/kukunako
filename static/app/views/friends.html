@@ -13,7 +13,7 @@
 			<div class="caption text-center">
 				<h3 style="text-transform: capitalize;">
                     <a href="" data-placement="bottom" style="text-decoration:none;" data-animation="am-fade-and-scale"
-                       data-html="true" data-title="<h6>{{user.name.first}} {{user.name.last}}</h6>"
+                       data-html="true" data-title="{{user.name.first}} {{user.name.last}}"
                          bs-tooltip>
                         {{user.name.first}} {{user.name.last}}
                     </a>
@@ -23,6 +23,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading" style="background-color:#fff;">
 				<h5 style="">
+                    <i style="color:#337ab7" class="fa fa-bullhorn"></i>&nbsp;
 					<strong>About</strong>
 				</h5>
 			</div>
@@ -66,6 +67,7 @@
 		<div class="panel panel-default">
 			<div class="clearfix panel-heading" style="background-color:#fff;">
                 <h5>
+                    <i style="color:#337ab7" class="fa fa-user"></i>&nbsp;
                     <strong>
                         Friends - <span style="opacity:0.70;">
                         {{user.friends.length}}
@@ -77,8 +79,7 @@
             <div class="panel-body" style="padding:1px;">
                 <a ng-repeat="friend in user.friends " href="#/profile/{{ friend }}">
                     <img data-placement="top" style="width:87px" data-animation="am-fade-and-scale" data-html="true"
-                         data-title="<h6>{{UserService.get(friend).name.first}} {{UserService.get(friend).name.last}}</h6>
-                            <h6>Lives In {{ UserService.get(friend).location.city }}, {{UserService.get(friend).location.state}}</h6>"
+                         data-title="{{UserService.get(friend).name.first}} {{UserService.get(friend).name.last}}"
                          bs-tooltip ng-src="{{UserService.get(friend).picture.thumbnail}}">
                 </a>
             </div>
@@ -91,7 +92,8 @@
                    <div class="panel-heading" style="background-color:#fff;">
                        <div class="row">
                            <div class="col-sm-6">
-                               <h5 style="opacity:0.70">
+                               <h5>
+                                   <i style="color:#337ab7" class="fa fa-user"></i>&nbsp;
                                    <strong>Friends</strong> -&nbsp;
                                        <label class="">
                                            <a href="" style="">
@@ -125,7 +127,7 @@
                                         <h5>
                                             <a href="#/profile/{{ friend._id }}"
                                                data-placement="top" style="text-decoration:none;" data-animation="am-fade-and-scale"
-                                               data-html="true" data-title="<h6>{{friend.name.first}} {{friend.name.last}}</h6>"
+                                               data-html="true" data-title="{{friend.name.first}} {{friend.name.last}}"
                                                  bs-tooltip>
                                                 <strong>
                                                     {{ friend.name.first }} {{ friend.name.last }}
@@ -139,7 +141,8 @@
                                             Unfriend
                                         </a>-->
                                         <unaddfriend>
-                                            <button ng-click="friendunfriend('{{ friend._id }}')" class="btn-sm btn btn-default">unfriend</button>
+                                            <button ng-click="friendunfriend('{{ friend._id }}')"
+                                                    class="btn-sm btn btn-primary">unfriend</button>
                                         </unaddfriend>
                                     </div>
                                 </div>
@@ -156,7 +159,7 @@
                     <div class="panel-body" style="padding-bottom:0px;">
                         <h5 style="margin:1px 0px">
                             <strong>
-                                <i class="fa fa-user"></i>&nbsp;
+                                <i style="color:#337ab7" class="fa fa-user"></i>&nbsp;
                                 Friends Suggestions
                             </strong>
                         </h5>
@@ -165,20 +168,23 @@
                     <div class="panel-body" style="padding-top:0px;">
                         <div ng-repeat="person in suggested_people">
                             <div class="row" cg-busy="load_cancel_request">
-                                <div class="col-lg-12">
+                                <div class="col-lg-9">
                                     <img ng-src="{{ person.picture.medium }}" class="pull-left"
                                          style="width:60px;border-radius:3px;margin-right:10px;" />
                                     <h5 style="">
                                         <a href="#/profile/{{ person._id}}">
                                             {{ person.name.first }} {{ person.name.last }}
                                         </a>
-                                        <cancelrequest>
-                                            <button  ng-click="frndaddrequest(person._id, 0)"
-                                                     class="btn btn-sm pull-right btn-primary">
-                                                Add Friend
-                                            </button>
-                                        </cancelrequest>
+
                                     </h5>
+                                </div>
+                                <div class="col-lg-3 pull-right">
+                                    <cancelrequest>
+                                        <button  ng-click="frndaddrequest(person._id, 0)"
+                                                 class="btn btn-sm pull-right btn-primary">
+                                            Add Friend
+                                        </button>
+                                    </cancelrequest>
                                 </div>
                             </div>
                             <hr style="margin:10px 0px;" />
@@ -193,33 +199,43 @@
                     <div class="panel-body" style="padding-bottom:0px;">
                         <h5 style="margin:1px 0px">
                             <strong>
-                                <i class="fa fa-user"></i>&nbsp;
+                                <i style="color:#337ab7" class="fa fa-user"></i>&nbsp;
                                 Sent Friend Requests
                             </strong>
                         </h5>
                     </div>
                     <hr />
                     <div class="panel-body" style="padding-top:0px;">
-                        <!--{{ currentUser.send_add_requests }}-->
                         <div ng-repeat="friend in currentUser.send_add_requests">
                             <div class="row" cg-busy="load_cancel_request">
-                                <div class="col-lg-12">
+                                <div class="col-lg-9">
                                     <img ng-src="{{ friend.picture.thumbnail }}" class="pull-left"
                                          style="width:60px;border-radius:3px;margin-right:10px;" />
                                     <h5 style="">
                                         <a href="#/profile/{{ friend._id }}">
                                             {{ friend.name.first }} {{ friend.name.last }}
                                         </a>
-                                        <addfriend>
-                                            <button ng-click="frndcancelrequest(friend._id, 0)"
-                                                    class="btn btn-sm btn-primary pull-right">
-                                                cancel request
-                                            </button>
-                                        </addfriend>
                                     </h5>
+                                </div>
+                                <div class="col-lg-3 pull-right">
+                                    <addfriend>
+                                        <button ng-click="frndcancelrequest(friend._id, 0)"
+                                                class="btn btn-sm btn-primary pull-right">
+                                            cancel request
+                                        </button>
+                                    </addfriend>
                                 </div>
                             </div>
                             <hr style="margin:10px 0px;" />
+                        </div>
+                        <div ng-if="currentUser.send_add_requests.length == 0">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h4>
+                                        No sent requests found.
+                                    </h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
