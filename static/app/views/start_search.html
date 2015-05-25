@@ -10,15 +10,15 @@
 <div class="container" style="">
     <div ng-if="!(isAuthenticated())" style="margin-top: 20px;"></div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 colpadding col-lg-offset-3">
             <div class="row" ng-if="!(isAuthenticated())">
                 <div class="col-sm-12">
-                    <h1>
+                    <h1 class="white-h1">
                         Welcome to Youpep
                     </h1>
-                    <h3 style="line-height: 1.5em;">
-                        Youpep is medium to search people, based on their activities,interests and location.
-                    </h3>
+                    <h4 class="white-h4">
+                        search people based on their activities, interests and location.
+                    </h4>
                 </div>
             </div>
             <div class="row" style="margin-top:30px;">
@@ -105,49 +105,6 @@
 							</a>
                         </h5>
                     </div>
-
-                    <div class="row" ng-if="!searched;!(isAuthenticated())" style="margin-top:20px;">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default" style="border-top:1px solid #dcdcdc!important;">
-                                <div class="panel-body">
-                                    <h5 style="color:;">
-                                        How to use Youpep in simple 3 steps
-                                    </h5>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row" style="padding-bottom:20px;">
-                                        <div class="col-lg-4 colpadding" style="">
-                                            <i class="fa fa-search"
-                                               style="padding:17px;font-size:18px;background-color:#3090C7;color:#FFF;border-radius:50%;">
-
-                                            </i>
-                                            <label style="margin-top:3px;">
-                                                Search
-                                            </label>
-                                        </div>
-                                        <div class="col-lg-4 be-margin colpadding" style="">
-                                            <i class="fa fa-user"
-                                               style="padding:17px;font-size:18px;background-color:#4E9258;color:#FFF;border-radius:50%;">
-
-                                            </i>
-                                            <label style="margin-top:3px;">
-                                                Find a person
-                                            </label>
-                                        </div>
-                                        <div class="col-lg-4 be-margin colpadding" style="">
-                                            <i class="fa fa-check-circle"
-                                                style="padding:17px;text-align:center;font-size:18px;background-color:#FFA62F;color:#FFF;border-radius:50%;">
-
-                                            </i>
-                                            <label style="margin-top:3px;">
-                                                Connect & Enjoy
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-lg-12" ng-show="show_no_results">
                     <div ng-if="matchResults.mresults.length == 0" class="panel panel-default">
@@ -162,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3" style="margin-top:30px;" ng-if="isAuthenticated()">
+        <!--<div class="col-lg-3" style="margin-top:30px;" ng-if="isAuthenticated()">
             <div class="panel panel-default" style="margin-bottom:0px;">
                 <div class="panel-body" style="border-bottom:1px solid #F5F5F5;padding:10px 15px 5px 10px;">
                     <h5>
@@ -189,83 +146,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-offset-1 col-lg-4" ng-if="!(isAuthenticated())">
-            <div class="row">
-                <div class="col-lg-12 colpadding">
-                    <h2>
-                        <label style="font-family: 'open sans',arial,sans-serif;color:;font-weight:400;">
-                            <strong>
-                                New to Youpep?
-                            </strong>
-                        </label>
-                    </h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 colpadding">
-                    <form accept-charset="UTF-8"
-                          role="form" name="myForm" method="post"
-                          ng-submit="signup()" cg-busy="signupBusy">
-                        <fieldset>
-                            <div class="form-group">
-                                <input type="email" class="form-control input-box input-md" style="box-shadow:none !important;"
-                                       placeholder="Enter email" autocomplete="off"
-                                           id="email" name="email" ng-model="formData.email" required/>
-                                    <span ng-show="myForm.email.$error.required && myForm.email.$dirty" style="color:red">
-                                        Email is required
-                                    </span>
-                                    <span ng-show="!myForm.email.$error.required && myForm.email.$error.email && myForm.email.$dirty"
-                                            style="color:red">
-                                        You entered an invalid email
-                                    </span>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-6 col-sm-12" style="">
-                                        <input class="form-control input-box input-md" autocomplete="off"  style="box-shadow:none !important;"
-                                               type="text" placeholder="Enter first name"
-                                           id="name" name="name" ng-model="formData.firstname" required/>
-                                        <span ng-show="myForm.name.$error.required && myForm.name.$dirty" style="color:red">
-                                            required
-                                        </span>
-                                    </div>
-                                    <div class="col-lg-6 be-margin col-sm-12" style="">
-                                        <input class="form-control input-box input-md" style="box-shadow:none !important;" autocomplete="off" type="text" placeholder="Enter last name"
-                                           id="lastname" name="lastname" ng-model="formData.lastname" required  />
-                                        <span ng-show="myForm.lastname.$error.required && myForm.lastname.$dirty" style="color:red">
-                                            required
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group" style="">
-                                <input class="form-control input-box input-md" required style="box-shadow:none !important;"
-                                       placeholder="Password(at least 6 Characters )"
-                                       id="password" name="password" ng-model="formData.password" ng-minlength="5" ng-maxlength="15" type="password" value="">
-                                <span ng-show="myForm.password.$error.required && myForm.password.$dirty" style="color:red">
-                                    required
-                                </span>
-                                <span ng-show="!myForm.password.$error.required && (myForm.password.$error.minlength || myForm.password.$error.maxlength) && myForm.password.$dirty" style="color:red">
-                                    Passwords must be between 5 and 10 characters.
-                                </span>
-                            </div>
-                            <div class="form-group" style="">
-                                <span ng-if="signUpError" style="color:red;">
-                                    {{ signUpError.data.error }}
-                                </span>
-                            </div>
-
-                            <button ng-click = "registerUser()" style="padding: 8px 12px;"
-                                                type="submit" class="btn btn-block btn-primary btn-width-48"
-                                                ng-disabled="!myForm.$valid">
-                                Register with Youpep
-                            </button>
-                        </fieldset>
-			      	</form>
-                </div>
-            </div>
-        </div>
+        </div>-->
     </div>
 </div>
 

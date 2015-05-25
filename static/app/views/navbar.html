@@ -1,4 +1,39 @@
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<style ng-if="!(isAuthenticated())">
+    .navbar-brand { position: relative; z-index: 2; }
+    .navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; }
+    .navbar .navbar-collapse { position: relative; }
+    .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 22px; }
+    .navbar .nav-collapse { position: absolute; z-index: 1; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding-right: 120px; padding-left: 80px; width: 100%; }
+    .navbar.navbar-default .nav-collapse { background-color: #f8f8f8; }
+    .navbar.navbar-inverse .nav-collapse { background-color: #222; }
+    .navbar .nav-collapse .navbar-form { border-width: 0; box-shadow: none; }
+    .nav-collapse>li { float: right; }
+
+    .btn.btn-circle { border-radius: 50px;border: 1px solid #DBDBDB; }
+    .btn.btn-outline { background-color: transparent; }
+
+    @media screen and (max-width: 767px) {
+        .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 15px; padding-right: 15px; }
+
+        .navbar .nav-collapse { margin: 7.5px auto; padding: 0; }
+        .navbar .nav-collapse .navbar-form { margin: 0; }
+        .nav-collapse>li { float: none; }
+    }
+    .navbar{
+        margin-bottom:0px;
+    }
+    .navbar-default {
+        background: radial-gradient(circle,#FFFFFF,#FFFFFF);
+        background: radial-gradient(circle,#FFFFFF,#FFFFFF);
+        background: radial-gradient(circle,#FFFFFF,#FFFFFF);
+        background: radial-gradient(circle,#FFFFFF,#FFFFFF);
+        border-color: #FFF;
+        border-bottom: 1px solid #FFFFFF;
+        -webkit-box-shadow: 0 1px 2px -2px rgba(0, 0, 0, .52);
+    }
+</style>
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
                 {{ data }}
                 <div class="navbar-header">
@@ -10,19 +45,18 @@
                     </button>
 
                     <a ng-if="!(isAuthenticated())" class="navbar-brand" href="/#/search" title="Youpep" rel="home">
-                        <h3 style="margin-top:-4px;color:#fff;">
+                        <h3 style="margin-top:-4px;color:#FF0000;">
                             Youpep
                         </h3>
                     </a>
                     <a ng-if="isAuthenticated()" class="navbar-brand" href="/#/home" title="Youpep" rel="home">
-                        <h3 style="margin-top:-4px;color:#fff;">
+                        <h3 style="margin-top:-4px;">
                             Youpep
                         </h3>
                     </a>
                 </div><!-- /.navbar-header -->
                 <div class="collapse navbar-collapse upper-navbar">
                     <form class="navbar-form pull-left" ng-if="isAuthenticated()" role="search">
-
                         <div class="input-group">
                             <autocomplete ng-model="result" attr-placeholder="Search friends in Youpep"
                                           click-activation="false" data="movies" on-type="doSomething"
@@ -37,9 +71,14 @@
                         </div>
                     </form>
                     <ul  ng-if="!(isAuthenticated())" class="nav navbar-nav navbar-right">
-                        <li style="margin-top:10px;">
-                            <a class="btn btn-sm login-button" href="#/login">
+                        <li style="">
+                            <a class="btn btn-sm btn-circle" href="#/login" style="color:#333;">
                                 Login
+                            </a>
+                        </li>
+                        <li style="">
+                            <a class="btn btn-sm btn-circle" href="#/signup" style="color:#333;">
+                                Signup
                             </a>
                         </li>
                     </ul>

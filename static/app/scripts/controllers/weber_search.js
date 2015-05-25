@@ -92,6 +92,7 @@ angular.module('weberApp')
         }
 
         $scope.go = function(query){
+            console.log("query", query);
             $scope.query = query;
             $scope.perfomSearch($scope.query);
         }

@@ -57,7 +57,7 @@
                         <span style="opacity:0.50">
                             New to Youpep?
                         </span>&nbsp;
-                        <a href="#/search">
+                        <a href="#/signup">
                             Signup Here
                         </a>
                     </h5>
@@ -70,7 +70,13 @@
                             Resend activation
                         </a>
                     </h5>
-                    <div id="1" style="border-top:1px solid #dcdcdc;" cg-busy="Resend_busy" class="panel-collapse collapse out">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <div id="1" class="panel-collapse collapse out" class="panel panel-default">
+                <div class="panel-body">
+                    <div cg-busy="Resend_busy">
                         <form role="form" name="ResendForm" class="col-sm-5">
                             <input type="email" class="form-control"
                                        placeholder="Enter registered mail" id="resend" name="resend" ng-model="ss" required  />

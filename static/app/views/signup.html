@@ -4,154 +4,103 @@
 <meta name="keywords" content="youpep,sign up,signup youpep,youpep sign up,create account,start account in youpep,people,search,find,location,activity,activities of people,activity search,interests,interests search,people interests,looking people,meeting people,making friends,friends,meeting,dating,looking,searching for classmate,searching friend,."/>
 <div class="container" style="padding-top:80px;">
     <div class="row" style="">
-        <div class="col-md-5 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-heading" style="padding-top:15px;padding-bottom:15px">
-                    <span class="glyphicon glyphicon-lock" style="opacity:0.70"></span>
-                    <strong>Youpep</strong>
-                    Registration Form
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default" style="margin-bottom:0px;border-top:1px solid #ddd !important;">
+                <div class="panel-body" cg-busy="show_login_busy">
+                    <h2 style="margin-bottom:20px;">
+                        <strong>
+                            Join Today
+                        </strong>
+                    </h2>
+                    <form accept-charset="UTF-8"
+                          role="form" name="myForm" method="post"
+                          ng-submit="signup()" cg-busy="signupBusy">
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <input type="email" class="form-control input-box input-md" style="box-shadow:none !important;"
+                                           placeholder="Enter email" autocomplete="off"
+                                               id="email" name="email" ng-model="formData.email" required/>
+                                        <span ng-show="myForm.email.$error.required && myForm.email.$dirty" style="color:red">
+                                            Email is required
+                                        </span>
+                                        <span ng-show="!myForm.email.$error.required && myForm.email.$error.email && myForm.email.$dirty"
+                                                style="color:red">
+                                            You entered an invalid email
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12" style="">
+                                        <input class="form-control input-box input-md" autocomplete="off"  style="box-shadow:none !important;"
+                                               type="text" placeholder="Enter first name"
+                                           id="name" name="name" ng-model="formData.firstname" required/>
+                                        <span ng-show="myForm.name.$error.required && myForm.name.$dirty" style="color:red">
+                                            required
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-6 be-margin col-sm-12" style="">
+                                        <input class="form-control input-box input-md" style="box-shadow:none !important;" autocomplete="off" type="text" placeholder="Enter last name"
+                                           id="lastname" name="lastname" ng-model="formData.lastname" required  />
+                                        <span ng-show="myForm.lastname.$error.required && myForm.lastname.$dirty" style="color:red">
+                                            required
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <input class="form-control input-box input-md" required style="box-shadow:none !important;"
+                                               placeholder="Password(at least 6 Characters )"
+                                               id="password" name="password" ng-model="formData.password" ng-minlength="5" ng-maxlength="15" type="password" value="">
+                                        <span ng-show="myForm.password.$error.required && myForm.password.$dirty" style="color:red">
+                                            required
+                                        </span>
+                                        <span ng-show="!myForm.password.$error.required && (myForm.password.$error.minlength || myForm.password.$error.maxlength) && myForm.password.$dirty" style="color:red">
+                                            Passwords must be between 5 and 10 characters.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="">
+                                <span ng-if="signUpError" style="color:red;">
+                                    {{ signUpError.data.error }}
+                                </span>
+                            </div>
+                            <div class="form-group" style="">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <button ng-click = "registerUser()" style="padding: 8px 12px;"
+                                                type="submit" class="btn btn-block btn-primary btn-width-48"
+                                                ng-disabled="!myForm.$valid">
+                                            Register with Youpep
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+			      	</form>
                 </div>
-                <div class="panel-body" cg-busy="signup_Busy">
-                    <form name="myForm" class="form-horizontal" method="post" ng-submit="signup()">
-                        <div class="form-group">
-                            <label for="email"  class="col-sm-3 control-label">
-                                First Name
-                            </label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" placeholder="Enter first name"
-                                       id="name" name="name" ng-model="formData.firstname" required/>
-                                <span ng-show="myForm.name.$error.required && myForm.name.$dirty" style="color:red">
-                                    required
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lastname"  class="col-sm-3 control-label">
-                                Last Name
-                            </label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" placeholder="Enter last name"
-                                       id="lastname" name="lastname" ng-model="formData.lastname" required  />
-                                <span ng-show="myForm.lastname.$error.required && myForm.lastname.$dirty" style="color:red">
-                                    required
-                                </span>
-                            </div>
-                        </div>
-
-                        <!--<div class="form-group">
-                            <label for="username"  class="col-sm-3 control-label">
-                                Username
-                            </label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" id="username" name="username" ng-model="formData.username" required  />
-                                <span ng-show="myForm.username.$error.required && myForm.username.$dirty" style="color:red">
-                                    required
-                                </span>
-                            </div>
-                        </div>-->
-
-                        <div class="form-group">
-                            <label  class="col-sm-3 control-label">
-                                Email
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="email" class="form-control" placeholder="Enter email"
-                                       id="email" name="email" ng-model="formData.email" required/>
-                                <span ng-show="myForm.email.$error.required && myForm.email.$dirty" style="color:red">
-                                    Email is required
-                                </span>
-                                <span ng-show="!myForm.email.$error.required && myForm.email.$error.email && myForm.email.$dirty"
-                                        style="color:red">
-                                    You entered an invalid email
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password"  class="col-sm-3 control-label">
-                                Password
-                            </label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="password" placeholder="Enter password"
-                                       id="password" name="password" ng-model="formData.password" ng-minlength="5" ng-maxlength="15" required  />
-                                <span ng-show="myForm.password.$error.required && myForm.password.$dirty" style="color:red">
-                                    required
-                                </span>
-                                <span ng-show="!myForm.password.$error.required && (myForm.password.$error.minlength || myForm.password.$error.maxlength) && myForm.password.$dirty" style="color:red">
-                                    Passwords must be between 8 and 15 characters.
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password_c"  class="col-sm-3 control-label">
-                                Confirm Password
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="password" class="form-control" placeholder="Re enter password"
-                                       id="password_c" name="password_c" ng-model="formData.password_c" valid-password-c required  />
-                                <span ng-show="myForm.password_c.$error.required && myForm.password_c.$dirty" style="color:red">
-                                    Please confirm your password.
-                                </span>
-                                <span ng-show="!myForm.password_c.$error.required && myForm.password_c.$error.noMatch && myForm.password.$dirty" style="color:red">
-                                    Passwords do not match.
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                Select Interests
-                            </label>
-                            <div class="col-sm-9">
-                                <tags-input ng-model="tags" on-tag-added="tagAdded($tag)"
-                                            on-tag-removed="tagRemoved($tag)">
-                                    <auto-complete source="loadTags($query)"></auto-complete>
-                                </tags-input>
-                            </div>
-                        </div>
-                        <div class="form-group" style="">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <label class="radio-inline" style="color:;">
-                                  <input type="radio" ng-change="gendererror = false" ng-model="formData.gender" value="male">
-                                  Male
-                                </label>
-                                <label class="radio-inline" style="color:;">
-                                  <input type="radio" ng-change="gendererror = false" ng-model="formData.gender" value="female">
-                                  Female
-                                </label>
-                                <span ng-show="gendererror">
-                                    Please select gender
-                                </span>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <div class="col-sm-3 col-sm-offset-3">
-                                <button ng-click = "registerUser()"
-                                        type="submit" class="btn btn-success"
-                                        ng-disabled="!myForm.$valid">
-                                    Register with weber
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="panel-footer" style="background-color: #FCFCFC;">
+                    <h5>
+                        <span style="opacity:0.50">
+                            Goto Login?
+                        </span>&nbsp;
+                        <a href="#/login">
+                            Login Here
+                        </a>
+                    </h5>
                 </div>
-                <div class="panel-footer">
-                    Goto login?  <a href="#/login">Click here</a></div>
             </div>
         </div>
+
     </div>
 </div>
-<style ng-if="!(isAuthenticated())">
-    body{
-        /*background: url(static/app/images/bg-start.jpg) no-repeat center center fixed;*/
-        background-color:#fff;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        padding-top:30px;
-    }
-</style>

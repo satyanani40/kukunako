@@ -161,7 +161,7 @@ angular
 			})
 			.when('/signup', {
 				templateUrl: '/static/app/views/signup.html',
-				controller: 'SignupCtrl'
+				controller: 'indexCtrl'
 			})
 			.when('/about', {
 				templateUrl: '/static/app/views/about.html'
