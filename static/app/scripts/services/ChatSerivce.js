@@ -27,7 +27,7 @@ angular.module('weberApp')
 
             this.receiverid = receiverid;
             self = this;
-            Restangular.all('chat/sendmessage').post({
+            Restangular.all('chat/send-message').post({
                 'sender':this.currentuser._id,
                 'receiver': this.receiverid,
                 'message': text,
@@ -219,7 +219,7 @@ angular.module('weberApp')
 
             //console.log(params)
             if(getResults){
-                Restangular.all('updatetimestamp').post({
+                Restangular.all('update-time-stamp').post({
                     timestamp:self.currentuser.lastmessageseen,
                     userid:self.currentuser._id
                 }).then(function(data){
@@ -282,7 +282,7 @@ angular.module('weberApp')
                 messageids.push(this.updateseenmessages[x]._id);
             }
             if(messageids.length){
-                Restangular.all('updateMessageSeen').post({
+                Restangular.all('update-message-seen').post({
                     messageids: messageids
                 }).then(function(data){
                     //console.log('--------updated messages seen status----------')
@@ -333,7 +333,7 @@ angular.module('weberApp')
             if(this.currentuser.conversations.indexOf(id) == -1 &&
                this.currentuser.friends.indexOf(id) == -1){
                    this.currentuser.conversations.push(id);
-                   Restangular.one('addconversation').get({
+                   Restangular.one('add-conversation').get({
                     cuserid : this.currentuser._id,
                     conversationid : id,
                     seed:Math.random()
@@ -352,7 +352,7 @@ angular.module('weberApp')
                         break;
                    }
                }
-              Restangular.one('deleteconversation').get({
+              Restangular.one('delete-conversation').get({
 		        cuserid : this.currentuser._id,
 		        conversationid : id,
 		        seed:Math.random()

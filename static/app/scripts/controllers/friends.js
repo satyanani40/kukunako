@@ -40,7 +40,7 @@ angular.module('weberApp')
                  var req = {
 
                         method: 'POST',
-                        url: '/api/suggestedFriends',
+                        url: '/api/suggested-friends',
                         headers: {
                             'Content-Type': 'application/json'
                         },

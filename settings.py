@@ -200,7 +200,7 @@ people = {
         'url': 'regex("[\w]+")',
         'field': 'username'
     },
-    'resource_methods': ['POST'],
+    'resource_methods': ['GET', 'POST'],
 
     # Schema definition, based on Cerberus grammar. Check the Cerberus project
     # (https://github.com/nicolaiarocci/cerberus) for details.
@@ -471,15 +471,15 @@ interests = {
 }
 
 searchActivity = {
-    'item_title': 'searchActivity',
+    'item_title': 'search-activity',
     'schema' : searchActivity_schema,
-    'url' : 'searchActivity',
+    'url' : 'search-activity',
 }
 
 people_searchActivity = {
     'schema': searchActivity_schema,
-    'url': 'people/<regex("[a-f0-9]{24}"):author>/searchActivity',
-    'datasource': {"source": "searchActivity"}
+    'url': 'people/<regex("[a-f0-9]{24}"):author>/search-activity',
+    'datasource': {"source": "search-activity"}
 }
 
 people_posts = {
@@ -519,8 +519,8 @@ DOMAIN = {
     'people': people,
     'posts': posts,
     'interests': interests,
-    'searchActivity': searchActivity,
-    'people_searchActivity':people_searchActivity,
-    'people_posts':people_posts,
+    'search-activity': searchActivity,
+    'people-search-activity':people_searchActivity,
+    'people-posts':people_posts,
     'messages':messages
 }

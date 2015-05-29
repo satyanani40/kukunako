@@ -36,7 +36,7 @@ angular.module('weberApp')
                     // checking enter minimum interests
                     if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
                         //console.log('interests length', $rootScope.currentUser.questions.length, $rootScope.currentUser.interests.length)
-                        $location.path("/enter_interests")
+                        $location.path("/enter-interests")
                     }
 
 
@@ -85,7 +85,7 @@ angular.module('weberApp')
                     $scope.submit_post = function(){
                          if($scope.new_post) {
                             $scope.new_submit_busy_post = $http({
-                                url: '/api/simwords',
+                                url: '/api/sim-words',
                                 method: "GET",
                                 params: {querystring: $scope.new_post}
                             })

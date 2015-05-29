@@ -70,7 +70,7 @@ angular.module('weberApp')
                     $scope.UploadImage_busy = $timeout(function() {
                        var req = {
                             method: 'POST',
-                            url: '/api/imagecrop',
+                            url: '/api/image-crop',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
@@ -196,7 +196,7 @@ angular.module('weberApp')
 
                 $scope.checkUserCurrentPassword = function(){
 
-                    $http.post('/check_user_current_password',
+                    $http.post('/check-user-current-password',
                         {
                             user_name:$scope.user.username,
                             old_password:$scope.formData.cPassword
@@ -215,7 +215,7 @@ angular.module('weberApp')
                     if ($scope.if_user_password_is_incorrect == false) {
                         $scope.Password_busy = $timeout(function(){
 
-                            $http.post('/get_new_hash_password',{
+                            $http.post('/get-new-hash-password',{
                                 user_name:$scope.user.username,
                                 new_password:$scope.formData.password
                             })
@@ -269,7 +269,7 @@ angular.module('weberApp')
                     }
 
                     $scope.Interests_busy = $timeout(function() {
-                        $http.post('/get_interested_ids',
+                        $http.post('/get-interested-ids',
                         {
                             interests: $scope.final_interests_array,
                             username: $scope.user.username

@@ -2,6 +2,7 @@ import json, requests, urllib2, random
 from werkzeug.security import generate_password_hash
 from loremipsum import generate_paragraph
 import datetime
+import dateutil.parser
 from bson import json_util
 import json
 import time

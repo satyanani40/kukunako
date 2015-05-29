@@ -17,7 +17,7 @@ angular.module('weberApp')
 
                 $scope.sendPassword = function(){
 
-                    $scope.password_recovery_busy = $http.post('/forgotpasswordlink', {email:$scope.email}).
+                    $scope.password_recovery_busy = $http.post('/forgot-password-link', {email:$scope.email}).
                         success(function(data, status, headers, config) {
                             // this callback will be called asynchronously
                             // when the response is available
@@ -52,7 +52,7 @@ angular.module('weberApp')
 
                 $scope.passwordButton = function(){
 
-                    $scope.new_password = $http.post('/get_new_hash_password', {
+                    $scope.new_password = $http.post('/get-new-hash-password', {
                             user_name:$routeParams.user_name,
                             new_password:$scope.formData.password
                         })

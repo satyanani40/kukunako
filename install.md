@@ -8,7 +8,7 @@ activate virtualenv
 ==================
 goto venv folder then type: source bin/activate
 
-pip install PyJwt
+pip install PyJwt==0.4.3
 
 pip install eve
 
@@ -50,6 +50,7 @@ install instructions for chat socketio
 Flask-SocketIO
 
 Werkzeug==0.9.4
+sudo pip install python-dateutil
 
 gevent==1.0
 

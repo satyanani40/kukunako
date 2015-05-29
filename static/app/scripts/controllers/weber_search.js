@@ -31,8 +31,8 @@ angular.module('weberApp')
                     //$rootScope.temp_user = user;
                     if($rootScope.currentUser.interests.length == 0 &&
                         $rootScope.currentUser.questions.length < 4){
-
-                       $location.path("/enter_interests")
+                       // console.log('----------> got to enter-interests')
+                        $location.path("/enter-interests")
                     }
 
                     //console.log($scope.currentUser);
@@ -46,7 +46,8 @@ angular.module('weberApp')
         }else{
             if($rootScope.currentUser.interests.length == 0 &&
                 $rootScope.currentUser.questions.length < 4){
-                $location.path("/enter_interests")
+                //console.log('----------> got to enter-interests')
+                $location.path("/enter-interests")
             }
             //console.log($scope.currentUser);
             $scope.searchActivity = new SearchActivity($scope.currentUser);

@@ -159,7 +159,7 @@ def filterIdFields(user, interests = None, questions = None, conversations = Non
 
 # add to converstions
 #delete conversation user
-@app.route('/api/addconversation', methods=['GET'])
+@app.route('/api/add-conversation', methods=['GET'])
 def addConversation():
     data = request.args.to_dict()
     accounts = app.data.driver.db['people']
@@ -170,7 +170,7 @@ def addConversation():
     return jsonify({'data': False})
 
 
-@app.route('/api/storeSearchResults', methods=['POST'])
+@app.route('/api/store-search-results', methods=['POST'])
 def deleteSearchItem():
     data = json.loads(request.data)
     if (data['content'] != "" and data['author'] != "" and data['author']):
@@ -186,7 +186,7 @@ def deleteSearchItem():
             return dumps({'data':True, '_id':_id})
     return jsonify({'data': False})
 
-@app.route('/api/matchresults', methods=['POST'])
+@app.route('/api/match-results', methods=['POST'])
 def matchresults():
     data = json.loads(request.data)
     location_data = ""
@@ -284,7 +284,7 @@ def matchresults():
 
 
 
-@app.route('/api/deleteSearchHistoryItem', methods=['POST'])
+@app.route('/api/delete-search-historyItem', methods=['POST'])
 def storeSearchResults():
     data = json.loads(request.data)
     if (data['_id'] != "" and data['_id']):
@@ -295,7 +295,7 @@ def storeSearchResults():
     return jsonify({'data': False})
 
 #delete conversation user
-@app.route('/api/deleteconversation', methods=['GET'])
+@app.route('/api/delete-conversation', methods=['GET'])
 def deleteConversation():
     data = request.args.to_dict()
     accounts = app.data.driver.db['people']
@@ -312,7 +312,7 @@ def deleteConversation():
 
 
 #update user answer
-@app.route('/api/updateAnswer', methods=['POST', 'GET'])
+@app.route('/api/update-answer', methods=['POST', 'GET'])
 def updateAnswer():
     print '----------update answer---------'
     accounts = app.data.driver.db['people']
@@ -334,7 +334,7 @@ def updateAnswer():
 
 
 # adding friend request
-@app.route('/api/addfriend', methods=['POST', 'GET'])
+@app.route('/api/add-friend', methods=['POST', 'GET'])
 def addfriend():
     cuserid = request.args.get('cuserid')
     puserid = request.args.get('puserid')
@@ -345,7 +345,7 @@ def addfriend():
     return jsonify({'data': result})
 
 # cancel request
-@app.route('/api/cancelfriend', methods=['POST', 'GET'])
+@app.route('/api/cancel-friend', methods=['POST', 'GET'])
 def cancelfriend():
     cuserid = request.args.get('cuserid')
     puserid = request.args.get('puserid')
@@ -353,7 +353,7 @@ def cancelfriend():
     result = friends.cancelFriend()
     return jsonify({'data':result})
 
-@app.route('/api/acceptfriend', methods=['POST', 'GET'])
+@app.route('/api/accept-friend', methods=['POST', 'GET'])
 def acceptfriend():
     cuserid = request.args.get('cuserid')
     puserid = request.args.get('puserid')
@@ -363,7 +363,7 @@ def acceptfriend():
         socketio.emit('FMnotific',{'data':{'FMnotific': True}}, room = str(puserid))
     return jsonify({'data':result})
 
-@app.route('/api/rejectfriend', methods=['POST', 'GET'])
+@app.route('/api/reject-friend', methods=['POST', 'GET'])
 def rejectfriend():
     cuserid = request.args.get('cuserid')
     puserid = request.args.get('puserid')
@@ -372,7 +372,7 @@ def rejectfriend():
     print result
     return jsonify({'data':result})
 
-@app.route('/api/unfriend', methods=['POST', 'GET'])
+@app.route('/api/un-friend', methods=['POST', 'GET'])
 def unfriend():
     cuserid = request.args.get('cuserid')
     puserid = request.args.get('puserid')
@@ -380,7 +380,7 @@ def unfriend():
     result = friends.unFriend()
     return jsonify({'data':result})
 
-@app.route('/api/makeseen', methods=['POST', 'GET'])
+@app.route('/api/make-seen', methods=['POST', 'GET'])
 def makeseen():
     cuserid = request.args.get('cuserid')
     operations = Notifications(cuserid, app)
@@ -396,14 +396,14 @@ def match():
         socketio.emit('FMnotific',{'data':{'FMnotific': True}}, room = str(data['authorid']))
     return jsonify({'data':result})
 
-@app.route('/api/unmatch', methods=['POST', 'GET'])
+@app.route('/api/un-match', methods=['POST', 'GET'])
 def unmatch():
     data = (request.args.to_dict())
     matchunmatch = MatchUnmatch(data, app)
     result = matchunmatch.unMatch()
     return jsonify({'data':result})
 
-@app.route('/api/sendfeedback', methods=['GET'])
+@app.route('/api/send-feedback', methods=['GET'])
 def sendfeedback():
     data = (request.args.to_dict())
     msg = Message('FeedBack',
@@ -416,7 +416,7 @@ def sendfeedback():
         return jsonify({'data':True})
     return  jsonify({'data':False})
 
-@app.route('/api/send_eng_career', methods=['GET'])
+@app.route('/api/send-eng-career', methods=['GET'])
 def sendEngCareer():
     data = (request.args.to_dict())
     msg = Message('Careers',
@@ -438,7 +438,7 @@ def sendEngCareer():
         return jsonify({'data':True})
     return  jsonify({'data':False})
 
-@app.route('/api/suggestedFriends', methods=['POST','GET'])
+@app.route('/api/suggested-friends', methods=['POST','GET'])
 def friendSuggestions():
 
     resultUsers = []
@@ -512,7 +512,7 @@ def index():
 def me():
     return Response(json.dumps(g.user_id),  mimetype='application/json')
 
-@app.route('/api/getpeoplenames/<query>',  methods=['GET','POST'])
+@app.route('/api/get-people-names/<query>',  methods=['GET','POST'])
 def getnames(query):
     accounts = app.data.driver.db['people']
     data = accounts.find({"$or":[
@@ -530,7 +530,7 @@ def getnames(query):
 def send_foo(filename):
     return send_from_directory('/static/', filename)
 
-@app.route('/api/imagecrop', methods=['GET','POST'])
+@app.route('/api/image-crop', methods=['GET','POST'])
 def convertedCropedImage():
     import re
     data = json.loads(request.data)
@@ -561,7 +561,7 @@ def convertedCropedImage():
         return jsonify({'data':True})
     return jsonify({'data':False})
 
-@app.route('/resendActivationLink', methods = ['POST', 'GET'])
+@app.route('/resend-activation-link', methods = ['POST', 'GET'])
 def resendActivationLink():
     accounts = app.data.driver.db['people']
     user = accounts.find_one({'email': request.json['resend_email']})
@@ -581,14 +581,14 @@ def resendActivationLink():
     msg.html = '<div style="min-height:100px;border:1px solid #dcdcdc;">' \
                '<h5>Thanks for registering with us, To complete your Youpep registration, Follow this link:</h5>' \
                '<div style="padding:20px 5px">' \
-               '<a href="http://www.youpep.com/#/confirm_account/users/'+user_id+'/confirm/'+create_random_number+'">Click Here</a></div></div>'
+               '<a href="http://www.youpep.com/#/confirm-account/users/'+user_id+'/confirm/'+create_random_number+'">Click Here</a></div></div>'
     mail.send(msg)
     response = jsonify(data = 'Activation link has been sent to your email')
     response.status_code = 200
     return response
 
 
-@app.route('/forgotpasswordlink', methods=['POST', 'GET'])
+@app.route('/forgot-password-link', methods=['POST', 'GET'])
 def forgotpassword():
     accounts = app.data.driver.db['people']
     user = accounts.find_one({'email': request.json['email']})
@@ -608,7 +608,7 @@ def forgotpassword():
         msg.html = "<p>Please click on the link:<br>\
                         <br><p style='color:red;border:1px solid #dcdcdc;padding:10px;" \
                        "width:800px;text-align:center;font-size:14px;'>" \
-                       "<a href='http://www.youpep.com/#/users/"+user_name+"/change_password_link/"+user_randome_string+"'>Click Here</a></p>\
+                       "<a href='http://www.youpep.com/#/users/"+user_name+"/change-password-link/"+user_randome_string+"'>Click Here</a></p>\
                         <br><br><br><br>\
                         Thanks,<br>The Youpep Team\
                         </p>"
@@ -617,7 +617,7 @@ def forgotpassword():
 
 
 
-@app.route('/changepassword', methods=['POST', 'GET'])
+@app.route('/change-password', methods=['POST', 'GET'])
 def changepassword():
     accounts = app.data.driver.db['people']
     user = accounts.find_one({'username': request.json['user_name']})
@@ -627,7 +627,7 @@ def changepassword():
 
 
 @login_required
-@app.route('/check_user_current_password', methods=['POST', 'GET'])
+@app.route('/check-user-current-password', methods=['POST', 'GET'])
 def check_user_current_password():
     accounts = app.data.driver.db['people']
     user = accounts.find_one({'username': request.json['user_name']})
@@ -642,7 +642,7 @@ def check_user_current_password():
 
 
 @login_required
-@app.route('/get_new_hash_password', methods=['POST', 'GET'])
+@app.route('/get-new-hash-password', methods=['POST', 'GET'])
 def get_new_hash_password():
     accounts = app.data.driver.db['people']
     user = accounts.find_one({'username': request.json['user_name']})
@@ -660,7 +660,7 @@ def getSimilarWords(data):
     keywords = set(list(post_tokens)+list(words))
     return list(set(keywords))
 
-@app.route('/api/simwords', methods=['GET'])
+@app.route('/api/sim-words', methods=['GET'])
 def getsimwords():
     data = request.args.to_dict()
     words = parse_sentence(data['querystring'])
@@ -745,7 +745,7 @@ def signup():
         response.status_code = 401
         return response
 
-@app.route('/get_interested_ids', methods=['POST', 'GET'])
+@app.route('/get-interested-ids', methods=['POST', 'GET'])
 def after_get_interests_ids():
     data = get_interest_ids(request.json['interests'])
     accounts = app.data.driver.db['people']
@@ -775,7 +775,7 @@ def get_interest_ids(data):
             interest_ids.append(id)
     return list(set(interest_ids))
 
-@app.route('/api/chat/sendmessage', methods=['POST'])
+@app.route('/api/chat/send-message', methods=['POST'])
 def sendmessage():
     print '------------datetime-----------'
 
@@ -803,7 +803,7 @@ def sendmessage():
         return dumps({'status': 'ok','data':data})
     return dumps({'status':'failed','data':0})
 
-@app.route('/api/updatetimestamp', methods=['POST'])
+@app.route('/api/update-time-stamp', methods=['POST'])
 def updateTimeStamp():
     accounts = app.data.driver.db['people']
     ts = int(time.time())
@@ -812,7 +812,7 @@ def updateTimeStamp():
         return jsonify({'status':'ok'})
     return jsonify({'status':'failed'})
 
-@app.route('/api/updateMessageSeen', methods=['POST'])
+@app.route('/api/update-message-seen', methods=['POST'])
 def makeMessagesSeen():
     print request.json['messageids']
     list = []
@@ -899,7 +899,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-@app.route('/fileUpload', methods=['GET', 'POST'])
+@app.route('/file-upload', methods=['GET', 'POST'])
 def fileupload():
     if request.method == 'POST':
         file = request.files['file']
@@ -914,11 +914,11 @@ def fileupload():
 @socketio.on('connecting')
 def joiningtoroom(data):
     if(join_into_room(data['id'])):
-        emit('joiningstatus',{'data': data['id'] in request.namespace.rooms})
+        emit('joining-status',{'data': data['id'] in request.namespace.rooms})
 
-@socketio.on('send_message')
+@socketio.on('send-message')
 def send_to_room(data):
-    emit('receive_messages',
+    emit('receive-messages',
          {
           'message': data['message'],
           'senderid':data['senderid'],

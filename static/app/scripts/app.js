@@ -39,8 +39,8 @@ angular
 	])
 	.config(["$socketProvider", function ($socketProvider) {
       //$socketProvider.setUrl("www.weber.ooo");
+      $socketProvider.setUrl("http://130.211.99.188/");
       //$socketProvider.setUrl("http://127.0.0.1:8000/");
-      $socketProvider.setUrl("www.youpep.com");
     }])
     .config(['RestangularProvider',
 		function(RestangularProvider) {
@@ -135,7 +135,7 @@ angular
 					}
 				}
 			})
-			.when('/enter_interests/:email?', {
+			.when('/enter-interests/:email?', {
 				templateUrl: '/static/app/views/enter_interests.html',
 				controller:'enterInterestsCtrl',
 				resolve: {
@@ -146,16 +146,16 @@ angular
 					}
 				}
 			})
-			.when('/forgotpassword', {
+			.when('/forgot-password', {
 				templateUrl: '/static/app/views/f_password.html'
 
 
 			})
 
-			.when('/users/:user_name/change_password_link/:password_random_string', {
+			.when('/users/:user_name/change-password-link/:password_random_string', {
 				templateUrl:'/static/app/views/change_password.html'
 			})
-			.when('/confirm_account/users/:objectId/confirm/:rand_string', {
+			.when('/confirm-account/users/:objectId/confirm/:rand_string', {
 				templateUrl:'/static/app/views/confirm_email.html',
 				controller:'EmailCtrl'
 			})

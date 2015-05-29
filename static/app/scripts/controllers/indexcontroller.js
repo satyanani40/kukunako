@@ -22,7 +22,7 @@ angular.module('weberApp')
         function socket_operations(){
             $socket.emit('connecting', {id:$rootScope.currentUser._id});
 
-            $socket.on('joiningstatus', function(data) {
+            $socket.on('joining-status', function(data) {
                 console.log('joing==>', data)
             });
 
@@ -37,7 +37,7 @@ angular.module('weberApp')
                 }
             });
 
-             $socket.on('receive_messages', function(msg) {
+             $socket.on('receive-messages', function(msg) {
                 //console.log('message received', msg)
                 var new_message = {};
                 var details = JSON.parse(sessionStorage.getItem(msg.senderid));
@@ -142,7 +142,7 @@ angular.module('weberApp')
 
                 //$scope.chatactivity.messages = data;
 
-                $socket.emit('send_message', {receiverid: Recept, senderid :$rootScope.currentUser._id  ,message: text});
+                $socket.emit('send-message', {receiverid: Recept, senderid :$rootScope.currentUser._id  ,message: text});
                 $rootScope.chatactivity.sendMessage(Recept, text);
             }else{
                 return false;
@@ -333,7 +333,7 @@ angular.module('weberApp')
                     $scope.searchActivity = new SearchActivity($rootScope.currentUser);
 
                     if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
-                        $location.path("/enter_interests")
+                        $location.path("/enter-interests")
                     }
 
                     get_friend_notifications($rootScope.currentUser);
@@ -357,7 +357,7 @@ angular.module('weberApp')
                 $scope.Resend_busy = $timeout(function(){
                     console.log("email",$scope.ss)
                     // Simple POST request example (passing data) :
-                    $http.post('/resendActivationLink', {resend_email: $scope.ss}).
+                    $http.post('/resend-activation-link', {resend_email: $scope.ss}).
                     success(function(data, status, headers, config) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -425,7 +425,7 @@ angular.module('weberApp')
                         $scope.searchActivity = new SearchActivity($rootScope.currentUser);
                         socket_operations();
 
-                        $location.path('/enter_interests/' + self.formData.email);
+                        $location.path('/enter-interests/' + self.formData.email);
                     }
 
                 }, function (signuperror) {
@@ -465,7 +465,7 @@ angular.module('weberApp')
         if(typeof $rootScope.currentUser !== 'undefined'){
             // checking questions answered or not and place interests or not
             if($rootScope.currentUser.interests.length == 0 && $rootScope.currentUser.questions.length < 4){
-                $location.path("/enter_interests")
+                $location.path("/enter-interests")
             }
 
              $rootScope.chatactivity = new ChatActivity($rootScope.currentUser);
@@ -580,7 +580,7 @@ angular.module('weberApp')
             if($scope.feedback_data){
                 var data = $scope.feedback_data;
                 $scope.feedback_data = "";
-                Restangular.one('sendfeedback').get({
+                Restangular.one('send-feedback').get({
                         feedback_data : data,
                 }).then(function(data){
                     var myAlert = $alert({

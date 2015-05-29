@@ -52,7 +52,7 @@ angular.module('weberApp')
             var self = this;
             var req = {
                 method: 'POST',
-                url: '/api/updateAnswer',
+                url: '/api/update-answer',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -101,7 +101,7 @@ angular.module('weberApp')
            var self = this;
             var req = {
                 method: 'POST',
-                url: '/api/updateAnswer',
+                url: '/api/update-answer',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -145,7 +145,7 @@ angular.module('weberApp')
             if((query)) {
                 var req = {
                     method: 'POST',
-                    url: '/api/getpeoplenames',
+                    url: '/api/get-people-names',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -173,7 +173,7 @@ angular.module('weberApp')
 			var self = this;
             var req = {
                  method: 'POST',
-                 url: '/api/getpeoplenames',
+                 url: '/api/get-people-names',
                  headers: {
                    'Content-Type': 'application/json'
                  },
@@ -247,7 +247,7 @@ angular.module('weberApp')
                     return this.history[i].result;
                 }
             }
-            return $http.get('/api/getpeoplenames/'+query);
+            return $http.get('/api/get-people-names/'+query);
         };
 
         this.pushToHistory = function(historyObject, query){
@@ -280,7 +280,7 @@ angular.module('weberApp')
 		};
 
 		this.unmatch = function(authorid, postid, cuserid){
-                return Restangular.one('unmatch').get({
+                return Restangular.one('un-match').get({
 		        cuserid : cuserid,
 		        authorid : authorid,
 		        postid: postid,
@@ -570,7 +570,7 @@ angular.module('weberApp')
 		}
 
 		SearchActivity.prototype.getMysearches = function(){
-                Restangular.one('people', this.user_obj._id).all('searchActivity').getList({
+                Restangular.one('people', this.user_obj._id).all('search-activity').getList({
                     max_results: 10,
                     page: this.page,
                     sort: '[("_created",-1)]',
@@ -592,7 +592,7 @@ angular.module('weberApp')
        SearchActivity.prototype.nextPage = function() {
 			if (this.busy | this.end) return;
 			this.busy = true;
-            this.user_obj.all('searchActivity').getList({
+            this.user_obj.all('search-activity').getList({
                     max_results: 2,
                     page: this.page,
                     sort: '[("_created",-1)]',
@@ -612,7 +612,7 @@ angular.module('weberApp')
 		    var self = this;
             var req = {
                 method: 'POST',
-                url: '/api/storeSearchResults',
+                url: '/api/store-search-results',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -631,7 +631,7 @@ angular.module('weberApp')
 
        SearchActivity.prototype.getSimilarWords = function(sentence){
             return $http({
-                       url: '/api/similarwords',
+                       url: '/api/similar-words',
                        method: "GET",
                        params: {querystring: sentence }
             });
@@ -702,7 +702,7 @@ angular.module('weberApp')
                 var self = this;
                 var req = {
                     method: 'POST',
-                    url: '/api/matchresults',
+                    url: '/api/match-results',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -727,7 +727,7 @@ angular.module('weberApp')
 
 			var params = '{"_id":"'+searchPostId+'"}';
 
-			var data = Restangular.one("people",JSON.parse(CurrentUser1.userId)).all('searchActivity').getList({
+			var data = Restangular.one("people",JSON.parse(CurrentUser1.userId)).all('search-activity').getList({
 				where :params,
 				sort: '[("_created",-1)]',
 				seed : Math.random()
@@ -745,7 +745,7 @@ angular.module('weberApp')
 					this.mresults.push.apply(this.mresults,data);
 				}.bind(this));
 
-				Restangular.one("searchActivity",searchPostId).patch(
+				Restangular.one("search-activity",searchPostId).patch(
 					{newResults:0},{},
 					{
 						'Content-Type': 'application/json',
@@ -793,7 +793,7 @@ angular.module('weberApp')
 			this.sBusy = true;
             var self = this;
 
-			Restangular.all('searchActivity').getList({
+			Restangular.all('search-activity').getList({
 			    where : self.param1,
 				max_results: 30,
 				page: self.sPage,
@@ -813,53 +813,5 @@ angular.module('weberApp')
 			}.bind(self));
 		};
 
-		/*MatchMeResults.prototype.getMatchPeoples = function(searchText) {
-
-			var params = '{"$or":[{"name.first":{"$regex":".*'+searchText+'.*"}},{"name.last":{"$regex":".*'+searchText+'.*"}},'+
-			             '{"username":{"$regex":".*'+searchText+'.*"}}]}';
-			Restangular.all('people').getList({
-				where :params
-				}).then(function(data) {
-					this.totalNames = data.length;
-					this.searchNames.push.apply(this.searchNames,data);
-				}.bind(this));
-
-		};
-
-		MatchMeResults.prototype.getSuggestedPeople = function(){
-
-            function combine_ids(ids) {
-   			    return (ids.length ? "\"" + ids.join("\",\"") + "\"" : "");
-		    }
-
-            var param = '{"interestsimilarwords":{"$in":['+combine_ids(this.query.split(" "))+']}}';
-            Restangular.all("people").getList({
-					where: param,
-					seed : Math.random()
-			}).then(function(data){
-                   if(data.length >= 1){
-                     this.suggestpeople = true;
-			       }
-					var tempresutls = [];
-					this.mresults.push.apply(this.mresults,data);
-					for(var temp in this.mresults){
-					    var author = {
-					        author:{
-                                name:{
-                                    first:this.mresults[temp].name.first,
-                                    last: this.mresults[temp].name.last,
-                                },
-                                _id:this.mresults[temp]._id,
-                                picture:{
-                                    medium:this.mresults[temp].picture.medium
-                                }
-                            }
-					    }
-					    tempresutls.push(author);
-					}
-
-					this.mresults = tempresutls;
-			}.bind(this));
-		}*/
-		return MatchMeResults;
+	return MatchMeResults;
 	});

@@ -30,6 +30,7 @@ angular.module('weberApp')
 			}
 		}).success(function(userId) {
             Restangular.one('people', JSON.parse(userId)).get({seed:Math.random()}).then(function(user) {
+
                 $rootScope.currentUser = user;
                 if($rootScope.currentUser.email_confirmed == false){
                     var userNameAlert = $alert({
@@ -84,8 +85,9 @@ angular.module('weberApp')
                     for(var temp in $rootScope.currentUser.interests){
                         $scope.final_interests_array.push(InterestsService.get($rootScope.currentUser.interests[temp]).interest_string)
                     }
+
                     $scope.Interests_busy = $timeout(function() {
-                        $http.post('/get_interested_ids',
+                        $http.post('/get-interested-ids',
                         {
                             interests: $scope.final_interests_array,
                             username: $rootScope.currentUser.username
@@ -111,7 +113,6 @@ angular.module('weberApp')
                         });
                     },2000);
                 }
-
             });
         });
     });

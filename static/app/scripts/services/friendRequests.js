@@ -63,7 +63,7 @@ angular.module('weberApp')
 	.service('Friends', function($http, Restangular) {
 
 		this.addFriend = function(cuserid, puserid) {
-		    return Restangular.one('addfriend').get({
+		    return Restangular.one('add-friend').get({
 		        cuserid : cuserid,
 		        puserid : puserid,
 		        seed:Math.random()
@@ -72,7 +72,7 @@ angular.module('weberApp')
 
 		this.cancelRequest = function(cuserid, puserid){
 		    //console.log(cuserid, puserid)
-		    return Restangular.one('cancelfriend').get({
+		    return Restangular.one('cancel-friend').get({
 		        cuserid : cuserid,
 		        puserid : puserid,
 		        seed:Math.random()
@@ -81,7 +81,7 @@ angular.module('weberApp')
 		}
 
 		this.acceptRequest = function(cuserid, puserid){
-		    return Restangular.one('acceptfriend').get({
+		    return Restangular.one('accept-friend').get({
 		        cuserid : cuserid,
 		        puserid : puserid,
 		        seed:Math.random()
@@ -90,7 +90,7 @@ angular.module('weberApp')
 		}
 
 		this.rejectRequest = function(cuserid, puserid){
-		    return Restangular.one('rejectfriend').get({
+		    return Restangular.one('reject-friend').get({
 		        cuserid : cuserid,
 		        puserid : puserid,
 		        seed : Math.random()
@@ -98,7 +98,7 @@ angular.module('weberApp')
 		}
 
 		this.unFreind = function(cuserid, puserid){
-		    return Restangular.one('unfriend').get({
+		    return Restangular.one('un-friend').get({
 		        cuserid : cuserid,
 		        puserid : puserid,
 		        seed : Math.random()
@@ -106,7 +106,7 @@ angular.module('weberApp')
 		}
 
 		this.makeSeen = function(cuserid){
-		    return Restangular.one('makeseen').get({
+		    return Restangular.one('make-seen').get({
 		        cuserid : cuserid,
 		        seed : Math.random()
 		    });
