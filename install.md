@@ -70,3 +70,7 @@ http://flask-socketio.readthedocs.org/en/latest/#flask.ext.socketio.SocketIO.run
 for ssh generation to git hub
 =============================
 https://help.github.com/articles/generating-ssh-keys/
+
+change https to ssh after ssh key added
+=========================================
+https://help.github.com/articles/changing-a-remote-s-url/
