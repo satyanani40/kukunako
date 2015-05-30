@@ -76,6 +76,32 @@ def login_required(f):
 
     return decorated_function
 
+# generating friends for person
+@app.route('/api/generate-friends', methods=['POST'])
+def generate_friends():
+    accounts = app.data.driver.db['people']
+    data = accounts.find()
+    print '---generating data--'
+    interests_set = set()
+
+    for temp in data:
+        interests_set.add(ObjectId(temp['_id']))
+
+    temperary_set = interests_set
+
+    for temp in temperary_set:
+        print '-------current user----->>', temp
+        temp_set = list(interests_set)
+        temp_set.remove(temp)
+        cdata = accounts.update({'_id': ObjectId(temp)},
+                               { "$pushAll" :{ "friends": list(temp_set)}
+                               })
+        data = accounts.find_one({'_id':ObjectId(temp)})
+        print '-----added friends---->', data['friends']
+    return dumps({'status': 200})
+
+
+
 @app.route('/auth/login', methods=['POST'])
 def login():
     accounts = app.data.driver.db['people']
@@ -95,14 +121,7 @@ def login():
     token = create_token(user)
     return dumps({'user':filterIdFields(user, all=True), 'token': token})
 
-@app.route('/api/generate-friends', methods=['POST'])
-def generate_friends():
-    accounts = app.data.driver.db['people']
-    user = accounts.find_one({'email': request.json['email']})
-    if not user:
-        status_code = 401
-        return dumps({'status':status_code})
-    return dumps({'status':200})
+
 
 def filterIdFields(user, interests = None, questions = None, conversations = None, _id = None, \
                    send_add_requests= None, notifications = None,friends = None, _updated = None, all = None):
@@ -175,6 +194,7 @@ def addConversation():
     if add_conversation is not None:
         return jsonify({'data': True})
     return jsonify({'data': False})
+
 
 
 @app.route('/api/store-search-results', methods=['POST'])
