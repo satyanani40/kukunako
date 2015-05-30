@@ -95,7 +95,14 @@ def login():
     token = create_token(user)
     return dumps({'user':filterIdFields(user, all=True), 'token': token})
 
-
+@app.route('/api/generate-friends', methods=['POST'])
+def generate_friends():
+    accounts = app.data.driver.db['people']
+    user = accounts.find_one({'email': request.json['email']})
+    if not user:
+        status_code = 401
+        return dumps({'status':status_code})
+    return dumps({'status':200})
 
 def filterIdFields(user, interests = None, questions = None, conversations = None, _id = None, \
                    send_add_requests= None, notifications = None,friends = None, _updated = None, all = None):
@@ -174,7 +181,7 @@ def addConversation():
 def deleteSearchItem():
     data = json.loads(request.data)
     if (data['content'] != "" and data['author'] != "" and data['author']):
-        search_account = app.data.driver.db['searchActivity']
+        search_account = app.data.driver.db['search-activity']
         previous_text = search_account.find_one({'author':ObjectId(data['author']), 'content':data['content']})
         if previous_text is None:
             _id = search_account.insert({
