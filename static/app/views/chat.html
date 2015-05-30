@@ -37,14 +37,17 @@
                 </div>
                 <div class="tab-pane fade" id="others" cg-busy="new_submit_busy_post">
                     <ul class="pure-menu-list">
-                        <li class="pure-menu-item" ng-repeat="conversation in tempconversations = (chatactivity.currentuser.conversations)"
+                        <li class="pure-menu-item"
+                            ng-repeat="conversation in tempconversations = (chatactivity.currentuser.conversations)"
                             ng-click="openchatroom(UserService.get(conversation))">
                             <a style="cursor:pointer;text-decoration:none;" class="pure-menu-link">
                                 <img style="margin-right:5px;" ng-src="{{ UserService.get(conversation).picture.thumbnail }}">
                                 {{ UserService.get(conversation).name.first }}
                                 {{ UserService.get(conversation).name.last }}
                             </a>
+                            <span ng-click="deleteConversation(conversation)">delete</span>
                         </li>
+
                     </ul>
                 </div>
             </div>

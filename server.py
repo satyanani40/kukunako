@@ -77,28 +77,173 @@ def login_required(f):
     return decorated_function
 
 # generating friends for person
-@app.route('/api/generate-friends', methods=['POST'])
-def generate_friends():
+@app.route('/api/generate-fake-data', methods=['POST'])
+def generate_fake_data():
     accounts = app.data.driver.db['people']
-    data = accounts.find()
-    print '---generating data--'
-    interests_set = set()
+    user_email = accounts.find_one({'email': request.json['email']})
+    if not user_email:
+        dt = datetime.now()
+        #data = requests.get('http://weber.ooo/api/similarwords?querystring='+' '.join(request.json['interests']))
+        user = {
+            'email' :request.json['email'],
+            'username':request.json['username'],
+            'name':{
+               'first':request.json['firstname'],
+               'last':request.json['lastname']
+            },
+            'password':{
+                'password':generate_password_hash(request.json['password']),
+                'password_updated':str(datetime.now())
+            },
+            'email_confirmed':True,
+            'picture' : {
+                'large' : "static/app/images/yp-logo-500X500.png",
+                'medium' : "static/app/images/yp-logo-300X300.png",
+                'thumbnail' : "static/app/images/yp-logo-300X300.png"
+            },
+            'phone': "",
+            'send_add_requests':[],
+            'study': {
+              'intermediate':"",
+              'graduate': ""
+            },
+            'random_string': id_generator(),
+            'born' : "",
+            'role': "normal",
+            'questions':[],
+            'gender' : "",
+            'lastmessageseen': dt.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'location' : {
+                'city' : "",
+                'state' : "",
+                'street' : ""
+            },
+            'friends' : [],
+            'matchnotifications':[],
+            'notifications':[],
+            'interests': [],
+            'conversations':[],
+            '_updated': datetime.now()
+        }
+        accounts.insert(user)
+        user_id = str(user['_id'])
 
-    for temp in data:
-        interests_set.add(ObjectId(temp['_id']))
+        posts = app.data.driver.db['posts']
+        for temp in range(1, 5):
+            post = {
+	            "interestedPeople" : [ ],
+	            "author" : ObjectId(user['_id']),
+	            "content" : "Dolor curae vitae neque fames auctor facilisi et ullamcorper urna. Netus proin hac urna placerat vel. Proin justo volutpat. Fames lacus a mollis tincidunt. Nulla curae laoreet nec fringilla nullam. Porta augue nisi inceptos tempus. Dolor ipsum quis mi nisl commodo ligula est arcu vestibulum ac. Velit class egestas eros ut. Augue purus sem cras. Dolor massa. Fames augue sagittis quam quisque laoreet nisi senectus. Velit fusce semper pellentesque facilisis purus dignissim. Neque class elit suspendisse aliquet mus blandit magnis urna diam.",
+	            "type" : "text",
+            }
+            posts.insert(post)
 
-    temperary_set = interests_set
+        token = create_token(user)
+        user['_id'] = str(user['_id'])
+        # generating fake data for new user
 
-    for temp in temperary_set:
-        print '-------current user----->>', temp
-        temp_set = list(interests_set)
-        temp_set.remove(temp)
-        cdata = accounts.update({'_id': ObjectId(temp)},
-                               { "$pushAll" :{ "friends": list(temp_set)}
+
+        accounts = app.data.driver.db['people']
+        data = accounts.find()
+        print '------------------generating data------------------'
+        interests_set = set()
+        posts_set = set()
+
+        for temp in data:
+            interests_set.add(ObjectId(temp['_id']))
+
+        interests_set.remove(ObjectId(user['_id']))
+        temperary_set = interests_set
+        count = 0
+
+        posts = app.data.driver.db['posts']
+        posts_data = posts.find({'author':ObjectId(user['_id'])})
+        for temp3 in posts_data:
+            posts_set.add(ObjectId(temp3['_id']))
+
+        for temp in temperary_set:
+            if(count < 3 and count >= 0):
+                cdata = accounts.update({'_id': ObjectId(user['_id'])},
+                                   { "$push" :{
+                                                "notifications": {
+                                                    'friendid': ObjectId(temp),
+                                                    'seen': False,
+                                                    'daterequest': str(datetime.now()),
+                                                    'notific_type': 2 #accept request type
+                                                },
+                                                "friends": ObjectId(temp)
+                                     },
+                                   })
+
+                pdata = accounts.update( {'_id': ObjectId(temp)},
+                                         { "$push" :{ "friends": ObjectId(user['_id'])}})
+
+
+                count += 1
+
+            if(count >= 3 and count <6):
+                data = accounts.update({'_id': ObjectId(user['_id'])},
+                               { "$push" :{ "notifications":
+                                                {'friendid': ObjectId(temp),
+                                                 'seen': False,
+                                                 'daterequest': str(datetime.now()),
+                                                 'notific_type': 1 # friend request type
+                                                 }
+                                            }
                                })
-        data = accounts.find_one({'_id':ObjectId(temp)})
-        print '-----added friends---->', data['friends']
-    return dumps({'status': 200})
+
+                data2 = accounts.update({'_id': ObjectId(temp)},
+                                        { "$push" :{ "send_add_requests": ObjectId(user['_id'])}})
+                count += 1
+
+            for temp2 in posts_set:
+                print '-------------post set element-----------', temp2
+                accounts.update( {'_id': ObjectId(user['_id'])},
+                                     {
+                                         "$push" :{
+                                            "notifications": {
+                                                'friendid': ObjectId(temp),
+                                                'postid' : ObjectId(temp2),
+                                                'seen': False,
+                                                'daterequest': str(datetime.now()),
+                                                'notific_type': 3 #match the post request type
+                                            },
+                                         }
+                                     })
+
+                posts.update( {'_id': ObjectId(temp2)},
+                                     {
+                                         "$push" :{
+                                            "interestedPeople": {
+                                                'interested_person': ObjectId(temp),
+                                                'match_date': str(datetime.now()),
+                                            },
+                                         }
+                                     })
+            messages = app.data.driver.db['messages']
+            ts = int(time.time())
+            message = {
+                'sender':ObjectId(temp),
+                'receiver': ObjectId(user['_id']),
+                'seen' : False,
+                'message' : 'testing sample message',
+                'timestamp': ts,
+                'message_created': datetime.now()
+            }
+
+             #accounts.update({'timestamp':1425368551},{'$set':{'seen':True}})
+            data = messages.insert(message)
+
+
+
+
+        return dumps({'token':token, 'user': user, 'status':200})
+
+    else:
+        response = jsonify(error='You are already registered with this email, Please try forgot password ')
+        response.status_code = 401
+        return response
+
 
 
 
@@ -128,6 +273,7 @@ def filterIdFields(user, interests = None, questions = None, conversations = Non
     temp_array = []
 
     if _updated or all is not None:
+        print '-------------updated field---', user['username']
         user['_updated'] = str(user['_updated'])
 
     if _id or all is not None:
@@ -185,12 +331,12 @@ def filterIdFields(user, interests = None, questions = None, conversations = Non
 
 # add to converstions
 #delete conversation user
-@app.route('/api/add-conversation', methods=['GET'])
+@app.route('/api/add-conversation', methods=['POST'])
 def addConversation():
-    data = request.args.to_dict()
+    data = json.loads(request.data)
     accounts = app.data.driver.db['people']
-    add_conversation = accounts.update({'_id': ObjectId(data['cuserid'])},
-                                       { "$push" :{ "conversations": ObjectId(data['conversationid'])}})
+    add_conversation = accounts.update({'_id': ObjectId(data['cUserId'])},
+                                       { "$push" :{ "conversations": ObjectId(data['conversationId'])}})
     if add_conversation is not None:
         return jsonify({'data': True})
     return jsonify({'data': False})
@@ -233,7 +379,7 @@ def matchresults():
     location_set    = set()
     searchActivity_set  = set()
 
-    keywords = getSimilarWords(data['query'])
+    #keywords = getSimilarWords(data['query'])
     posts = app.data.driver.db['posts']
 
     posts_data = posts.find({"$or":[{"keywords": {"$in":keywords}}, \
@@ -246,7 +392,7 @@ def matchresults():
     #you must make index to keywords and content in searchActivity
     #db.posts.ensureIndex({'keywords':1,'content':'text'}"""
 
-    searchActivity = app.data.driver.db['searchActivity']
+    searchActivity = app.data.driver.db['search-activity']
     searchActivity_data = searchActivity.find({"$or":[{"keywords": {"$in":keywords}},\
                                                       {"content":{"$regex":".*"+data['query']+".*"}}]},{'author':1})
     for temp in searchActivity_data:
@@ -731,7 +877,6 @@ def signup():
               'graduate': ""
             },
             'random_string': id_generator(),
-            'accept_notifications':[],
             'born' : "",
             'role': "normal",
             'questions':[],
