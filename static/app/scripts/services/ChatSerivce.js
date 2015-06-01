@@ -30,8 +30,7 @@ angular.module('weberApp')
             Restangular.all('chat/send-message').post({
                 'sender':this.currentuser._id,
                 'receiver': this.receiverid,
-                'message': text,
-                'seen': false
+                'message': text
             }).then(function(data){
                 //console.log(data)
             });
@@ -95,6 +94,7 @@ angular.module('weberApp')
                 ']}';
 
             self.embedded_param = '{"sender":1,"receiver":1}';
+
             var data = getKey_Pages(self.pages, user2);
             page = data.pageinfo;
             key = data.key;
@@ -283,7 +283,7 @@ angular.module('weberApp')
             }
             if(messageids.length){
                 Restangular.all('update-message-seen').post({
-                    messageids: messageids
+                    message_ids: messageids
                 }).then(function(data){
                     //console.log('--------updated messages seen status----------')
                     //console.log(data)

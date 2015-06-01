@@ -986,15 +986,16 @@ def updateTimeStamp():
 
 @app.route('/api/update-message-seen', methods=['POST'])
 def makeMessagesSeen():
-    print request.json['messageids']
+    print request.json['message_ids']
     list = []
-    accounts = app.data.driver.db['messages']
+    status = False
+    accounts = app.data.driver.db['message_ids']
 
-    for x in request.json['messageids']:
+    for x in request.json['message_ids']:
         accounts.update({ '_id':ObjectId(x) },{'$set':{'seen':True}})
-        print(x+'is updated')
+        status = True
 
-    return 'hai'
+    return json.dumps({'status': status})
 
 def id_generator(size=60, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
