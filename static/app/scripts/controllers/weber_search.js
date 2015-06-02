@@ -17,6 +17,7 @@ angular.module('weberApp')
 	 	$scope.UserService = UserService;
 	 	$scope.InterestsService = InterestsService;
 	 	if(typeof $rootScope.currentUser === 'undefined'){
+
             $http.get('/api/me', {
                 headers: {
                     'Content-Type': 'application/json',
@@ -26,12 +27,12 @@ angular.module('weberApp')
                 var params = '{"send_add_requests":1}';
                 Restangular.one('people',JSON.parse(user_id)).get({embedded:params, seed: Math.random()}).then(function(user) {
 
-
+                    console.log('-------------->', $rootScope.currentUser)
                     $rootScope.currentUser = user;
                     //$rootScope.temp_user = user;
                     if($rootScope.currentUser.interests.length == 0 &&
-                        $rootScope.currentUser.questions.length < 4){
-                       // console.log('----------> got to enter-interests')
+                        $rootScope.currentUser.questions.length < 4
+                        ){
                         $location.path("/enter-interests")
                     }
 
@@ -46,7 +47,6 @@ angular.module('weberApp')
         }else{
             if($rootScope.currentUser.interests.length == 0 &&
                 $rootScope.currentUser.questions.length < 4){
-                //console.log('----------> got to enter-interests')
                 $location.path("/enter-interests")
             }
             //console.log($scope.currentUser);

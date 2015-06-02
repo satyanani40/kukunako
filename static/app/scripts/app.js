@@ -39,7 +39,7 @@ angular
 	])
 	.config(["$socketProvider", function ($socketProvider) {
       //$socketProvider.setUrl("www.weber.ooo");
-      $socketProvider.setUrl("http://130.211.99.188/");
+      $socketProvider.setUrl(document.location.host);
       //$socketProvider.setUrl("http://127.0.0.1:8000/");
     }])
     .config(['RestangularProvider',

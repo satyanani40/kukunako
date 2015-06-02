@@ -10,6 +10,8 @@ angular.module('weberApp')
             return $auth.isAuthenticated();
         };
 
+        console.log('--------domain name', document.location.host)
+
         $scope.get_screen_height = window.innerHeight-52;
         $scope.get_inner_div_height = (window.innerHeight-210)/2;
         $scope.UserService = UserService;
@@ -456,6 +458,7 @@ angular.module('weberApp')
         $scope.logout = function() {
         //CurrentUser.reset();
             $window.sessionStorage.clear();
+            $rootScope.currentUser = undefined;
             $auth.logout();
             $location.path("/search");
         };

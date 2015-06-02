@@ -112,7 +112,7 @@ def generate_fake_data():
             'role': "normal",
             'questions':[],
             'gender' : "",
-            'lastmessageseen': dt.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'lastmessageseen': int(time.time()),
             'location' : {
                 'city' : "",
                 'state' : "",
@@ -121,7 +121,7 @@ def generate_fake_data():
             'friends' : [],
             'matchnotifications':[],
             'notifications':[],
-            'interests': [],
+            'interests': get_interest_ids(['work', 'education', 'data']),
             'conversations':[],
             '_updated': datetime.now()
         }
@@ -881,7 +881,7 @@ def signup():
             'role': "normal",
             'questions':[],
             'gender' : "",
-            'lastmessageseen' : dt.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'lastmessageseen' : int(time.time()),
             'location' : {
                 'city' : "",
                 'state' : "",
@@ -1024,10 +1024,10 @@ searchNotific = 0
         r.delete(fkey):"""
 
 
-@app.route('/stream/<userid>')
+"""@app.route('/stream/<userid>')
 #@nocache
 def stream(userid):
-    return Response(check_updates(userid),mimetype='text/event-stream')
+    return Response(check_updates(userid),mimetype='text/event-stream')"""
 
 def after_post_inserted(items):
     post_author = ""
